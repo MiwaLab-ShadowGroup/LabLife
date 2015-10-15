@@ -9,7 +9,7 @@ using Microsoft.Kinect;
 
 namespace UDPDepthTest
 {
-    class getdepth
+    public class getdepth
     {
 
         KinectSensor kinect;
@@ -27,20 +27,23 @@ namespace UDPDepthTest
         //コンストラクタ
         public getdepth()
         {
+            try {
+                kinect = KinectSensor.GetDefault();
 
-            kinect = KinectSensor.GetDefault();
-
-            this.depthFrameReader = this.kinect.DepthFrameSource.OpenReader();
-            this.depthFrameReader.FrameArrived += DepthFrame_Arrived;
-            this.depthFrameDescription = this.kinect.DepthFrameSource.FrameDescription;
-            this.depthBuffer = new ushort[this.depthFrameDescription.LengthInPixels];
-            this.depthImageWidth = this.depthFrameDescription.Width;
-            this.depthImageHeight = this.depthFrameDescription.Height;
-            this.depthStride = (int)(depthFrameDescription.Width * depthFrameDescription.BytesPerPixel);
+                this.depthFrameReader = this.kinect.DepthFrameSource.OpenReader();
+                this.depthFrameReader.FrameArrived += DepthFrame_Arrived;
+                this.depthFrameDescription = this.kinect.DepthFrameSource.FrameDescription;
+                this.depthBuffer = new ushort[this.depthFrameDescription.LengthInPixels];
+                this.depthImageWidth = this.depthFrameDescription.Width;
+                this.depthImageHeight = this.depthFrameDescription.Height;
+                this.depthStride = (int)(depthFrameDescription.Width * depthFrameDescription.BytesPerPixel);
 
 
-            this.kinect.Open();
-
+                this.kinect.Open();
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
 
@@ -69,11 +72,11 @@ namespace UDPDepthTest
                     depthBuffer[i] = (ushort)(depthBuffer[i] * 65535 / 8000);
                 }
 
-                
+                OnDataReceived(depthBuffer);
             }
 
         }
 
-        }
+    }
 
 }

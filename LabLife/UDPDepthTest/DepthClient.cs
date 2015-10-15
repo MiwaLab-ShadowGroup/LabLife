@@ -103,6 +103,9 @@ namespace UDPDepthTest
 
         public void Send(string remoteIPAdress, ushort[] data)
         {
+            //位置を記録
+            this.remoteIPAdress = remoteIPAdress;
+            //送信用データの作成
             if (this.rowdatalength != data.Length * 2)
             {
                 this.rowdatalength = data.Length * 2;
@@ -113,7 +116,7 @@ namespace UDPDepthTest
                 }
                 this.SendByte[this.ClientNum - 1] = new byte[data.Length * 2 % this.ClientNum];
             }
-
+            //送信
             var result = Parallel.For(0, this.ClientNum, (l) =>
             {
                 for (int z = 0; z < this.SendByte[l].Length; z += 2)
