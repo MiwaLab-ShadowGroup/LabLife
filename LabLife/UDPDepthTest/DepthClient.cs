@@ -20,6 +20,8 @@ namespace UDPDepthTest
         public int rowdatalength;
         public string remoteIPAdress;
 
+        public ushort[] ushortReceivedData { set; get; }
+
         public List<KeyValuePair<int, UdpClient>> clients { private set; get; }
 
         /// <summary>
@@ -40,6 +42,9 @@ namespace UDPDepthTest
             this.Data = data;
             this.ClientNum = 10;
             this.StartPortNumber = 35000;
+            this.receiveByte = new byte[this.ClientNum][];
+            this.receiveRawdata = new byte[512 * 424 * 2];
+            this.ushortReceivedData = new ushort[512 * 424];
         }
 
         /// <summary>
@@ -92,13 +97,29 @@ namespace UDPDepthTest
 
         }
 
-        public byte[] Recieve()
+        public ushort[] Recieve()
         {
+            foreach( var p in this.receiveByte)
+            {
+                if (p == null)
+                {
+                    return new ushort[1];
+                }
+            }
             Parallel.For(0,this.receiveByte.Length,(i) =>
             {
-                this.receiveByte[i].CopyTo(this.receiveRawdata, i * this.receiveByte[0].Length);
+                if (this.receiveByte[i] != null)
+                {
+                    this.receiveByte[i].CopyTo(this.receiveRawdata, i * this.receiveByte[0].Length);
+                }
             });
-            return this.receiveRawdata;
+
+            for (int i =0; i < this.ushortReceivedData.Length; i++)
+            {
+                this.ushortReceivedData[i] = BitConverter.ToUInt16( new byte[]{ this.receiveRawdata[i * 2],this.receiveRawdata[i * 2 + 1]},0);
+            }
+
+            return this.ushortReceivedData;
         }
 
         public void Send(string remoteIPAdress, ushort[] data)
@@ -121,8 +142,8 @@ namespace UDPDepthTest
             {
                 for (int z = 0; z < this.SendByte[l].Length; z += 2)
                 {
-                    this.SendByte[l][z] = BitConverter.GetBytes(data[z / 2 + l * this.SendByte[0].Length])[0];
-                    this.SendByte[l][z] = BitConverter.GetBytes(data[z / 2 + l * this.SendByte[0].Length])[1];
+                    this.SendByte[l][z] = BitConverter.GetBytes(data[z / 2 + l * this.SendByte[0].Length/2])[0];
+                    this.SendByte[l][z] = BitConverter.GetBytes(data[z / 2 + l * this.SendByte[0].Length/2])[1];
                 }
             });
             Parallel.ForEach(this.clients, (p) =>
