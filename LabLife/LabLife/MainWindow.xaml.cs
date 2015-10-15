@@ -23,6 +23,10 @@ namespace LabLife
         public MainWindow()
         {
             InitializeComponent();
+
+
         }
+
+        
     }
 }
