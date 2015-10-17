@@ -1,0 +1,3 @@
+[submodule "CIPCSystem"]
+	path = CIPCSystem
+	url = https://github.com/YusukeKajita/CIPCSystem.git
