@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
+using System.Net.Sockets;
 using System.Collections;
+using System.Net;
 
 public class camerascript : MonoBehaviour {
     public RenderTexture renderTexture;
     private Texture2D sendtexture;
-	// Use this for initialization
-	void Start ()
+    private UdpClient client;
+    // Use this for initialization
+    void Start ()
     {
         if(this.renderTexture == null)
         {
             return;
         }
+        this.client = new UdpClient();
         this.sendtexture = new Texture2D(this.renderTexture.width, this.renderTexture.height);
 	}
 	
@@ -24,7 +28,8 @@ public class camerascript : MonoBehaviour {
         RenderTexture.active = this.renderTexture;
         this.sendtexture.ReadPixels(new Rect( 0,0,this.renderTexture.width, this.renderTexture.height),0,0);
         this.sendtexture.Apply();
-
-        Debug.Log( this.sendtexture.EncodeToJPG().Length);
+        var bytes = this.sendtexture.EncodeToJPG();
+        Debug.Log(this.client.Send(bytes,bytes.Length,"127.0.0.1",15000));
+        
     }
 }
