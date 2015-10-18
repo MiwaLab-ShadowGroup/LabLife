@@ -18,13 +18,16 @@ namespace AndroidTest
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
+            CIPC_CS.CLIENT.CLIENT client = new CIPC_CS.CLIENT.CLIENT();
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
             // Get our button from the layout resource,
             // and attach an event to it
             Button button = FindViewById<Button>(Resource.Id.MyButton);
+            EditText edit_text_remoteIP = FindViewById<EditText>(Resource.Id.remoteIP);
+            EditText edit_text_remotePort = FindViewById<EditText>(Resource.Id.remotePort);
+
 
             button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
         }

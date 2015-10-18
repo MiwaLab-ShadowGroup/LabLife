@@ -28,7 +28,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
-    <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidLinkMode>Full</AndroidLinkMode>
+    <AndroidLinkSkip>CIPC_CS</AndroidLinkSkip>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <BundleAssemblies>False</BundleAssemblies>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+    <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
+    <AndroidStoreUncompressedFileExtensions />
+    <MandroidI18n />
+    <Debugger>Xamarin</Debugger>
+    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
+    <DevInstrumentationEnabled>False</DevInstrumentationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,12 +51,24 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CIPC_CS">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Release\CIPC_CS.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="UDP_LIVESTREAMING">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Release\UDP_LIVESTREAMING.dll</HintPath>
+    </Reference>
+    <Reference Include="UDP_PACKETS_CLIANT">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Release\UDP_PACKETS_CLIANT.dll</HintPath>
+    </Reference>
+    <Reference Include="UDP_PACKETS_CODER">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Release\UDP_PACKETS_CODER.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
