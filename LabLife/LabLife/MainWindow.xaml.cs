@@ -24,9 +24,35 @@ namespace LabLife
         {
             InitializeComponent();
 
-
+            InitEvents();
         }
 
-        
+        private void InitEvents()
+        {
+            this.DockPanel_Header.MouseLeftButtonDown += (s, e) => this.DragMoveByHeader(s, e);
+        }
+
+        private void DragMoveByHeader(object s, MouseButtonEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.Top = -20;
+                var p = e.GetPosition(this).X / this.ActualWidth;
+                this.Left = e.GetPosition(this).X;
+                this.WindowState = WindowState.Normal;
+                this.Left -= p * this.Width;
+            }
+            this.DragMove();
+        }
+
+        private void Button_Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button_Minimize_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

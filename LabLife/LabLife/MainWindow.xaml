@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LabLife"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="350" Width="525" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
+    <Grid Background="{StaticResource MainColor}" Margin="7">
+        <DockPanel>
+            <DockPanel DockPanel.Dock="Top" x:Name="DockPanel_Header" Background="{StaticResource MainColor}">
+                <Button DockPanel.Dock="Right" Width="30" Height="30" Template="{DynamicResource WindowButtonTemplate}" Content=" ✕ " x:Name="Button_Close" Click="Button_Close_Click" />
+                <Button DockPanel.Dock="Right" Width="30" Height="30" Template="{DynamicResource WindowButtonTemplate}" Content=" ＿ " x:Name="Button_Minimize" Click="Button_Minimize_Click"/>
+                <TextBlock Text="LabLife!" VerticalAlignment="Bottom" FontSize="16" FontFamily="Meiryo" />
+            </DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="File">
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+            <Grid>
+                <Button Content="Test"/>
+            </Grid>
+        </DockPanel>
     </Grid>
 </Window>
