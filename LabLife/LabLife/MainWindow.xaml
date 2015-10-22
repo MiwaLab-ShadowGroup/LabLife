@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LabLife"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
+        Title="MainWindow" Height="350" Width="525" AllowsTransparency="True" WindowStyle="None" Background="#FF171717" ResizeMode="CanResizeWithGrip">
     <Grid Background="{StaticResource MainColor}" Margin="7">
         <DockPanel>
             <DockPanel DockPanel.Dock="Top" x:Name="DockPanel_Header" Background="{StaticResource MainColor}">
@@ -15,13 +15,17 @@
             </DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="File">
-                    <MenuItem Header="File">
-                    </MenuItem>
+                    <MenuItem Header="開く"/>
+                    <MenuItem Header="閉じる"/>
+                </MenuItem>
+                <MenuItem Header="window" x:Name="MenuItem_Window">
                 </MenuItem>
             </Menu>
-            <Grid>
-                <Button Content="Test"/>
-            </Grid>
+            <StatusBar DockPanel.Dock="Bottom">
+                <TextBlock x:Name="TextBlock_Status"/>
+            </StatusBar>
+            <DockPanel x:Name="DockPanel_MainDock" DockPanel.Dock="Bottom">
+            </DockPanel>
         </DockPanel>
     </Grid>
 </Window>

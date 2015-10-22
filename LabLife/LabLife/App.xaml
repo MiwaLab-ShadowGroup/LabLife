@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:LabLife"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <Style TargetType="StatusBar">
+            <Setter Property="Background" Value="#FF440000"/>
+        </Style>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground">
                 <Setter.Value>

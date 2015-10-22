@@ -25,8 +25,9 @@ namespace LabLife
             InitializeComponent();
 
             InitEvents();
-        }
 
+            this.DockPanel_MainDock.Children.Add(new Editor.WindowListPanel(this));
+        }
         private void InitEvents()
         {
             this.DockPanel_Header.MouseLeftButtonDown += (s, e) => this.DragMoveByHeader(s, e);
@@ -52,7 +53,7 @@ namespace LabLife
 
         private void Button_Minimize_Click(object sender, RoutedEventArgs e)
         {
-
+            this.WindowState = WindowState.Minimized;
         }
     }
 }
