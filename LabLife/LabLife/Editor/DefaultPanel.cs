@@ -13,7 +13,7 @@ namespace LabLife.Editor
 {
     public abstract class DefaultPanel : Border
     {
-        private StackPanel StackPanel_Main = new StackPanel();
+        private DockPanel DockPanel_Main = new DockPanel();
         private Border Border_Header = new Border();
         private DockPanel DockPanel_Header = new DockPanel();
         private TextBlock TextBlock_Header = new TextBlock();
@@ -27,9 +27,10 @@ namespace LabLife.Editor
 
         private MainWindow m_MainWindow;
         
-        protected void AddContent(UIElement item)
+        protected void AddContent(UIElement item, Dock dock)
         {
-            this.StackPanel_Main.Children.Add(item);
+            this.DockPanel_Main.Children.Add(item);
+            DockPanel.SetDock(item, dock);
         }
 
         public virtual void Initialize(MainWindow mainwindow)
@@ -42,13 +43,15 @@ namespace LabLife.Editor
             this.Button_Close.Content = " ✕ ";
             this.Button_Close.Style = (Style)App.Current.Resources["WindowButtonStyle"];
             this.Button_Close.Click += this.Close;
+            this.Button_Close.ToolTip = "Close";
 
             this.Button_ToMainWindow.Content = " → ";
             this.Button_ToMainWindow.Style = (Style)App.Current.Resources["WindowButtonStyle"];
             this.Button_ToMainWindow.Click += this.ToMainWindow;
-
+            this.Button_ToMainWindow.ToolTip = "ToMainWindow";
 
             this.LLCheckbox_IsClip.Content = " +++ ";
+            this.LLCheckbox_IsClip.ToolTip = "Fix";
 
             this.TextBlock_Header.Text = this.TitleName;
 
@@ -62,8 +65,10 @@ namespace LabLife.Editor
             this.Border_Header.Background = new SolidColorBrush(Color.FromArgb(20,255,255,255));
             this.Border_Header.BorderThickness = new Thickness(0);
             this.Border_Header.Child = this.DockPanel_Header;
-            this.StackPanel_Main.Children.Add(this.Border_Header);
-            this.Child = StackPanel_Main;
+            DockPanel.SetDock(Border_Header, Dock.Top);
+
+            this.DockPanel_Main.Children.Add(this.Border_Header);
+            this.Child = DockPanel_Main;
 
             this.m_MainWindow = mainwindow;
             this.Style = (Style)App.Current.Resources["Border_Default"];
@@ -71,6 +76,7 @@ namespace LabLife.Editor
 
         private void ToMainWindow(object sender, RoutedEventArgs e)
         {
+            if (this.LLCheckbox_IsClip.IsChecked == true) return;
             var parent = (Panel)this.Parent;
             var window = Window.GetWindow(this);
             parent.Children.Remove(this);
@@ -84,6 +90,7 @@ namespace LabLife.Editor
 
         public virtual void Close(object sender, RoutedEventArgs e)
         {
+            if (this.LLCheckbox_IsClip.IsChecked == true) return;
             var parent = (Panel)this.Parent;
             var window = Window.GetWindow(this);
             parent.Children.Remove(this);
@@ -96,6 +103,7 @@ namespace LabLife.Editor
 
         private void DockPanel_Header_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if (this.LLCheckbox_IsClip.IsChecked == true) return;
             Console.WriteLine("Pressed");
 
             var parent = (Panel)this.Parent;
@@ -117,11 +125,8 @@ namespace LabLife.Editor
             p.Add(this);
             p.Show();
 
-
-
             p.Height = height;
             p.Width = width;
-
 
             p.Left = OwnerWindow.Left;
             p.Top = OwnerWindow.Top;

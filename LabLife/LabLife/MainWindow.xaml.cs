@@ -41,7 +41,10 @@ namespace LabLife
         private void InitPanelList()
         {
             this.PanelList.Add(new WindowListPanel());
-            foreach(var p in this.PanelList)
+            this.PanelList.Add(new DiagnocticsPanel());
+
+
+            foreach (var p in this.PanelList)
             {
                 p.Initialize(this);
             }

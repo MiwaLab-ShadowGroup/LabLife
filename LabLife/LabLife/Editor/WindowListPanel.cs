@@ -13,11 +13,11 @@ namespace LabLife.Editor
         public TreeView treeview = new TreeView();
         public WindowListPanel()
         {
+            this.TitleName = "Window List";
             this.Children.Add(this.treeview);
         }
         public override void Initialize(MainWindow mainwindow)
         {
-            this.TitleName = "Window List";
             base.Initialize(mainwindow);
 
             foreach (var p in mainwindow.PanelList)
@@ -30,7 +30,7 @@ namespace LabLife.Editor
                 }
                 this.treeview.Items.Add(item);
             }
-            this.AddContent(this.treeview);
+            this.AddContent(this.treeview, Dock.Top);
 
         }
     }
