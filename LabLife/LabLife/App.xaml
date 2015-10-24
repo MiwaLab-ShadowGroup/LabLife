@@ -99,6 +99,7 @@
             </Border>
         </ControlTemplate>
 
+
         <ControlTemplate x:Key="ButtonTemplate"  TargetType="Button">
             <Border CornerRadius="0" Padding="1" BorderThickness="1" x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
                 <VisualStateManager.VisualStateGroups>
@@ -285,7 +286,7 @@
           Name="SubmenuBorder" 
           SnapsToDevicePixels="True" 
           Background="#55000000" 
-          BorderBrush="#FFFFFFFF" 
+          BorderBrush="#50FFFFFF" 
           BorderThickness="1" >
                             <StackPanel   
             IsItemsHost="True"  
@@ -720,6 +721,44 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="Button" x:Key="WindowButtonStyle">
+            <Setter Property="Background" Value="#01000000"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#77FFFFFF"/>
+            <Setter Property="Template" Value="{DynamicResource WindowButtonTemplate}"/>
+        </Style>
 
+        <Style TargetType="Button" x:Key="WindowButtonCheckOnStyle">
+            <Setter Property="Background" Value="#77FFFFFF"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#77FFFFFF"/>
+            <Setter Property="Template" Value="{DynamicResource WindowButtonTemplate}"/>
+        </Style>
+        <Style TargetType="Button" x:Key="WindowButtonCheckOffStyle">
+            <Setter Property="Background" Value="#01000000"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#77FFFFFF"/>
+            <Setter Property="Template" Value="{DynamicResource WindowButtonTemplate}"/>
+        </Style>
+        
+        <Style TargetType="{x:Type Border}" x:Key="Border_Default">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="#3FFFFFFF"></SolidColorBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Window" x:Key="WindowStyle">
+            <Setter Property="AllowsTransparency" Value="true"/>
+            <Setter Property="WindowStyle" Value="None"/>
+            <Setter Property="Background" Value="#FF171717"/>
+            <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
+        </Style>
+
+        <Style TargetType="TreeView">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
     </Application.Resources>
 </Application>
+    

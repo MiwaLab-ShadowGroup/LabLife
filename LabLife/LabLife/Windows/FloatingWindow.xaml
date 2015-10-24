@@ -1,11 +1,11 @@
-﻿<Window x:Class="LabLife.MainWindow"
+﻿<Window x:Class="LabLife.Windows.FloatingWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LabLife"
+        xmlns:local="clr-namespace:LabLife.Windows"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" AllowsTransparency="True" WindowStyle="None" Background="#FF171717" ResizeMode="CanResizeWithGrip">
+        Title="FloatingWindow" Height="auto" Width="auto">
     <Grid Background="{StaticResource MainColor}" Margin="7">
         <DockPanel>
             <DockPanel DockPanel.Dock="Top" x:Name="DockPanel_Header" Background="{StaticResource MainColor}">
@@ -14,18 +14,7 @@
                 <Button DockPanel.Dock="Right" Width="30" Height="30" Template="{DynamicResource WindowButtonTemplate}" Content=" ＿ " x:Name="Button_Minimize" Click="Button_Minimize_Click"/>
                 <TextBlock Text="LabLife!" x:Name="TextBlock_Title" VerticalAlignment="Bottom" FontSize="16" FontFamily="Meiryo" />
             </DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="File">
-                    <MenuItem Header="開く"/>
-                    <MenuItem Header="閉じる"/>
-                </MenuItem>
-                <MenuItem Header="window" x:Name="MenuItem_Window">
-                </MenuItem>
-            </Menu>
-            <StatusBar DockPanel.Dock="Bottom">
-                <TextBlock x:Name="TextBlock_Status"/>
-            </StatusBar>
-            <DockPanel x:Name="DockPanel_MainDock" DockPanel.Dock="Bottom">
+            <DockPanel DockPanel.Dock="Bottom" x:Name="DockPanel_Sub_Window_Main" Background="{StaticResource MainColor}">
             </DockPanel>
         </DockPanel>
     </Grid>

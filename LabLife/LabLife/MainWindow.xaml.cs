@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LabLife.Editor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,14 +21,55 @@ namespace LabLife
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<DefaultPanel> PanelList = new List<DefaultPanel>();
         public MainWindow()
         {
             InitializeComponent();
 
+            InitWindow();
             InitEvents();
-
-            this.DockPanel_MainDock.Children.Add(new Editor.WindowListPanel(this));
+            InitPanelList();
+            InitMenu();
         }
+
+        private void InitWindow()
+        {
+            this.Title = "LabLife!";
+            this.TextBlock_Title.Text = this.Title;
+        }
+
+        private void InitPanelList()
+        {
+            this.PanelList.Add(new WindowListPanel());
+            foreach(var p in this.PanelList)
+            {
+                p.Initialize(this);
+            }
+        }
+
+        private void InitMenu()
+        {
+            foreach (var p in this.PanelList)
+            {
+                MenuItem item = new MenuItem();
+                item.Header = p.TitleName;
+                item.Click += Item_Click;
+                this.MenuItem_Window.Items.Add(item);
+            }
+        }
+
+        private void Item_Click(object sender, RoutedEventArgs e)
+        {
+            var menuitem = (MenuItem)sender;
+            DefaultPanel panel = this.PanelList.Find(i => i.TitleName == (string)menuitem.Header);
+
+            if (Window.GetWindow(panel) == null)
+            {
+                this.DockPanel_MainDock.Children.Add(panel);
+                DockPanel.SetDock(panel, Dock.Left);
+            }
+        }
+
         private void InitEvents()
         {
             this.DockPanel_Header.MouseLeftButtonDown += (s, e) => this.DragMoveByHeader(s, e);
@@ -54,6 +96,19 @@ namespace LabLife
         private void Button_Minimize_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        private void Button_Maximize_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = WindowState.Normal;
+
+            }
         }
     }
 }
