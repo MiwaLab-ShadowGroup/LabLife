@@ -94,7 +94,7 @@ namespace LabLife.Editor
         {
             if (this.ProcessList[this.ListBox_ProcessList.SelectedIndex-1].CloseMainWindow())
             {
-                this.ProcessList[this.ListBox_ProcessList.SelectedIndex-1].WaitForExit();
+                this.ProcessList[this.ListBox_ProcessList.SelectedIndex-1].WaitForExit(2000);
                 this.updateProcesses();
             }
         }
