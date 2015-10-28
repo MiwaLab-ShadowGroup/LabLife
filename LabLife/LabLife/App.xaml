@@ -61,6 +61,7 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
         <Style TargetType="TextBox">
+            <Setter Property="CaretBrush" Value="White"/>
             <Setter Property="Background">
                 <Setter.Value>
                     <SolidColorBrush Color="Transparent">

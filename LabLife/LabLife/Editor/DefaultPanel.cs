@@ -25,7 +25,7 @@ namespace LabLife.Editor
 
         public string TitleName = "";
 
-        private MainWindow m_MainWindow;
+        protected MainWindow m_MainWindow;
         
         protected void AddContent(UIElement item, Dock dock)
         {

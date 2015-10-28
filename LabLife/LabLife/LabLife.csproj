@@ -64,6 +64,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Contorols\LLCheckBox.cs" />
+    <Compile Include="Editor\CommandLinePanel.cs" />
     <Compile Include="Editor\DiagnocticsPanel.cs" />
     <Compile Include="Project\AProject.cs" />
     <Compile Include="Project\LLProject.cs" />

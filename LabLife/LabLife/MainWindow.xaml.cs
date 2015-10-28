@@ -40,6 +40,7 @@ namespace LabLife
 
         private void InitPanelList()
         {
+            this.PanelList.Add(new CommandLinePanel());
             this.PanelList.Add(new WindowListPanel());
             this.PanelList.Add(new DiagnocticsPanel());
 
