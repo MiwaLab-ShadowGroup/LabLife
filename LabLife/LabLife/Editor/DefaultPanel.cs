@@ -104,7 +104,6 @@ namespace LabLife.Editor
         private void DockPanel_Header_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (this.LLCheckbox_IsClip.IsChecked == true) return;
-            Console.WriteLine("Pressed");
 
             var parent = (Panel)this.Parent;
 
