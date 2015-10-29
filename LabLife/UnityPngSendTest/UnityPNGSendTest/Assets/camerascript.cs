@@ -5,6 +5,8 @@ using System.Net;
 
 public class camerascript : MonoBehaviour {
     public RenderTexture renderTexture;
+    public string IPAdress;
+    public int portNumber;
     private Texture2D sendtexture;
     private UdpClient client;
     // Use this for initialization
@@ -16,6 +18,14 @@ public class camerascript : MonoBehaviour {
         }
         this.client = new UdpClient();
         this.sendtexture = new Texture2D(this.renderTexture.width, this.renderTexture.height);
+        if(this.portNumber == 0)
+        {
+            this.portNumber = 15000;
+        }
+        if(this.IPAdress == "")
+        {
+            this.IPAdress = "127.0.0.1";
+        }
 	}
 	
 	// Update is called once per frame
@@ -29,7 +39,7 @@ public class camerascript : MonoBehaviour {
         this.sendtexture.ReadPixels(new Rect( 0,0,this.renderTexture.width, this.renderTexture.height),0,0);
         this.sendtexture.Apply();
         var bytes = this.sendtexture.EncodeToJPG();
-        Debug.Log(this.client.Send(bytes,bytes.Length,"127.0.0.1",15000));
+        Debug.Log(this.client.Send(bytes,bytes.Length,this.IPAdress,this.portNumber));
         
     }
 }
