@@ -43,6 +43,7 @@ namespace LabLife
             this.PanelList.Add(new CommandLinePanel());
             this.PanelList.Add(new WindowListPanel());
             this.PanelList.Add(new DiagnocticsPanel());
+            this.PanelList.Add(new ImageReceiverHostPanel());
 
 
             foreach (var p in this.PanelList)
@@ -51,8 +52,20 @@ namespace LabLife
             }
         }
 
+        public void AddPanel(DefaultPanel panel)
+        {
+            this.PanelList.Add(panel);
+            this.InitMenu();
+        }
+        public void RemovePanel(DefaultPanel panel)
+        {
+            this.PanelList.Remove(panel);
+            this.InitMenu();
+        }
+
         private void InitMenu()
         {
+            this.MenuItem_Window.Items.Clear();
             foreach (var p in this.PanelList)
             {
                 MenuItem item = new MenuItem();
@@ -67,6 +80,11 @@ namespace LabLife
             var menuitem = (MenuItem)sender;
             DefaultPanel panel = this.PanelList.Find(i => i.TitleName == (string)menuitem.Header);
 
+            this.DisplayPanel(panel);
+        }
+
+        public void DisplayPanel(DefaultPanel panel)
+        {
             if (Window.GetWindow(panel) == null)
             {
                 this.DockPanel_MainDock.Children.Add(panel);

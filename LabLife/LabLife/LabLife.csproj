@@ -66,6 +66,8 @@
     <Compile Include="Contorols\LLCheckBox.cs" />
     <Compile Include="Editor\CommandLinePanel.cs" />
     <Compile Include="Editor\DiagnocticsPanel.cs" />
+    <Compile Include="Editor\ImageReceiverHostPanel.cs" />
+    <Compile Include="Editor\ImageReceiverPanel.cs" />
     <Compile Include="Project\AProject.cs" />
     <Compile Include="Project\LLProject.cs" />
     <Compile Include="Windows\FloatingWindow.xaml.cs">
