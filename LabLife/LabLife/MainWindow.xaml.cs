@@ -95,6 +95,15 @@ namespace LabLife
         private void InitEvents()
         {
             this.DockPanel_Header.MouseLeftButtonDown += (s, e) => this.DragMoveByHeader(s, e);
+            this.Closing += MainWindow_Closing;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            foreach(var p in this.PanelList)
+            {
+                p.Close(sender,new RoutedEventArgs());
+            }
         }
 
         private void DragMoveByHeader(object s, MouseButtonEventArgs e)

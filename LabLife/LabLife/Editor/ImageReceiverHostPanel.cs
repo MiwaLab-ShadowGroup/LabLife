@@ -66,7 +66,6 @@ namespace LabLife.Editor
             foreach (var item in this.List_ImageReceiver)
             {
                 this.m_MainWindow.RemovePanel(item);
-                this.m_MainWindow.DisplayPanel(item);
                 item.Close(this, new System.Windows.RoutedEventArgs());
             }
             this.List_ImageReceiver.Clear();
@@ -80,7 +79,6 @@ namespace LabLife.Editor
             this.List_ImageReceiver.Remove(item);
 
             this.m_MainWindow.RemovePanel(item);
-            this.m_MainWindow.DisplayPanel(item);
             item.Close(this, new System.Windows.RoutedEventArgs());
             this.UpdateListBox();
         }

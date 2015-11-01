@@ -93,11 +93,16 @@ namespace LabLife.Editor
             if (this.LLCheckbox_IsClip.IsChecked == true) return;
             var parent = (Panel)this.Parent;
             var window = Window.GetWindow(this);
-            parent.Children.Remove(this);
-
-            if (window.GetType() == typeof(FloatingWindow))
+            if (parent != null)
             {
-                ((FloatingWindow)window).UpdateClose();
+                parent.Children.Remove(this);
+            }
+            if (window != null)
+            {
+                if (window.GetType() == typeof(FloatingWindow))
+                {
+                    ((FloatingWindow)window).UpdateClose();
+                }
             }
         }
 
