@@ -94,6 +94,8 @@
     <Compile Include="Editor\DiagnocticsPanel.cs" />
     <Compile Include="Editor\ImageReceiverHostPanel.cs" />
     <Compile Include="Editor\ImageReceiverPanel.cs" />
+    <Compile Include="Editor\ProjectionPanel.cs" />
+    <Compile Include="Processer\Transporter.cs" />
     <Compile Include="Project\AProject.cs" />
     <Compile Include="Project\LLProject.cs" />
     <Compile Include="Windows\FloatingWindow.xaml.cs">

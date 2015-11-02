@@ -117,11 +117,10 @@ namespace LabLife.Editor
                         this.m_data = new byte[this.bitmapsorce.PixelWidth * this.bitmapsorce.PixelHeight * this.bitmapsorce.Format.BitsPerPixel / 8];
                         this.Image_Main.Source = this.m_WritableBitmap;
                     }
-                    this.mat = new Mat(this.bitmapsorce.PixelWidth, this.bitmapsorce.PixelHeight, MatType.CV_8UC3, this.m_data);
-
-                    Cv2.ImShow("Test" + this.TitleName, this.mat);
-                    
                     this.bitmapsorce.CopyPixels(this.m_data, this.bitmapsorce.PixelWidth * this.bitmapsorce.Format.BitsPerPixel / 8, 0);
+
+                    this.mat = new Mat(this.bitmapsorce.PixelWidth, this.bitmapsorce.PixelHeight, MatType.CV_8UC3, this.m_data);
+                    
                     this.m_WritableBitmap.WritePixels(new Int32Rect(0, 0, this.m_WritableBitmap.PixelWidth, this.m_WritableBitmap.PixelHeight), this.m_data, this.bitmapsorce.PixelWidth * this.bitmapsorce.Format.BitsPerPixel / 8, 0);
                     this.bitmapsorce = null;
                 }

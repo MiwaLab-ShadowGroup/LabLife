@@ -44,7 +44,7 @@ namespace LabLife
             this.PanelList.Add(new WindowListPanel());
             this.PanelList.Add(new DiagnocticsPanel());
             this.PanelList.Add(new ImageReceiverHostPanel());
-
+            this.PanelList.Add(new ProjectionPanel(1));
 
             foreach (var p in this.PanelList)
             {
