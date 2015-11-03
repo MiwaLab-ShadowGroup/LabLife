@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{483B70D3-1ED7-543C-EFFA-B157943B98D3}") = "UnityPNGSendTest", "Assembly-CSharp.csproj", "{E73064BC-F7B1-7BD6-9388-F95369901877}"
+Project("{483B70D3-1ED7-543C-EFFA-B157943B98D3}") = "UnityPNGSendTest", "Assembly-CSharp-vs.csproj", "{E73064BC-F7B1-7BD6-9388-F95369901877}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,7 +17,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
+		GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -36,4 +36,5 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
+
 EndGlobal
