@@ -38,6 +38,8 @@ namespace LabLife.Editor
             base.TitleName = "Kinect Condition";
             kinect = KinectSensor.GetDefault();
 
+
+            //bodyindex関連
             this.bodyIndexFrameDesc = kinect.DepthFrameSource.FrameDescription;
             this.bodyIndexBuffer = new byte[bodyIndexFrameDesc.LengthInPixels];
             this.bodyIndexColorImage = new WriteableBitmap(bodyIndexFrameDesc.Width, bodyIndexFrameDesc.Height,
@@ -151,7 +153,7 @@ namespace LabLife.Editor
                         bodyIndexColorBuffer[colorIndex + 3] = 255;
 
                     }
-                    if ( index == 255)
+                    if (index == 255)
                     {
                         bodyIndexColorBuffer[colorIndex + 0] = 255;
                         bodyIndexColorBuffer[colorIndex + 1] = 255;
