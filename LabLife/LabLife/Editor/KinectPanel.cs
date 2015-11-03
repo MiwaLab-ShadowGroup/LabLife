@@ -25,7 +25,7 @@ namespace LabLife.Editor
         byte[] bodyIndexBuffer;
 
         WriteableBitmap bodyIndexColorImage;
-        WriteableBitmap bodyindeximg;
+        
 
         Int32Rect bodyIndexColorRect;
         int bodyIndexColorStride;
