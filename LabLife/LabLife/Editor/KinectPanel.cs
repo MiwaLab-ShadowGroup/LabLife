@@ -16,28 +16,37 @@ namespace LabLife.Editor
 {
     public class KinectPanel : DefaultPanel
     {
-        Button KinectButton = new Button();
 
+        Button KinectButton = new Button();
+        
         KinectSensor kinect;
+
+        //bodyindex関連
         BodyIndexFrameReader bodyIndexFrameReader;
         FrameDescription bodyIndexFrameDesc;
-
         byte[] bodyIndexBuffer;
-
         WriteableBitmap bodyIndexColorImage;
         
-
         Int32Rect bodyIndexColorRect;
         int bodyIndexColorStride;
         int bodyIndexColorBytesPerPixel = 4;
         byte[] bodyIndexColorBuffer;
         System.Windows.Media.Color[] bodyIndexColors;
 
+        //depth関連
+        DepthFrameReader depthFrameReader;
+        FrameDescription depthFrameDescription;
+        Int32Rect depthRect;
+        int depthStride;
+        ushort[] depthBuffer;
+        int depthImageWidth;
+        int depthImageHeight;
+        WriteableBitmap depthImage;
+
         public KinectPanel()
         {
             base.TitleName = "Kinect Condition";
             kinect = KinectSensor.GetDefault();
-
 
             //bodyindex関連
             this.bodyIndexFrameDesc = kinect.DepthFrameSource.FrameDescription;
@@ -53,6 +62,18 @@ namespace LabLife.Editor
                 };
             bodyIndexFrameReader = kinect.BodyIndexFrameSource.OpenReader();
             bodyIndexFrameReader.FrameArrived += bodyIndexFrameReader_FrameArrived;
+
+            //depth関連
+            this.depthFrameReader = this.kinect.DepthFrameSource.OpenReader();
+            this.depthFrameReader.FrameArrived += DepthFrame_Arrived;
+            this.depthFrameDescription = this.kinect.DepthFrameSource.FrameDescription;
+            this.depthBuffer = new ushort[this.depthFrameDescription.LengthInPixels];
+            this.depthImageWidth = this.depthFrameDescription.Width;
+            this.depthImageHeight = this.depthFrameDescription.Height;
+            this.depthImage = new WriteableBitmap(depthFrameDescription.Width, depthFrameDescription.Height, 96, 96, PixelFormats.Gray16, null);
+
+            this.depthRect = new Int32Rect(0, 0, depthFrameDescription.Width, depthFrameDescription.Height);
+            this.depthStride = (int)(depthFrameDescription.Width * depthFrameDescription.BytesPerPixel);
         }
 
         public override void Initialize(MainWindow mainwindow)
@@ -60,17 +81,19 @@ namespace LabLife.Editor
             base.Initialize(mainwindow);
 
             var p = new KinectPanelControl();
+            var q = new KinectPanelControl();
 
             base.AddContent(KinectButton, Dock.Top);
             KinectButton.Content = "Kinect Start";
             KinectButton.Click += KinectButton_Click;
 
-            base.AddContent(p, Dock.Bottom);
+
+            base.AddContent(p, Dock.Left);
             p.Image_Kinect.Source = bodyIndexColorImage;
+            base.AddContent(q, Dock.Left);
+            q.Image_Kinect.Source = depthImage;
 
-            
         }
-
 
 
         public void KinectButton_Click(object sender, RoutedEventArgs e)
@@ -166,14 +189,51 @@ namespace LabLife.Editor
                 // ビットマップにする
                 this.bodyIndexColorImage.WritePixels(bodyIndexColorRect, bodyIndexColorBuffer, bodyIndexColorStride, 0);
                 
-                
             }
+
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
         }
 
+
+        void DepthFrame_Arrived(object sender, DepthFrameArrivedEventArgs e)
+        {
+            using (DepthFrame depthFrame = e.FrameReference.AcquireFrame())
+            {
+
+                //フレームがなければ終了、あれば格納
+                if (depthFrame == null) return;
+
+
+                int[] depthBitdata = new int[depthBuffer.Length];
+                depthFrame.CopyFrameDataToArray(this.depthBuffer);
+
+                //取得範囲指定するときはコメントアウト解除
+                //var max = 3500;
+                //var min = 1000;
+
+                for (int i = 0; i < depthBuffer.Length; i++)
+                {
+                    //if (max > depthBuffer[i] &&
+                    //    min < depthBuffer[i])
+                    //{
+                        depthBuffer[i] = (ushort)(depthBuffer[i] * 65535 / 8000);
+
+                    //}
+                    //else
+                    //{
+                    //    depthBuffer[i] = ushort.MinValue;
+                    //}
+                    //depthBuffer[i] = (ushort)(depthBuffer[i] * 65535 / 8000);
+                }
+
+                this.depthImage.WritePixels(depthRect, depthBuffer, depthStride, 0);
+
+                
+            }
+        }
 
     }
 }
