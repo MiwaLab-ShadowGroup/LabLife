@@ -1,4 +1,5 @@
-﻿using LabLife.Editor;
+﻿using LabLife.Data;
+using LabLife.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,12 +41,19 @@ namespace LabLife
 
         private void InitPanelList()
         {
-            this.PanelList.Add(new CommandLinePanel());
-            this.PanelList.Add(new WindowListPanel());
-            this.PanelList.Add(new DiagnocticsPanel());
-            this.PanelList.Add(new ImageReceiverHostPanel());
-            this.PanelList.Add(new KinectPanel());
-
+            try
+            {
+                this.PanelList.Add(new LogPanel());
+                this.PanelList.Add(new CommandLinePanel());
+                this.PanelList.Add(new WindowListPanel());
+                this.PanelList.Add(new DiagnocticsPanel());
+                this.PanelList.Add(new ImageReceiverHostPanel());
+                this.PanelList.Add(new KinectPanel());
+            }
+            catch (Exception ex)
+            {
+                General.Log(this, ex.Message);
+            }
 
             this.PanelList.Add(new ProjectionPanel(1));
 
@@ -103,9 +111,9 @@ namespace LabLife
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            foreach(var p in this.PanelList)
+            foreach (var p in this.PanelList)
             {
-                p.Close(sender,new RoutedEventArgs());
+                p.Close(sender, new RoutedEventArgs());
             }
         }
 

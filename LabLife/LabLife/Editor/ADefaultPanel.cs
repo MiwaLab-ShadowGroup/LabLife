@@ -1,4 +1,5 @@
 ﻿using LabLife.Contorols;
+using LabLife.Data;
 using LabLife.Windows;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace LabLife.Editor
 
         public virtual void Initialize(MainWindow mainwindow)
         {
+            General.Log(this, "Initialize");
+
             DockPanel.SetDock(this.Button_Close, Dock.Right);
             DockPanel.SetDock(this.TextBlock_Header, Dock.Left);
             DockPanel.SetDock(this.LLCheckbox_IsClip, Dock.Right);
@@ -72,6 +75,7 @@ namespace LabLife.Editor
 
             this.m_MainWindow = mainwindow;
             this.Style = (Style)App.Current.Resources["Border_Default"];
+
         }
 
         private void ToMainWindow(object sender, RoutedEventArgs e)
