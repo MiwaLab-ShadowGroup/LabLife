@@ -86,6 +86,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Contorols\KinectPanelControl.xaml.cs">
+      <DependentUpon>KinectPanelControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contorols\LLCheckBox.cs" />
     <Compile Include="Contorols\SliderAndTextControl.xaml.cs">
       <DependentUpon>SliderAndTextControl.xaml</DependentUpon>
@@ -94,6 +97,7 @@
     <Compile Include="Editor\DiagnocticsPanel.cs" />
     <Compile Include="Editor\ImageReceiverHostPanel.cs" />
     <Compile Include="Editor\ImageReceiverPanel.cs" />
+    <Compile Include="Editor\KinectPanel.cs" />
     <Compile Include="Editor\ProjectionPanel.cs" />
     <Compile Include="Processer\Transporter.cs" />
     <Compile Include="Project\AProject.cs" />
@@ -101,6 +105,10 @@
     <Compile Include="Windows\FloatingWindow.xaml.cs">
       <DependentUpon>FloatingWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Contorols\KinectPanelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Contorols\SliderAndTextControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
