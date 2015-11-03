@@ -93,6 +93,7 @@
     <Compile Include="Contorols\SliderAndTextControl.xaml.cs">
       <DependentUpon>SliderAndTextControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editor\AImageResourcePanel.cs" />
     <Compile Include="Editor\CommandLinePanel.cs" />
     <Compile Include="Editor\DiagnocticsPanel.cs" />
     <Compile Include="Editor\ImageReceiverHostPanel.cs" />
@@ -121,7 +122,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Editor\DefaultPanel.cs" />
+    <Compile Include="Editor\ADefaultPanel.cs" />
     <Compile Include="Editor\WindowListPanel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

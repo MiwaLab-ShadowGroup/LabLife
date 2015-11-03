@@ -16,7 +16,7 @@ using OpenCvSharp.CPlusPlus;
 
 namespace LabLife.Editor
 {
-    public class ImageReceiverPanel : DefaultPanel
+    public class ImageReceiverPanel : ADefaultPanel
     {
         private int m_ImageReceiveID;
         private Image Image_Main = new Image();

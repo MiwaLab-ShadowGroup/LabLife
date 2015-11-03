@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace LabLife.Editor
 {
-    public class DiagnocticsPanel : DefaultPanel
+    public class DiagnocticsPanel : ADefaultPanel
     {
         public TreeView treeview = new TreeView();
         public ListBox ListBox_ProcessList = new ListBox();

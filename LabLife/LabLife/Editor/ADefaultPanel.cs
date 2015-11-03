@@ -11,7 +11,7 @@ using System.Windows.Media;
 
 namespace LabLife.Editor
 {
-    public abstract class DefaultPanel : Border
+    public abstract class ADefaultPanel : Border
     {
         private DockPanel DockPanel_Main = new DockPanel();
         private Border Border_Header = new Border();

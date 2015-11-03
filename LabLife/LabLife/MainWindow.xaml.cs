@@ -21,7 +21,7 @@ namespace LabLife
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<DefaultPanel> PanelList = new List<DefaultPanel>();
+        public List<ADefaultPanel> PanelList = new List<ADefaultPanel>();
         public MainWindow()
         {
             InitializeComponent();
@@ -55,12 +55,12 @@ namespace LabLife
             }
         }
 
-        public void AddPanel(DefaultPanel panel)
+        public void AddPanel(ADefaultPanel panel)
         {
             this.PanelList.Add(panel);
             this.InitMenu();
         }
-        public void RemovePanel(DefaultPanel panel)
+        public void RemovePanel(ADefaultPanel panel)
         {
             this.PanelList.Remove(panel);
             this.InitMenu();
@@ -81,12 +81,12 @@ namespace LabLife
         private void Item_Click(object sender, RoutedEventArgs e)
         {
             var menuitem = (MenuItem)sender;
-            DefaultPanel panel = this.PanelList.Find(i => i.TitleName == (string)menuitem.Header);
+            ADefaultPanel panel = this.PanelList.Find(i => i.TitleName == (string)menuitem.Header);
 
             this.DisplayPanel(panel);
         }
 
-        public void DisplayPanel(DefaultPanel panel)
+        public void DisplayPanel(ADefaultPanel panel)
         {
             if (Window.GetWindow(panel) == null)
             {

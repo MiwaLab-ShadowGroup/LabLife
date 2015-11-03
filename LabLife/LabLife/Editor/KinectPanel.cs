@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 
 namespace LabLife.Editor
 {
-    public class KinectPanel : DefaultPanel
+    public class KinectPanel : ADefaultPanel
     {
 
         LLCheckBox KinectButton = new LLCheckBox();
