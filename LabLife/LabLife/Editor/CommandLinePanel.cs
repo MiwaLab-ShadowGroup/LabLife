@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace LabLife.Editor
 {
-    public class CommandLinePanel : DefaultPanel
+    public class CommandLinePanel : ADefaultPanel
     {
         private static List<string> LineList = new List<string>();
 

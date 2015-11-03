@@ -16,7 +16,7 @@ using OpenCvSharp.CPlusPlus;
 
 namespace LabLife.Editor
 {
-    public class ImageReceiverPanel : DefaultPanel
+    public class ImageReceiverPanel : AImageResourcePanel
     {
         private int m_ImageReceiveID;
         private Image Image_Main = new Image();
@@ -62,7 +62,8 @@ namespace LabLife.Editor
             this.TextBlock_Header.Text = this.ToString();
             this.AddContent(this.TextBlock_Header, Dock.Top);
             this.AddContent(this.SliderAndTextControl_margin, Dock.Top);
-            this.AddContent(this.Image_Main, Dock.Top);
+            base.SetImageToGridChildren(this.Image_Main);
+            this.AddContent(base.Grid_Image, Dock.Top);
 
             this.SliderAndTextControl_margin.Slider_Main.Maximum = 200;
             this.SliderAndTextControl_margin.Slider_Main.Minimum = 0;
