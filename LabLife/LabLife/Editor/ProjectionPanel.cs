@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace LabLife.Editor
 {
-    class ProjectionPanel : ADefaultPanel
+    public class ProjectionPanel : ADefaultPanel
     {
         private int m_ProjectionPanelId;
         private Image Image_Main = new Image();

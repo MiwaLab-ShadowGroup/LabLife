@@ -66,11 +66,21 @@ namespace LabLife
             }
         }
 
-        public List<ADefaultPanel> GetPanels<T>()
+        public List<T> GetPanels<T>()
             where T : ADefaultPanel
         {
-            return this.PanelList.FindAll(p => p.GetType() == typeof(T));            
+            List<T> ListPanels = new List<T>();
+            foreach (var p in this.PanelList)
+            {
+                T item = p as T;
+                if (item != null)
+                {
+                    ListPanels.Add(item);
+                }
+            }
+            return ListPanels;
         }
+
         public ADefaultPanel GetPanel<T>()
             where T : ADefaultPanel
         {
