@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace LabLife.Editor
 {
@@ -28,23 +29,34 @@ namespace LabLife.Editor
                 ImageFrameArrived(this, e);
             }
         }
-        
+        private int m_DivNum = 0;
 
-        public Canvas Canvas_ImageCallib = new Canvas();
-        public Grid Grid_Image = new Grid();
+        public List<Canvas> Canvas_ImageCallib = new List<Canvas>();
+        public UniformGrid Grid_Image = new UniformGrid();
 
        
         public override void Initialize(MainWindow mainwindow)
         {
             base.Initialize(mainwindow);
-
-            this.Grid_Image.Children.Add(Canvas_ImageCallib);
         }
         
 
         public void SetImageToGridChildren(Image addImage)
         {
+            ++m_DivNum;
+
+            this.Grid_Image.Columns = this.m_DivNum;
+
             this.Grid_Image.Children.Add(addImage);
+
+            var item = new Canvas();
+
+            this.Canvas_ImageCallib.Add(item);
+
+            Grid.SetColumn(item, m_DivNum - 1);
+            Grid.SetColumn(addImage, m_DivNum - 1);
+
+
         }
     }
 }
