@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace LabLife.Editor
 {
-    public class ImageReceiverHostPanel : DefaultPanel
+    public class ImageReceiverHostPanel : ADefaultPanel
     {
         public List<ImageReceiverPanel> List_ImageReceiver = new List<ImageReceiverPanel>();
 

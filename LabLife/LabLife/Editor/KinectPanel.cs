@@ -14,10 +14,10 @@ using System.Windows.Media.Imaging;
 
 namespace LabLife.Editor
 {
-    public class KinectPanel : DefaultPanel
+    public class KinectPanel : ADefaultPanel
     {
 
-        Button KinectButton = new Button();
+        LLCheckBox KinectButton = new LLCheckBox();
         
         KinectSensor kinect;
 
@@ -42,6 +42,9 @@ namespace LabLife.Editor
         int depthImageWidth;
         int depthImageHeight;
         WriteableBitmap depthImage;
+
+        private int[] depthBitdata;
+
 
         public KinectPanel()
         {
@@ -83,7 +86,10 @@ namespace LabLife.Editor
             var p = new KinectPanelControl();
             var q = new KinectPanelControl();
 
-            base.AddContent(KinectButton, Dock.Top);
+            Border b = new Border();
+            b.Style = (Style)App.Current.Resources["Border_Default"];
+            b.Child = this.KinectButton;
+            base.AddContent(b, Dock.Top);
             KinectButton.Content = "Kinect Start";
             KinectButton.Click += KinectButton_Click;
 
@@ -95,40 +101,59 @@ namespace LabLife.Editor
 
         }
 
+        //close処理
+        public override void Close(object sender, RoutedEventArgs e)
+        {
+            this.KinectClose();
+            base.Close(sender, e);
+            
+        }
+        
 
         public void KinectButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.KinectButton.Content.ToString() == "Kinect Start")
+            if (this.kinect == null) this.kinect = KinectSensor.GetDefault();
+            if (!this.kinect.IsOpen)
             {
-                //kinect Start
-                try
-                {
-                    this.kinect.Open();
-                    this.KinectButton.Content = "Kinect Stop";
-                    if (this.kinect == null) this.kinect = KinectSensor.GetDefault();
-                }
-                catch
-                {
-                    Console.WriteLine("error:kinectstart");
-
-                }
+                this.KinectStart();
             }
-            else if (this.KinectButton.Content.ToString() == "Kinect Stop")
+            else
             {
-                //kinect Stop
-                try
-                {
-                    if (this.kinect != null) this.kinect.Close();
-                    this.KinectButton.Content = "Kinect Start";
-                }
-                catch
-                {
-                    Console.WriteLine("error:kinectstop");
 
-                }
-
+                this.KinectClose();
             }
 
+        }
+
+        private void KinectStart()
+        {
+            //kinect Start
+            try
+            {
+                this.kinect.Open();
+                this.KinectButton.Content = "Kinect Stop";
+                if (this.kinect == null) this.kinect = KinectSensor.GetDefault();
+            }
+            catch
+            {
+                Console.WriteLine("error:kinectstart");
+
+            }
+        }
+
+        private void KinectClose()
+        {
+            //kinect Stop
+            try
+            {
+                if (this.kinect != null) this.kinect.Close();
+                this.KinectButton.Content = "Kinect Start";
+            }
+            catch
+            {
+                Console.WriteLine("error:kinectstop");
+
+            }
         }
 
         void bodyIndexFrameReader_FrameArrived(object sender, BodyIndexFrameArrivedEventArgs e)
@@ -151,7 +176,7 @@ namespace LabLife.Editor
                 // ボディインデックスデータを取得する
                 bodyIndexFrame.CopyFrameDataToArray(bodyIndexBuffer);
 
-                bodyIndexFrame.Dispose();
+                //bodyIndexFrame.Dispose();
             }
         }
 
@@ -190,13 +215,11 @@ namespace LabLife.Editor
                 this.bodyIndexColorImage.WritePixels(bodyIndexColorRect, bodyIndexColorBuffer, bodyIndexColorStride, 0);
                 
             }
-
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
         }
-
 
         void DepthFrame_Arrived(object sender, DepthFrameArrivedEventArgs e)
         {
@@ -206,8 +229,10 @@ namespace LabLife.Editor
                 //フレームがなければ終了、あれば格納
                 if (depthFrame == null) return;
 
-
-                int[] depthBitdata = new int[depthBuffer.Length];
+                if (depthBitdata == null)
+                {
+                    depthBitdata = new int[depthBuffer.Length];
+                }
                 depthFrame.CopyFrameDataToArray(this.depthBuffer);
 
                 //取得範囲指定するときはコメントアウト解除

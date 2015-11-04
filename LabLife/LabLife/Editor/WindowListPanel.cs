@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace LabLife.Editor
 {
-    public class WindowListPanel : DefaultPanel
+    public class WindowListPanel : ADefaultPanel
     {
         public TreeView treeview = new TreeView();
         public WindowListPanel()

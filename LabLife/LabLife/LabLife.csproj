@@ -93,11 +93,14 @@
     <Compile Include="Contorols\SliderAndTextControl.xaml.cs">
       <DependentUpon>SliderAndTextControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\General.cs" />
+    <Compile Include="Editor\AImageResourcePanel.cs" />
     <Compile Include="Editor\CommandLinePanel.cs" />
     <Compile Include="Editor\DiagnocticsPanel.cs" />
     <Compile Include="Editor\ImageReceiverHostPanel.cs" />
     <Compile Include="Editor\ImageReceiverPanel.cs" />
     <Compile Include="Editor\KinectPanel.cs" />
+    <Compile Include="Editor\LogPanel.cs" />
     <Compile Include="Editor\ProjectionPanel.cs" />
     <Compile Include="Processer\Transporter.cs" />
     <Compile Include="Project\AProject.cs" />
@@ -121,7 +124,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Editor\DefaultPanel.cs" />
+    <Compile Include="Editor\ADefaultPanel.cs" />
     <Compile Include="Editor\WindowListPanel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

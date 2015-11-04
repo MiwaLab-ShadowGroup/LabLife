@@ -1,4 +1,5 @@
-﻿using LabLife.Editor;
+﻿using LabLife.Data;
+using LabLife.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace LabLife
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<DefaultPanel> PanelList = new List<DefaultPanel>();
+        public List<ADefaultPanel> PanelList = new List<ADefaultPanel>();
         public MainWindow()
         {
             InitializeComponent();
@@ -40,12 +41,19 @@ namespace LabLife
 
         private void InitPanelList()
         {
-            this.PanelList.Add(new CommandLinePanel());
-            this.PanelList.Add(new WindowListPanel());
-            this.PanelList.Add(new DiagnocticsPanel());
-            this.PanelList.Add(new ImageReceiverHostPanel());
-            this.PanelList.Add(new KinectPanel());
-
+            try
+            {
+                this.PanelList.Add(new LogPanel());
+                this.PanelList.Add(new CommandLinePanel());
+                this.PanelList.Add(new WindowListPanel());
+                this.PanelList.Add(new DiagnocticsPanel());
+                this.PanelList.Add(new ImageReceiverHostPanel());
+                this.PanelList.Add(new KinectPanel());
+            }
+            catch (Exception ex)
+            {
+                General.Log(this, ex.Message);
+            }
 
             this.PanelList.Add(new ProjectionPanel(1));
 
@@ -55,12 +63,12 @@ namespace LabLife
             }
         }
 
-        public void AddPanel(DefaultPanel panel)
+        public void AddPanel(ADefaultPanel panel)
         {
             this.PanelList.Add(panel);
             this.InitMenu();
         }
-        public void RemovePanel(DefaultPanel panel)
+        public void RemovePanel(ADefaultPanel panel)
         {
             this.PanelList.Remove(panel);
             this.InitMenu();
@@ -81,12 +89,12 @@ namespace LabLife
         private void Item_Click(object sender, RoutedEventArgs e)
         {
             var menuitem = (MenuItem)sender;
-            DefaultPanel panel = this.PanelList.Find(i => i.TitleName == (string)menuitem.Header);
+            ADefaultPanel panel = this.PanelList.Find(i => i.TitleName == (string)menuitem.Header);
 
             this.DisplayPanel(panel);
         }
 
-        public void DisplayPanel(DefaultPanel panel)
+        public void DisplayPanel(ADefaultPanel panel)
         {
             if (Window.GetWindow(panel) == null)
             {
@@ -103,9 +111,9 @@ namespace LabLife
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            foreach(var p in this.PanelList)
+            foreach (var p in this.PanelList)
             {
-                p.Close(sender,new RoutedEventArgs());
+                p.Close(sender, new RoutedEventArgs());
             }
         }
 

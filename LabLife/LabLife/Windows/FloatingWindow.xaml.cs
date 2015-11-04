@@ -40,7 +40,7 @@ namespace LabLife.Windows
             this.Topmost = this.LLCheckBox_IsTopMost.IsChecked;
         }
 
-        public void Add(DefaultPanel item)
+        public void Add(ADefaultPanel item)
         {
             this.DockPanel_Sub_Window_Main.Children.Add(item);
             this.TextBlock_Title.Text += " - " +item.TitleName;
