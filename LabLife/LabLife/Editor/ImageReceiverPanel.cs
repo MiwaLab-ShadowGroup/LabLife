@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using OpenCvSharp;
 using OpenCvSharp.CPlusPlus;
+using LabLife.Data;
 
 namespace LabLife.Editor
 {
@@ -30,8 +31,6 @@ namespace LabLife.Editor
         private WriteableBitmap m_WritableBitmap;
         private JpegBitmapDecoder jpegDec;
         private byte[] m_data;
-
-        OpenCvSharp.CPlusPlus.Mat mat;
 
         public int ImageReceiveID
         {
@@ -94,9 +93,9 @@ namespace LabLife.Editor
                 this.m_receivedMemory.Dispose();
                 this.m_receiver.BeginReceive(ReceiveCallBack, this.m_receiver);
             }
-            catch (SocketException ex)
+            catch (SocketException)
             {
-                Console.WriteLine(ex.Message);
+                General.Log(this,"close");
             }
             catch (Exception ex)
             {
@@ -120,7 +119,7 @@ namespace LabLife.Editor
                     }
                     this.bitmapsorce.CopyPixels(this.m_data, this.bitmapsorce.PixelWidth * this.bitmapsorce.Format.BitsPerPixel / 8, 0);
 
-                    this.mat = new Mat(this.bitmapsorce.PixelWidth, this.bitmapsorce.PixelHeight, MatType.CV_8UC3, this.m_data);
+                    OnImageFrameArrived(new ImageFrameArrivedEventArgs( new Mat[]{ new Mat(this.bitmapsorce.PixelWidth, this.bitmapsorce.PixelHeight, MatType.CV_8UC3, this.m_data)}));
                     
                     this.m_WritableBitmap.WritePixels(new Int32Rect(0, 0, this.m_WritableBitmap.PixelWidth, this.m_WritableBitmap.PixelHeight), this.m_data, this.bitmapsorce.PixelWidth * this.bitmapsorce.Format.BitsPerPixel / 8, 0);
                     this.bitmapsorce = null;
