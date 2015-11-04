@@ -1,4 +1,5 @@
 ﻿using LabLife.Contorols;
+using LabLife.Data;
 using Microsoft.Kinect;
 using OpenCvSharp.Extensions;
 using System;
@@ -14,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace LabLife.Editor
 {
-    public class KinectPanel : ADefaultPanel
+    public class KinectPanel : AImageResourcePanel
     {
 
         LLCheckBox KinectButton = new LLCheckBox();
@@ -45,6 +46,17 @@ namespace LabLife.Editor
 
         private int[] depthBitdata;
 
+        //colorimage関連
+        ColorImageFormat colorImageFormat;
+        ColorFrameReader colorFrameReader;
+        FrameDescription colorFrameDescription;
+        WriteableBitmap colorimage;
+        WriteableBitmap calibImg;
+        Int32Rect bitmapRect;
+        int bitmapStride;
+        byte[] colors;
+        int imageWidth;
+        int imageHeigt;
 
         public KinectPanel()
         {
@@ -77,6 +89,24 @@ namespace LabLife.Editor
 
             this.depthRect = new Int32Rect(0, 0, depthFrameDescription.Width, depthFrameDescription.Height);
             this.depthStride = (int)(depthFrameDescription.Width * depthFrameDescription.BytesPerPixel);
+
+            //colorimage
+            this.colorImageFormat = ColorImageFormat.Bgra;
+            this.colorFrameDescription = this.kinect.ColorFrameSource.CreateFrameDescription(this.colorImageFormat);
+            this.colorFrameReader = this.kinect.ColorFrameSource.OpenReader();
+            this.colorFrameReader.FrameArrived += ColorFrame_Arrived;
+            this.colors = new byte[this.colorFrameDescription.Width
+                                           * this.colorFrameDescription.Height
+                                           * this.colorFrameDescription.BytesPerPixel];
+            this.imageWidth = this.colorFrameDescription.Width;
+            this.imageHeigt = this.colorFrameDescription.Height;
+            this.colorimage = new WriteableBitmap(this.colorFrameDescription.Width, this.colorFrameDescription.Height, 96, 96, PixelFormats.Bgr32, null);
+            this.calibImg = new WriteableBitmap(this.colorFrameDescription.Width, this.colorFrameDescription.Height, 96, 96, PixelFormats.Bgr32, null);
+            this.bitmapRect = new Int32Rect(0, 0, this.colorFrameDescription.Width, this.colorFrameDescription.Height);
+            this.bitmapStride = this.colorFrameDescription.Width * (int)this.colorFrameDescription.BytesPerPixel;
+
+
+
         }
 
         public override void Initialize(MainWindow mainwindow)
@@ -85,6 +115,7 @@ namespace LabLife.Editor
 
             var p = new KinectPanelControl();
             var q = new KinectPanelControl();
+            var r = new KinectPanelControl();
 
             Border b = new Border();
             b.Style = (Style)App.Current.Resources["Border_Default"];
@@ -98,7 +129,8 @@ namespace LabLife.Editor
             p.Image_Kinect.Source = bodyIndexColorImage;
             base.AddContent(q, Dock.Left);
             q.Image_Kinect.Source = depthImage;
-
+            base.AddContent(r, Dock.Right);
+            r.Image_Kinect.Source = colorimage;
         }
 
         //close処理
@@ -108,8 +140,9 @@ namespace LabLife.Editor
             base.Close(sender, e);
             
         }
-        
 
+        //Kinect
+        #region
         public void KinectButton_Click(object sender, RoutedEventArgs e)
         {
             if (this.kinect == null) this.kinect = KinectSensor.GetDefault();
@@ -155,7 +188,10 @@ namespace LabLife.Editor
 
             }
         }
+        #endregion
 
+        //bodyindex
+        #region
         void bodyIndexFrameReader_FrameArrived(object sender, BodyIndexFrameArrivedEventArgs e)
         {
 
@@ -220,6 +256,7 @@ namespace LabLife.Editor
                 Console.WriteLine(ex);
             }
         }
+        #endregion
 
         void DepthFrame_Arrived(object sender, DepthFrameArrivedEventArgs e)
         {
@@ -251,13 +288,36 @@ namespace LabLife.Editor
                     //{
                     //    depthBuffer[i] = ushort.MinValue;
                     //}
-                    //depthBuffer[i] = (ushort)(depthBuffer[i] * 65535 / 8000);
+                    
                 }
 
                 this.depthImage.WritePixels(depthRect, depthBuffer, depthStride, 0);
 
-                
             }
+        }
+
+        //カラーイメージ取得
+        void ColorFrame_Arrived(object sender, ColorFrameArrivedEventArgs e)
+        {
+            try
+            {
+                ColorFrame colorFrame = e.FrameReference.AcquireFrame();
+                //フレームがなければ終了、あれば格納
+                if (colorFrame == null) return;
+                colorFrame.CopyConvertedFrameDataToArray(this.colors, this.colorImageFormat);
+                //表示
+                this.colorimage.WritePixels(this.bitmapRect, this.colors, this.bitmapStride, 0);
+                //データ送信
+                
+
+                //破棄
+                colorFrame.Dispose();
+            }
+            catch
+            {
+                General.Log(this, "ColorImageError");
+            }
+
         }
 
     }

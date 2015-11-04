@@ -8,21 +8,32 @@ using System.Windows.Controls;
 
 namespace LabLife.Editor
 {
+    public class ImageFrameArrivedEventArgs : EventArgs
+    {
+        public ImageFrameArrivedEventArgs(Mat[] mat)
+        {
+            this.Image = mat;
+        }
+        public Mat[] Image;
+    }
+
     public abstract class AImageResourcePanel : ADefaultPanel
     {
-        private Mat m_ImageResource;
+        public delegate void ImageFrameArrivedEventHandler(object Sender, EventArgs e);
+        public event ImageFrameArrivedEventHandler ImageFrameArrived;
+        protected virtual void OnImageFrameArrived(ImageFrameArrivedEventArgs e)
+        {
+            if (ImageFrameArrived != null)
+            {
+                ImageFrameArrived(this, e);
+            }
+        }
+        
 
         public Canvas Canvas_ImageCallib = new Canvas();
         public Grid Grid_Image = new Grid();
 
-        public Mat ImageResource
-        {
-            get
-            {
-                return this.m_ImageResource;
-            }
-        }
-
+       
         public override void Initialize(MainWindow mainwindow)
         {
             base.Initialize(mainwindow);
