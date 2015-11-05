@@ -31,7 +31,7 @@ namespace LabLife.Editor
         private WriteableBitmap m_WritableBitmap;
         private JpegBitmapDecoder jpegDec;
         private byte[] m_data;
-
+        
         public int ImageReceiveID
         {
             get

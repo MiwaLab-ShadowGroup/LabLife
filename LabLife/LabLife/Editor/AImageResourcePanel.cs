@@ -20,7 +20,7 @@ namespace LabLife.Editor
 
     public abstract class AImageResourcePanel : ADefaultPanel
     {
-        public delegate void ImageFrameArrivedEventHandler(object Sender, EventArgs e);
+        public delegate void ImageFrameArrivedEventHandler(object Sender, ImageFrameArrivedEventArgs e);
         public event ImageFrameArrivedEventHandler ImageFrameArrived;
         protected virtual void OnImageFrameArrived(ImageFrameArrivedEventArgs e)
         {

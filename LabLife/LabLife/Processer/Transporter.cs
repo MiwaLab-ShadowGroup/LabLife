@@ -1,4 +1,5 @@
-﻿using LabLife.Editor;
+﻿using LabLife.Data;
+using LabLife.Editor;
 using OpenCvSharp.CPlusPlus;
 using System;
 using System.Collections.Generic;
@@ -10,29 +11,31 @@ namespace LabLife.Processer
 {
     public class Transporter : IDisposable
     {
-        private AImageResourcePanel srcPanel;
-        private ProjectionPanel dstPanel;
-        public Transporter(AImageResourcePanel srcPanel, ProjectionPanel dstPanel)
+        private AImageResourcePanel m_srcPanel;
+        private ProjectionPanel m_dstPanel;
+        private int m_imageIndex;
+        public Transporter(AImageResourcePanel srcPanel, int ImageIndex, ProjectionPanel dstPanel)
         {
-            this.srcPanel = srcPanel;
-            this.dstPanel = dstPanel;
-
-            this.srcPanel.ImageFrameArrived += SrcPanel_ImageFrameArrived;
+            this.m_srcPanel = srcPanel;
+            this.m_dstPanel = dstPanel;
+            this.m_imageIndex = ImageIndex;
+            this.m_srcPanel.ImageFrameArrived += M_srcPanel_ImageFrameArrived;
         }
 
-        private void SrcPanel_ImageFrameArrived(object Sender, EventArgs e)
+        private void M_srcPanel_ImageFrameArrived(object Sender, ImageFrameArrivedEventArgs e)
         {
-            
+            General.Log(this, e.Image[this.m_imageIndex].ToString());
+
         }
         
         public void Dispose()
         {
-            this.srcPanel.ImageFrameArrived -= SrcPanel_ImageFrameArrived;
+            this.m_srcPanel.ImageFrameArrived -= M_srcPanel_ImageFrameArrived;
         }
 
         public override string ToString()
         {
-            return "{ " + srcPanel.TitleName + " }  { " + dstPanel.TitleName + " }";
+            return "{ " + this.m_imageIndex +" of " + m_srcPanel.TitleName + " }  { " + m_dstPanel.TitleName + " }";
         }
     }
 }
