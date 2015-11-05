@@ -34,28 +34,28 @@ namespace LabLife.Editor
         public List<Canvas> Canvas_ImageCallib = new List<Canvas>();
         public UniformGrid Grid_Image = new UniformGrid();
 
-       
+        public int ImageNum
+        {
+            get
+            {
+                return this.m_DivNum;
+            }
+        }
+
         public override void Initialize(MainWindow mainwindow)
         {
             base.Initialize(mainwindow);
         }
-        
 
         public void SetImageToGridChildren(Image addImage)
         {
             ++m_DivNum;
-
             this.Grid_Image.Columns = this.m_DivNum;
-
             this.Grid_Image.Children.Add(addImage);
-
             var item = new Canvas();
-
             this.Canvas_ImageCallib.Add(item);
-
             Grid.SetColumn(item, m_DivNum - 1);
             Grid.SetColumn(addImage, m_DivNum - 1);
-
         }
     }
 }
