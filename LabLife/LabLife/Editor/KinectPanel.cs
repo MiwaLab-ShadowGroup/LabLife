@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace LabLife.Editor
 {
@@ -137,12 +138,15 @@ namespace LabLife.Editor
             base.AddContent(Bonestatus, Dock.Top);
 
             base.SetImageToGridChildren(p);
+
             p.Source = bodyIndexColorImage;
             base.SetImageToGridChildren(q);
             q.Source = depthImage;
             base.SetImageToGridChildren(r);
             r.Source = colorimage;
             this.AddContent(base.Grid_Image, Dock.Top);
+
+            this.AddContent()
         }
 
         //close処理
@@ -362,6 +366,19 @@ namespace LabLife.Editor
                         //kinect.CoordinateMapper.MapCameraPointsToColorSpace(joint.Position, Colorpoint);
                         
                     }
+
+                    Ellipse ellipse = new Ellipse
+                    {
+                        Fill = System.Windows.Media.Brushes.Red,
+                        Width = 15,
+                        Height = 15
+                    };
+
+                    Canvas.SetLeft(ellipse, body.Joints[JointType.SpineBase].Position.X);
+                    Canvas.SetTop(ellipse, body.Joints[JointType.SpineBase].Position.Y);
+
+                    canvas1.Children.Add(ellipse);
+
                 }
                 //破棄
                 bodyFrame.Dispose();
