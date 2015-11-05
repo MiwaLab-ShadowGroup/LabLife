@@ -56,7 +56,6 @@ namespace LabLife.Editor
             Grid.SetColumn(item, m_DivNum - 1);
             Grid.SetColumn(addImage, m_DivNum - 1);
 
-
         }
     }
 }
