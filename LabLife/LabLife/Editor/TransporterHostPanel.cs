@@ -35,23 +35,24 @@ namespace LabLife.Editor
 
             UniformGrid grid = new UniformGrid();
             grid.Columns = 3;
-            Border b1 = new Border();
-            b1.Style = (Style)App.Current.Resources["Border_Default"];
-            b1.Child = this.ListBox_ResourcePanels;
-            grid.Children.Add(b1);
-            Grid.SetColumn(b1, 0);
 
-            Border b2 = new Border();
-            b2.Style = (Style)App.Current.Resources["Border_Default"];
-            b2.Child = this.ListBox_Transporters;
-            grid.Children.Add(b2);
-            Grid.SetColumn(b2, 1);
+            GroupBox gb1 = new GroupBox();
+            gb1.Header = "Resource Panels";
+            gb1.Content = this.ListBox_ResourcePanels;
+            grid.Children.Add(gb1);
+            Grid.SetColumn(gb1, 0);
+            
+            GroupBox gb2 = new GroupBox();
+            gb2.Header = "TransPorter";
+            gb2.Content= this.ListBox_Transporters;
+            grid.Children.Add(gb2);
+            Grid.SetColumn(gb2, 1);
 
-            Border b3 = new Border();
-            b3.Style = (Style)App.Current.Resources["Border_Default"];
-            b3.Child = this.ListBox_ProjectionPanel;
-            grid.Children.Add(b3);
-            Grid.SetColumn(b3, 2);
+            GroupBox gb3 = new GroupBox();
+            gb3.Header = "Projection Panels";
+            gb3.Content = this.ListBox_ProjectionPanel;
+            grid.Children.Add(gb3);
+            Grid.SetColumn(gb3, 2);
 
             StackPanel StackPanel_Control = new StackPanel();
             Button Button_Create = new Button();
@@ -83,11 +84,20 @@ namespace LabLife.Editor
 
         private void Button_Delete_Click(object sender, RoutedEventArgs e)
         {
-
+            this.List_Transporter.RemoveAt(this.ListBox_Transporters.SelectedIndex);
         }
 
         private void Button_Create_Click(object sender, RoutedEventArgs e)
         {
+            if (this.ListBox_ResourcePanels.SelectedIndex < 0)
+            {
+                return;
+            }
+            if (this.ListBox_ProjectionPanel.SelectedIndex < 0)
+            {
+                return;
+            }
+
             var item = new Transporter(
                     base.m_MainWindow.GetPanels<AImageResourcePanel>()[this.ListBox_ResourcePanels.SelectedIndex],
                     base.m_MainWindow.GetPanels<ProjectionPanel>()[this.ListBox_ProjectionPanel.SelectedIndex]

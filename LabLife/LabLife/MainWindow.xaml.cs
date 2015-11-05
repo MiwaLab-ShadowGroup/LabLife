@@ -50,9 +50,10 @@ namespace LabLife
                 this.PanelList.Add(new ImageReceiverHostPanel());
                 this.PanelList.Add(new TransporterHostPanel());
 
-#if WIN64
-                this.PanelList.Add(new KinectPanel());
-#endif
+                if (System.Environment.Is64BitOperatingSystem)
+                {
+                    this.PanelList.Add(new KinectPanel());
+                }
                 this.PanelList.Add(new ProjectionPanel(1));
             }
             catch (Exception ex)
