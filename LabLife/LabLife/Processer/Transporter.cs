@@ -19,23 +19,27 @@ namespace LabLife.Processer
             this.m_srcPanel = srcPanel;
             this.m_dstPanel = dstPanel;
             this.m_imageIndex = ImageIndex;
+            this.m_dstPanel.AddSenderList(this);
             this.m_srcPanel.ImageFrameArrived += M_srcPanel_ImageFrameArrived;
         }
 
         private void M_srcPanel_ImageFrameArrived(object Sender, ImageFrameArrivedEventArgs e)
         {
-            General.Log(this, e.Image[this.m_imageIndex].ToString());
+            this.m_dstPanel.InitImage(this, e.Image[this.m_imageIndex]);
 
+            this.m_dstPanel.m_ProjectionImageMatrix += e.Image[this.m_imageIndex];
+            this.m_dstPanel.UpdateImage(this);
         }
-        
+
         public void Dispose()
         {
+            this.m_dstPanel.RemoveSenderList(this);
             this.m_srcPanel.ImageFrameArrived -= M_srcPanel_ImageFrameArrived;
         }
 
         public override string ToString()
         {
-            return "{ " + this.m_imageIndex +" of " + m_srcPanel.TitleName + " }  { " + m_dstPanel.TitleName + " }";
+            return "{ " + this.m_imageIndex + " of " + m_srcPanel.TitleName + " }  { " + m_dstPanel.TitleName + " }";
         }
     }
 }

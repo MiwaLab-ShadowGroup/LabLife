@@ -95,6 +95,7 @@ namespace LabLife.Editor
             {
                 return;
             }
+            this.List_Transporter[this.ListBox_Transporters.SelectedIndex].Dispose();
             this.List_Transporter.RemoveAt(this.ListBox_Transporters.SelectedIndex);
             this.ListBox_Transporters.Items.RemoveAt(this.ListBox_Transporters.SelectedIndex);
         }
