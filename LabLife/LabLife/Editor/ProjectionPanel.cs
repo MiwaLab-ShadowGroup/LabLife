@@ -1,5 +1,5 @@
 ﻿//ガベージコレクタを強制呼び出し
-//#define USE_GC
+#define USE_GC
 
 using LabLife.Contorols;
 using OpenCvSharp;
@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using OpenCvSharp.CPlusPlus;
 using LabLife.Processer;
+using LabLife.Windows;
 
 namespace LabLife.Editor
 {
@@ -21,10 +22,14 @@ namespace LabLife.Editor
     {
         private int m_ProjectionPanelId;
         private Image Image_Main = new Image();
+        public Grid Grid_Image = new Grid();
         private TextBlock TextBlock_Header = new TextBlock();
+        private LLCheckBox LLCheckBox_ProjectorWindow = new LLCheckBox();
         private SliderAndTextControl SliderAndTextControl_margin = new SliderAndTextControl();
 
         private List<Transporter> m_SenderList = new List<Transporter>();
+
+        public ProjectorWindow m_ProjectorWindow = new ProjectorWindow();
 
         public int ImageWidth
         {
@@ -61,7 +66,13 @@ namespace LabLife.Editor
             this.TextBlock_Header.Text = this.ToString();
             this.AddContent(this.TextBlock_Header, Dock.Top);
             this.AddContent(this.SliderAndTextControl_margin, Dock.Top);
-            this.AddContent(this.Image_Main, Dock.Top);
+            this.AddContent(this.LLCheckBox_ProjectorWindow, Dock.Top);
+            this.AddContent(this.Grid_Image, Dock.Top);
+
+            this.Grid_Image.Children.Add(Image_Main);
+
+            this.LLCheckBox_ProjectorWindow.Content = "Window";
+            this.LLCheckBox_ProjectorWindow.Click += LLCheckBox_ProjectorWindow_Click;
 
             this.SliderAndTextControl_margin.Slider_Main.Maximum = 200;
             this.SliderAndTextControl_margin.Slider_Main.Minimum = 0;
@@ -69,8 +80,20 @@ namespace LabLife.Editor
             this.SliderAndTextControl_margin.TextBlock_Title.Text = "Margin";
             this.m_data = new byte[256 * 256 * 3];
             this.m_ProjectionImageMatrix = new OpenCvSharp.CPlusPlus.Mat(256, 256, OpenCvSharp.CPlusPlus.MatType.CV_8UC3, new Scalar(0, 0, 0));
-            this.m_WritableBitmap = new WriteableBitmap(256, 256, 96, 96, PixelFormats.Bgr24, null);
             this.Image_Main.Source = this.m_WritableBitmap;
+        }
+
+        private void LLCheckBox_ProjectorWindow_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.LLCheckBox_ProjectorWindow.IsChecked)
+            {
+                this.m_ProjectorWindow.Image_Project.Source = this.m_WritableBitmap;
+                this.m_ProjectorWindow.Show();
+            }
+            else
+            {
+                this.m_ProjectorWindow.Hide();
+            }
         }
 
         private void Slider_Main_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -93,7 +116,15 @@ namespace LabLife.Editor
             {
                 return;
             }
-            this.m_WritableBitmap.WritePixels(new Int32Rect(0, 0, 256, 256), m_ProjectionImageMatrix.Data, 256 * 256 * 3, 256 * 3);
+            if (this.m_WritableBitmap == null)
+            {
+                this.m_WritableBitmap = new WriteableBitmap(m_ProjectionImageMatrix.Width, m_ProjectionImageMatrix.Height, 96, 96, PixelFormats.Bgr24, null);
+                this.Image_Main.Source = this.m_WritableBitmap;
+                this.m_ProjectorWindow.Image_Project.Source = this.m_WritableBitmap;
+                this.Grid_Image.Width = m_ProjectionImageMatrix.Width;
+                this.Grid_Image.Height = m_ProjectionImageMatrix.Height;
+            }
+            this.m_WritableBitmap.WritePixels(new Int32Rect(0, 0, m_ProjectionImageMatrix.Width, m_ProjectionImageMatrix.Height), m_ProjectionImageMatrix.Data, m_ProjectionImageMatrix.Width * m_ProjectionImageMatrix.Height * m_ProjectionImageMatrix.Type().Channels, m_ProjectionImageMatrix.Width * m_ProjectionImageMatrix.Type().Channels);
             this.m_ProjectionImageMatrix.Dispose();
 #if USE_GC
             GC.Collect();
@@ -111,6 +142,7 @@ namespace LabLife.Editor
             }
 
             this.m_ProjectionImageMatrix = mat.Clone();
+            this.m_ProjectionImageMatrix.SetTo(black);
         }
         Scalar black = new Scalar(0, 0, 0);
 
@@ -126,6 +158,10 @@ namespace LabLife.Editor
         public override void Close(object sender, RoutedEventArgs e)
         {
             base.Close(sender, e);
+            if (this.m_ProjectorWindow != null)
+            {
+                this.m_ProjectorWindow.Close();
+            }
             this.m_ProjectionImageMatrix.Dispose();
         }
         public override string ToString()

@@ -126,7 +126,7 @@ namespace LabLife.Editor
 
                     //イベント発生・送信
                     this.bitmapsorce.CopyPixels(this.m_data, this.bitmapsorce.PixelWidth * this.bitmapsorce.Format.BitsPerPixel / 8, 0);
-                    this.m_mat = new Mat(this.bitmapsorce.PixelWidth, this.bitmapsorce.PixelHeight, MatType.CV_8UC3, this.m_data);
+                    this.m_mat = new Mat(this.bitmapsorce.PixelHeight, this.bitmapsorce.PixelWidth, MatType.CV_8UC3, this.m_data);
                     var e = new ImageFrameArrivedEventArgs(new Mat[] { this.m_mat });
                     OnImageFrameArrived(e);
 

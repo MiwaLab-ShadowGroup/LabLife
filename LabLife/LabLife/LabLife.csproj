@@ -109,6 +109,9 @@
     <Compile Include="Windows\FloatingWindow.xaml.cs">
       <DependentUpon>FloatingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ProjectorWindow.xaml.cs">
+      <DependentUpon>ProjectorWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Contorols\KinectPanelControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +135,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\FloatingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProjectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
