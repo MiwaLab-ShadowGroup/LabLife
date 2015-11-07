@@ -19,7 +19,9 @@ namespace LabLife.Editor
     {
 
         LLCheckBox KinectButton = new LLCheckBox();
-        
+        TextBlock Bonestatus = new TextBlock();
+        Canvas canvas1 = new Canvas();
+
         KinectSensor kinect;
 
         //bodyindex関連
@@ -57,6 +59,11 @@ namespace LabLife.Editor
         byte[] colors;
         int imageWidth;
         int imageHeigt;
+
+        //骨格情報
+        BodyFrameReader bodyFrameReader;
+        Body[] bodies;
+        int NumberofPlayer;
 
         public KinectPanel()
         {
@@ -105,7 +112,10 @@ namespace LabLife.Editor
             this.bitmapRect = new Int32Rect(0, 0, this.colorFrameDescription.Width, this.colorFrameDescription.Height);
             this.bitmapStride = this.colorFrameDescription.Width * (int)this.colorFrameDescription.BytesPerPixel;
 
-
+            //bone
+            this.bodyFrameReader = this.kinect.BodyFrameSource.OpenReader();
+            this.bodyFrameReader.FrameArrived += BodyFrame_Arrived;
+            this.bodies = new Body[this.kinect.BodyFrameSource.BodyCount]; //bodycountに骨格情報の数
 
         }
 
@@ -113,9 +123,9 @@ namespace LabLife.Editor
         {
             base.Initialize(mainwindow);
 
-            var p = new KinectPanelControl();
-            var q = new KinectPanelControl();
-            var r = new KinectPanelControl();
+            var p = new System.Windows.Controls.Image();
+            var q = new System.Windows.Controls.Image();
+            var r = new System.Windows.Controls.Image();
 
             Border b = new Border();
             b.Style = (Style)App.Current.Resources["Border_Default"];
@@ -124,13 +134,15 @@ namespace LabLife.Editor
             KinectButton.Content = "Kinect Start";
             KinectButton.Click += KinectButton_Click;
 
+            base.AddContent(Bonestatus, Dock.Top);
 
-            base.AddContent(p, Dock.Left);
-            p.Image_Kinect.Source = bodyIndexColorImage;
-            base.AddContent(q, Dock.Left);
-            q.Image_Kinect.Source = depthImage;
-            base.AddContent(r, Dock.Right);
-            r.Image_Kinect.Source = colorimage;
+            base.SetImageToGridChildren(p);
+            p.Source = bodyIndexColorImage;
+            base.SetImageToGridChildren(q);
+            q.Source = depthImage;
+            base.SetImageToGridChildren(r);
+            r.Source = colorimage;
+            this.AddContent(base.Grid_Image, Dock.Top);
         }
 
         //close処理
@@ -258,6 +270,8 @@ namespace LabLife.Editor
         }
         #endregion
 
+        //Depth
+        #region
         void DepthFrame_Arrived(object sender, DepthFrameArrivedEventArgs e)
         {
             using (DepthFrame depthFrame = e.FrameReference.AcquireFrame())
@@ -295,8 +309,10 @@ namespace LabLife.Editor
 
             }
         }
+        #endregion
 
-        //カラーイメージ取得
+        //ColorImage
+        #region
         void ColorFrame_Arrived(object sender, ColorFrameArrivedEventArgs e)
         {
             try
@@ -307,7 +323,6 @@ namespace LabLife.Editor
                 colorFrame.CopyConvertedFrameDataToArray(this.colors, this.colorImageFormat);
                 //表示
                 this.colorimage.WritePixels(this.bitmapRect, this.colors, this.bitmapStride, 0);
-                //データ送信
                 
 
                 //破棄
@@ -319,6 +334,45 @@ namespace LabLife.Editor
             }
 
         }
+        #endregion
+
+        //Bone
+        void BodyFrame_Arrived(object sender, BodyFrameArrivedEventArgs e)
+        {
+            try
+            {
+                // キャンバスをクリアする
+                canvas1.Children.Clear();
+
+                BodyFrame bodyFrame = e.FrameReference.AcquireFrame();
+                if (bodyFrame == null) return;
+                bodyFrame.GetAndRefreshBodyData(this.bodies);
+                
+
+                foreach (var body in bodies.Where(b => b.IsTracked))
+                {
+                    foreach (Joint joint in body.Joints.Values)
+                    {
+                        
+                        Bonestatus.Text = "X=" + body.Joints[JointType.SpineBase].Position.X + "Y=" + body.Joints[JointType.SpineBase].Position.Y + "Z=" + body.Joints[JointType.SpineBase].Position.Z;
+
+                        //CameraSpacePoint jointPosition = joint.Position;
+
+                        //ColorSpacePoint Colorpoint = new ColorSpacePoint();
+                        //kinect.CoordinateMapper.MapCameraPointsToColorSpace(joint.Position, Colorpoint);
+                        
+                    }
+                }
+                //破棄
+                bodyFrame.Dispose();
+            }
+            catch
+            {
+                General.Log(this, "BoneError");
+            }
+
+        }
+
 
     }
 }
