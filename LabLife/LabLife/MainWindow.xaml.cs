@@ -55,6 +55,7 @@ namespace LabLife
                     //this.PanelList.Add(new KinectPanel());
                 }
                 this.PanelList.Add(new ProjectionPanel(1));
+                this.PanelList.Add(new ProjectionPanel(2));
             }
             catch (Exception ex)
             {

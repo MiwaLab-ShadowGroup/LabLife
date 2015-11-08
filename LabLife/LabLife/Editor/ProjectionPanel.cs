@@ -130,6 +130,24 @@ namespace LabLife.Editor
             GC.Collect();
 #endif
         }
+
+        public void UpdateImageByThumb()
+        {
+            if (this.m_WritableBitmap == null)
+            {
+                this.m_WritableBitmap = new WriteableBitmap(m_ProjectionImageMatrix.Width, m_ProjectionImageMatrix.Height, 96, 96, PixelFormats.Bgr24, null);
+                this.Image_Main.Source = this.m_WritableBitmap;
+                this.m_ProjectorWindow.Image_Project.Source = this.m_WritableBitmap;
+                this.Grid_Image.Width = m_ProjectionImageMatrix.Width;
+                this.Grid_Image.Height = m_ProjectionImageMatrix.Height;
+            }
+            this.m_WritableBitmap.WritePixels(new Int32Rect(0, 0, m_ProjectionImageMatrix.Width, m_ProjectionImageMatrix.Height), m_ProjectionImageMatrix.Data, m_ProjectionImageMatrix.Width * m_ProjectionImageMatrix.Height * m_ProjectionImageMatrix.Type().Channels, m_ProjectionImageMatrix.Width * m_ProjectionImageMatrix.Type().Channels);
+            this.m_ProjectionImageMatrix.Dispose();
+#if USE_GC
+            GC.Collect();
+#endif
+        }
+
         public void InitImage(Transporter Sender, Mat mat)
         {
             if (m_SenderList == null)
@@ -145,6 +163,12 @@ namespace LabLife.Editor
             this.m_ProjectionImageMatrix.SetTo(black);
         }
         Scalar black = new Scalar(0, 0, 0);
+
+        public void InitImageByThumb(Mat mat)
+        {
+            this.m_ProjectionImageMatrix = mat.Clone();
+            this.m_ProjectionImageMatrix.SetTo(black);
+        }
 
         public void AddSenderList(Transporter Sender)
         {
