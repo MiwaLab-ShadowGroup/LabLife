@@ -1,4 +1,6 @@
-﻿using LabLife.Processer;
+﻿using LabLife.Contorols;
+using LabLife.Processer;
+using OpenCvSharp;
 using OpenCvSharp.CPlusPlus;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,7 +36,10 @@ namespace LabLife.Editor
         private byte[] data;
 
         VideoWriter vw;
-        
+
+        List<AImageResourcePanel> resourcePanels;
+        private SliderAndTextControl SliderTexBox;
+        private int saveImageIndex;
 
         public RecoderPanel()
         {
@@ -50,7 +56,7 @@ namespace LabLife.Editor
             Border b1 = new Border();
             b1.Style = (Style)App.Current.Resources["Border_Default"];
             b1.Child = this.ListBox_ResourcePanels;
-
+            this.ListBox_ResourcePanels.SelectionChanged += ListBox_ResourcePanels_SelectionChanged;
             //UniformGrid SaveGrid = new UniformGrid();
             //SaveGrid.Rows = 2;
             StackPanel savestack = new StackPanel();
@@ -59,12 +65,16 @@ namespace LabLife.Editor
             Button Button_Save = new Button();
             Button_Save.Click += Button_Save_Click;
             Button_Save.Content = "保存";
-            
+            SliderTexBox = new SliderAndTextControl();
+            savestack.Children.Add(SliderTexBox);
+            SliderTexBox.TextBlock_Title.Text = "Image Index : ";
+            SliderTexBox.Slider_Main.ValueChanged += Slider_Main_ValueChanged;
+
             savestack.Children.Add(textblock_save);
             savestack.Children.Add(Button_Save);
             grid.Children.Add(savestack);
             grid.Children.Add(b1);
-            
+
             Grid.SetColumn(b1, 0);
 
             Border b2 = new Border();
@@ -110,25 +120,85 @@ namespace LabLife.Editor
 
             //stackpanel.Children.Add(Button_Add);
             stackpanel.Children.Add(Button_Update);
+
             stackpanel.Children.Add(Button_Delete);
             base.AddContent(stackpanel, Dock.Top);
             base.AddContent(grid, Dock.Top);
 
 
+
             this.UpdateLists();
+        }
+
+        private void Slider_Main_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.SliderTexBox.Slider_Main.Value = ((int)(this.SliderTexBox.Slider_Main.Value));
+        }
+
+        private void ListBox_ResourcePanels_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.ListBox_ResourcePanels.SelectedIndex < 0)
+            {
+                return;
+            }
+
+            this.SliderTexBox.Slider_Main.Maximum = resourcePanels[this.ListBox_ResourcePanels.SelectedIndex].ImageNum - 1;
+            this.SliderTexBox.Slider_Main.Minimum = 0;
+            this.SliderTexBox.Slider_Main.Value = 0;
         }
 
         private void Button_Load_Click(object sender, RoutedEventArgs e)
         {
-            
+            Task task = new Task(new Action(this.PlayVideo));
+            task.Start();
+
+        }
+
+        private void PlayVideo()
+        {
+
+            OpenCvSharp.CPlusPlus.VideoCapture vc = new VideoCapture("video.avi");
+            var mat = new Mat(424, 512, MatType.CV_8UC4);
+            while (true)
+            {
+                try
+                {
+                    vc.Read(mat);
+                    Cv2.ImShow("mizuno", mat);
+                    OnImageFrameArrived(new ImageFrameArrivedEventArgs(new Mat[] { mat }));
+                    Cv2.WaitKey((int)(1000 / vc.Fps));
+                }
+                catch
+                {
+                    Console.WriteLine("終了");
+                    Cv2.DestroyAllWindows();
+                    break;
+                }
+            }
         }
 
         private void Button_Save_Click(object sender, RoutedEventArgs e)
         {
+
+            CvSize sz = new CvSize(512, 424);
+            string strRECName = "video.avi";
+
+            int codec = 1;
+            vw = new VideoWriter(strRECName, codec, 30, sz, true);
+
+
+            var panel = this.resourcePanels[this.ListBox_ResourcePanels.SelectedIndex];
+            panel.ImageFrameArrived += Panel_ImageFrameArrived;
             this.starttime = DateTime.Now;
             this.currentframe = 0;
             this.IsRecStarted = true;
-            
+            this.saveImageIndex = (int)this.SliderTexBox.Slider_Main.Value;
+        }
+
+        private void Panel_ImageFrameArrived(object Sender, ImageFrameArrivedEventArgs e)
+        {
+            Console.Write("a");
+            vw.Write(e.Image[this.saveImageIndex]);
         }
 
         //private void Button_Add_Click(object sender, RoutedEventArgs e)
@@ -159,38 +229,26 @@ namespace LabLife.Editor
 
         public void UpdateLists()
         {
-            var resourcePanels = base.m_MainWindow.GetPanels<KinectPanel>();
             //var projectionPanels = base.m_MainWindow.GetPanels<ProjectionPanel>();
+            this.resourcePanels = base.m_MainWindow.GetPanels<AImageResourcePanel>();
 
             if (resourcePanels != null)
             {
                 this.ListBox_ResourcePanels.Items.Clear();
                 foreach (var p in resourcePanels)
                 {
-                    
-                    for (int i = 0; i < p.ImageNum; i++)
-                    {
-                        this.ListBox_ResourcePanels.Items.Add(p.TitleName + " " + i.ToString());
-                    }
-                    
+
+                    this.ListBox_ResourcePanels.Items.Add(p.TitleName);
+
                 }
                 this.ListBox_ResourcePanels.SelectedIndex = 0;
             }
 
-            //if (projectionPanels != null)
-            //{
-            //    this.ListBox_ProjectionPanel.Items.Clear();
-            //    foreach (var p in projectionPanels)
-            //    {
-            //        this.ListBox_ProjectionPanel.Items.Add(p.TitleName);
-            //    }
-            //    this.ListBox_ProjectionPanel.SelectedIndex = 0;
-            //}
         }
 
         private void Button_Delete_Click(object sender, RoutedEventArgs e)
         {
-            
+
             //this.List_Recoder.RemoveAt(this.ListBox_Recoder.SelectedIndex);
 
         }

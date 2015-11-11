@@ -137,9 +137,9 @@ namespace LabLife.Editor
             this.size = new OpenCvSharp.CPlusPlus.Size(512, 424);
             this.size1 = new OpenCvSharp.CPlusPlus.Size(imageWidth, imageHeight);
 
-            this.bodyindexMat = new Mat(size, MatType.CV_8UC1);
-            this.depthMat = bodyindexMat.Clone();
-            this.colorimageMat = new Mat(size1, MatType.CV_8UC3);
+            //this.bodyindexMat = new Mat(size, MatType.CV_8UC1);
+            //this.depthMat = bodyindexMat.Clone();
+            //this.colorimageMat = new Mat(size1, MatType.CV_8UC3);
 
             stump = 0;
         }
@@ -289,13 +289,10 @@ namespace LabLife.Editor
                 // ビットマップにする
                 this.bodyIndexColorImage.WritePixels(bodyIndexColorRect, bodyIndexColorBuffer, bodyIndexColorStride, 0);
 
-                this.bodyindexMat = WriteableBitmapConverter.ToMat(bodyIndexColorImage);
+                //this.bodyindexMat = WriteableBitmapConverter.ToMat(bodyIndexColorImage);
 
-                stump++;
-                if(stump % 9 == 0)
-                {
-                    GC.Collect();
-                }
+                this.bodyindexMat = new Mat(424, 512, MatType.CV_8UC4, bodyIndexColorBuffer);
+                
             }
 
             catch (Exception ex)
@@ -342,7 +339,7 @@ namespace LabLife.Editor
 
                 this.depthImage.WritePixels(depthRect, depthBuffer, depthStride, 0);
 
-                depthMat = WriteableBitmapConverter.ToMat(depthImage);
+                depthMat = new Mat(424, 512, MatType.CV_16UC1, depthBuffer);
             }
         }
         #endregion
@@ -360,12 +357,12 @@ namespace LabLife.Editor
                 //表示
                 this.colorimage.WritePixels(this.bitmapRect, this.colors, this.bitmapStride, 0);
 
-                this.colorimageMat = WriteableBitmapConverter.ToMat(colorimage);
+                this.colorimageMat = new Mat(480,640,MatType.CV_8UC3,colors);
 
                 if (depthMat != null && bodyindexMat != null && colorimageMat != null)
                 {
 
-                    OnImageFrameArrived(new ImageFrameArrivedEventArgs(new Mat[] { /*bodyindexMat, depthMat, colorimageMat*/}));
+                    OnImageFrameArrived(new ImageFrameArrivedEventArgs(new Mat[] { bodyindexMat, depthMat, colorimageMat}));
                     
                 }
                 //破棄
