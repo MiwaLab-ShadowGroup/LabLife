@@ -22,8 +22,10 @@ namespace LabLife.Editor
         private ScrollViewer ScrollViewer_Transporters = new ScrollViewer();
         private ListBox ListBox_Transporters = new ListBox();
 
+        public Dictionary<Image, AImageResourcePanel> Dictionary_ResourceImage = new Dictionary<Image, AImageResourcePanel>();
+
         public List<Transporter> List_Transporter = new List<Transporter>();
-        
+
         public TransporterHostPanel()
         {
             this.TitleName = "Transporter";
@@ -33,25 +35,31 @@ namespace LabLife.Editor
         {
             base.Initialize(mainwindow);
 
-            UniformGrid grid = new UniformGrid();
-            grid.Columns = 3;
+            DockPanel Dock = new DockPanel();
             Border b1 = new Border();
             b1.Style = (Style)App.Current.Resources["Border_Default"];
             b1.Child = this.ListBox_ResourcePanels;
-            grid.Children.Add(b1);
-            Grid.SetColumn(b1, 0);
+            Dock.Children.Add(b1);
+            DockPanel.SetDock(b1, System.Windows.Controls.Dock.Left);
 
-            Border b2 = new Border();
-            b2.Style = (Style)App.Current.Resources["Border_Default"];
-            b2.Child = this.ListBox_Transporters;
-            grid.Children.Add(b2);
-            Grid.SetColumn(b2, 1);
+            this.ListBox_ResourcePanels.MinWidth = 100;
+            this.ListBox_ProjectionPanel.MinWidth = 100;
+            this.ListBox_Transporters.MinWidth = 100;
+
+
 
             Border b3 = new Border();
             b3.Style = (Style)App.Current.Resources["Border_Default"];
             b3.Child = this.ListBox_ProjectionPanel;
-            grid.Children.Add(b3);
-            Grid.SetColumn(b3, 2);
+            Dock.Children.Add(b3);
+            DockPanel.SetDock(b3, System.Windows.Controls.Dock.Right);
+
+
+            Border b2 = new Border();
+            b2.Style = (Style)App.Current.Resources["Border_Default"];
+            b2.Child = this.ListBox_Transporters;
+            Dock.Children.Add(b2);
+            DockPanel.SetDock(b2, System.Windows.Controls.Dock.Left);
 
             StackPanel StackPanel_Control = new StackPanel();
             Button Button_Create = new Button();
@@ -70,8 +78,8 @@ namespace LabLife.Editor
             StackPanel_Control.Children.Add(Button_Update);
             StackPanel_Control.Orientation = Orientation.Horizontal;
 
-            base.AddContent(StackPanel_Control, Dock.Top);
-            base.AddContent(grid, Dock.Top);
+            base.AddContent(StackPanel_Control, System.Windows.Controls.Dock.Top);
+            base.AddContent(Dock, System.Windows.Controls.Dock.Top);
 
             this.UpdateLists();
         }
@@ -83,7 +91,13 @@ namespace LabLife.Editor
 
         private void Button_Delete_Click(object sender, RoutedEventArgs e)
         {
+            if(this.ListBox_Transporters.SelectedIndex < 0)
+            {
+                return;
+            }
+            this.List_Transporter[this.ListBox_Transporters.SelectedIndex].Dispose();
             this.List_Transporter.RemoveAt(this.ListBox_Transporters.SelectedIndex);
+            this.ListBox_Transporters.Items.RemoveAt(this.ListBox_Transporters.SelectedIndex);
         }
 
         private void Button_Create_Click(object sender, RoutedEventArgs e)
@@ -98,7 +112,8 @@ namespace LabLife.Editor
             }
 
             var item = new Transporter(
-                    base.m_MainWindow.GetPanels<AImageResourcePanel>()[this.ListBox_ResourcePanels.SelectedIndex],
+                    this.Dictionary_ResourceImage.ElementAt(this.ListBox_ResourcePanels.SelectedIndex).Value,
+                    Grid.GetColumn( this.Dictionary_ResourceImage.ElementAt(this.ListBox_ResourcePanels.SelectedIndex).Key),
                     base.m_MainWindow.GetPanels<ProjectionPanel>()[this.ListBox_ProjectionPanel.SelectedIndex]
                 );
 
@@ -111,19 +126,21 @@ namespace LabLife.Editor
             var resourcePanels = base.m_MainWindow.GetPanels<AImageResourcePanel>();
             var projectionPanels = base.m_MainWindow.GetPanels<ProjectionPanel>();
 
-            if(resourcePanels != null)
+            if (resourcePanels != null)
             {
                 this.ListBox_ResourcePanels.Items.Clear();
-                foreach(var p in resourcePanels)
+                this.Dictionary_ResourceImage.Clear();
+                foreach (var p in resourcePanels)
                 {
                     for (int i = 0; i < p.ImageNum; i++)
                     {
                         this.ListBox_ResourcePanels.Items.Add(p.TitleName + " " + i.ToString());
+                        this.Dictionary_ResourceImage.Add((Image)p.Grid_Image.Children[i], p);
                     }
                 }
                 this.ListBox_ResourcePanels.SelectedIndex = 0;
             }
-            
+
             if (projectionPanels != null)
             {
                 this.ListBox_ProjectionPanel.Items.Clear();
