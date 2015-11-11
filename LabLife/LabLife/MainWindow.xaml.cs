@@ -49,6 +49,7 @@ namespace LabLife
                 this.PanelList.Add(new DiagnocticsPanel());
                 this.PanelList.Add(new ImageReceiverHostPanel());
                 this.PanelList.Add(new TransporterHostPanel());
+                this.PanelList.Add(new RecoderPanel());
 
                 if (System.Environment.Is64BitOperatingSystem)
                 {

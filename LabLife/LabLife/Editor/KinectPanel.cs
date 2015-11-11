@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using OpenCvSharp.CPlusPlus;
 
 namespace LabLife.Editor
 {
@@ -59,17 +60,32 @@ namespace LabLife.Editor
         int bitmapStride;
         byte[] colors;
         int imageWidth;
-        int imageHeigt;
+        int imageHeight;
 
         //骨格情報
         BodyFrameReader bodyFrameReader;
         Body[] bodies;
         int NumberofPlayer;
 
+        //Mat
+        Mat bodyindexMat;
+        Mat depthMat;
+        Mat colorimageMat;
+
+        OpenCvSharp.CPlusPlus.Size size;
+        OpenCvSharp.CPlusPlus.Size size1;
+
+        int stump;
+
         public KinectPanel()
         {
             base.TitleName = "Kinect Condition";
             kinect = KinectSensor.GetDefault();
+
+            //Mat
+            this.bodyindexMat = new Mat();
+            this.depthMat = new Mat();
+            this.colorimageMat = new Mat();
 
             //bodyindex関連
             this.bodyIndexFrameDesc = kinect.DepthFrameSource.FrameDescription;
@@ -107,7 +123,7 @@ namespace LabLife.Editor
                                            * this.colorFrameDescription.Height
                                            * this.colorFrameDescription.BytesPerPixel];
             this.imageWidth = this.colorFrameDescription.Width;
-            this.imageHeigt = this.colorFrameDescription.Height;
+            this.imageHeight = this.colorFrameDescription.Height;
             this.colorimage = new WriteableBitmap(this.colorFrameDescription.Width, this.colorFrameDescription.Height, 96, 96, PixelFormats.Bgr32, null);
             this.calibImg = new WriteableBitmap(this.colorFrameDescription.Width, this.colorFrameDescription.Height, 96, 96, PixelFormats.Bgr32, null);
             this.bitmapRect = new Int32Rect(0, 0, this.colorFrameDescription.Width, this.colorFrameDescription.Height);
@@ -118,6 +134,14 @@ namespace LabLife.Editor
             this.bodyFrameReader.FrameArrived += BodyFrame_Arrived;
             this.bodies = new Body[this.kinect.BodyFrameSource.BodyCount]; //bodycountに骨格情報の数
 
+            this.size = new OpenCvSharp.CPlusPlus.Size(512, 424);
+            this.size1 = new OpenCvSharp.CPlusPlus.Size(imageWidth, imageHeight);
+
+            this.bodyindexMat = new Mat(size, MatType.CV_8UC1);
+            this.depthMat = bodyindexMat.Clone();
+            this.colorimageMat = new Mat(size1, MatType.CV_8UC3);
+
+            stump = 0;
         }
 
         public override void Initialize(MainWindow mainwindow)
@@ -146,7 +170,7 @@ namespace LabLife.Editor
             r.Source = colorimage;
             this.AddContent(base.Grid_Image, Dock.Top);
 
-            this.AddContent()
+            //this.AddContent(canvas1, Dock.Bottom);
         }
 
         //close処理
@@ -168,7 +192,6 @@ namespace LabLife.Editor
             }
             else
             {
-
                 this.KinectClose();
             }
 
@@ -265,8 +288,16 @@ namespace LabLife.Editor
 
                 // ビットマップにする
                 this.bodyIndexColorImage.WritePixels(bodyIndexColorRect, bodyIndexColorBuffer, bodyIndexColorStride, 0);
-                
+
+                this.bodyindexMat = WriteableBitmapConverter.ToMat(bodyIndexColorImage);
+
+                stump++;
+                if(stump % 9 == 0)
+                {
+                    GC.Collect();
+                }
             }
+
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
@@ -311,6 +342,7 @@ namespace LabLife.Editor
 
                 this.depthImage.WritePixels(depthRect, depthBuffer, depthStride, 0);
 
+                depthMat = WriteableBitmapConverter.ToMat(depthImage);
             }
         }
         #endregion
@@ -327,8 +359,15 @@ namespace LabLife.Editor
                 colorFrame.CopyConvertedFrameDataToArray(this.colors, this.colorImageFormat);
                 //表示
                 this.colorimage.WritePixels(this.bitmapRect, this.colors, this.bitmapStride, 0);
-                
 
+                this.colorimageMat = WriteableBitmapConverter.ToMat(colorimage);
+
+                if (depthMat != null && bodyindexMat != null && colorimageMat != null)
+                {
+
+                    OnImageFrameArrived(new ImageFrameArrivedEventArgs(new Mat[] { /*bodyindexMat, depthMat, colorimageMat*/}));
+                    
+                }
                 //破棄
                 colorFrame.Dispose();
             }
@@ -367,17 +406,17 @@ namespace LabLife.Editor
                         
                     }
 
-                    Ellipse ellipse = new Ellipse
-                    {
-                        Fill = System.Windows.Media.Brushes.Red,
-                        Width = 15,
-                        Height = 15
-                    };
+                    //Ellipse ellipse = new Ellipse
+                    //{
+                    //    Fill = System.Windows.Media.Brushes.Red,
+                    //    Width = 15,
+                    //    Height = 15
+                    //};
 
-                    Canvas.SetLeft(ellipse, body.Joints[JointType.SpineBase].Position.X);
-                    Canvas.SetTop(ellipse, body.Joints[JointType.SpineBase].Position.Y);
+                    //Canvas.SetLeft(ellipse, body.Joints[JointType.SpineBase].Position.X);
+                    //Canvas.SetTop(ellipse, body.Joints[JointType.SpineBase].Position.Y);
 
-                    canvas1.Children.Add(ellipse);
+                    //canvas1.Children.Add(ellipse);
 
                 }
                 //破棄
