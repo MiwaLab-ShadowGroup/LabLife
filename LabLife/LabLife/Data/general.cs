@@ -13,9 +13,13 @@ namespace LabLife.Data
         public static event ChangeLogHandler OnLogChange;
 
         private static string log = "";
-        public static void Log(object sender,string str)
+        public static void Log(object sender, string str)
         {
             log += "[ " + sender.ToString() + " ] " + str + "\n";
+            if (log.Count(p=>p == '\n') >= 10)
+            {
+                log = log.Remove(0, log.IndexOf('\n') + 1);
+            }
             if (OnLogChange != null)
             {
                 OnLogChange(log);
