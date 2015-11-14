@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.PointCloud.CSharp.Plugins", "UnityVS.PointCloud.CSharp.Plugins.csproj", "{0251A7AE-4F76-BA57-CC7D-1954E7F9CFFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.PointCloud.CSharp", "UnityVS.PointCloud.CSharp.csproj", "{988F1EC0-1715-B6EA-FBBF-82A24FC30BF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.PointCloud.CSharp.Editor.Plugins", "UnityVS.PointCloud.CSharp.Editor.Plugins.csproj", "{31067F14-1178-F153-84F3-D069610B6133}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0251A7AE-4F76-BA57-CC7D-1954E7F9CFFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0251A7AE-4F76-BA57-CC7D-1954E7F9CFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0251A7AE-4F76-BA57-CC7D-1954E7F9CFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0251A7AE-4F76-BA57-CC7D-1954E7F9CFFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{988F1EC0-1715-B6EA-FBBF-82A24FC30BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{988F1EC0-1715-B6EA-FBBF-82A24FC30BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{988F1EC0-1715-B6EA-FBBF-82A24FC30BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{988F1EC0-1715-B6EA-FBBF-82A24FC30BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31067F14-1178-F153-84F3-D069610B6133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31067F14-1178-F153-84F3-D069610B6133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31067F14-1178-F153-84F3-D069610B6133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31067F14-1178-F153-84F3-D069610B6133}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
