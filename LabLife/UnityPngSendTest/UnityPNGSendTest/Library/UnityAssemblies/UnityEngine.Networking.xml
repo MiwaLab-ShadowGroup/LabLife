@@ -210,7 +210,7 @@
     </member>
     <member name="F:UnityEngine.Networking.CommandAttribute.channel">
       <summary>
-        <para>The QoS channel to use to send this command on, see [[Networking.QosType]].</para>
+        <para>The QoS channel to use to send this command on, see Networking.QosType.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Networking.LogFilter">
@@ -548,12 +548,12 @@
     </member>
     <member name="P:UnityEngine.Networking.NetworkBehaviour.connectionToClient">
       <summary>
-        <para>The [[NetworkConnection]] associated with this [[NetworkIdentity]]. This is only valid for player objects on the server.</para>
+        <para>The NetworkConnection associated with this NetworkIdentity. This is only valid for player objects on the server.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Networking.NetworkBehaviour.connectionToServer">
       <summary>
-        <para>The [[NetworkConnection]] associated with this [[NetworkIdentity]]. This is only valid for player objects on the server.</para>
+        <para>The NetworkConnection associated with this NetworkIdentity. This is only valid for player objects on the server.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Networking.NetworkBehaviour.hasAuthority">
@@ -1269,7 +1269,7 @@
     </member>
     <member name="P:UnityEngine.Networking.NetworkCRC.scriptCRCCheck">
       <summary>
-        <para>Enables a CRC check between server and client that ensures the [[NetworkBehaviour]] scripts match.</para>
+        <para>Enables a CRC check between server and client that ensures the NetworkBehaviour scripts match.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Networking.NetworkCRC.scripts">
@@ -2009,6 +2009,11 @@
         <para>Flag that control whether clients started by this NetworkManager will use simulated latency and packet loss.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Networking.NetworkManager.useWebSockets">
+      <summary>
+        <para>This makes the NetworkServer listen for WebSockets connections instead of normal transport layer connections.</para>
+      </summary>
+    </member>
     <member name="M:UnityEngine.Networking.NetworkManager.GetStartPosition">
       <summary>
         <para>This finds a spawn position based on NetworkStartPosition objects in the scene.</para>
@@ -2745,6 +2750,11 @@
         <para>Setting this true will make the server send peer info to all participants of the network.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Networking.NetworkServer.useWebSockets">
+      <summary>
+        <para>This makes the server listen for WebSockets connections instead of normal transport layer connections.</para>
+      </summary>
+    </member>
     <member name="M:UnityEngine.Networking.NetworkServer.AddExternalConnection(UnityEngine.Networking.NetworkConnection)">
       <summary>
         <para>This accepts a network connection from another external source and adds it to the server.</para>
@@ -2793,7 +2803,7 @@
     </member>
     <member name="M:UnityEngine.Networking.NetworkServer.Configure(UnityEngine.Networking.ConnectionConfig,System.Int32)">
       <summary>
-        <para>This configures the tranport layer settings for the server.</para>
+        <para>This configures the transport layer settings for the server.</para>
       </summary>
       <param name="config">Transport layer confuration object.</param>
       <param name="maxConnections">The maximum number of client connections to allow.</param>
@@ -2804,7 +2814,7 @@
     </member>
     <member name="M:UnityEngine.Networking.NetworkServer.Configure(UnityEngine.Networking.HostTopology)">
       <summary>
-        <para>This configures the tranport layer settings for the server.</para>
+        <para>This configures the transport layer settings for the server.</para>
       </summary>
       <param name="config">Transport layer confuration object.</param>
       <param name="maxConnections">The maximum number of client connections to allow.</param>
@@ -3465,7 +3475,7 @@
     </member>
     <member name="F:UnityEngine.Networking.NetworkTransform.TransformSyncMode.SyncCharacterController">
       <summary>
-        <para>Sync using the [[CharacterController]] component.</para>
+        <para>Sync using the CharacterController component.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Networking.NetworkTransform.TransformSyncMode.SyncNone">
@@ -3475,12 +3485,12 @@
     </member>
     <member name="F:UnityEngine.Networking.NetworkTransform.TransformSyncMode.SyncRigidbody2D">
       <summary>
-        <para>Sync using the [[Rigidbody2D]] component.</para>
+        <para>Sync using the Rigidbody2D component.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Networking.NetworkTransform.TransformSyncMode.SyncRigidbody3D">
       <summary>
-        <para>Sync using the [[Rigidbody]] component.</para>
+        <para>Sync using the Rigidbody component.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Networking.NetworkTransform.TransformSyncMode.SyncTransform">
