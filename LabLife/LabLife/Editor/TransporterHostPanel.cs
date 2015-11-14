@@ -2,6 +2,7 @@
 using LabLife.Processer;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,9 @@ namespace LabLife.Editor
 
         public List<Transporter> List_Transporter = new List<Transporter>();
 
+        public List<FileInfo> CallibrationDataPathList = new List<FileInfo>();
+        private ListBox ListBox_CallbPathList = new ListBox();
+        public TextBox TextBox_SaveFileName = new TextBox();
         public TransporterHostPanel()
         {
             this.TitleName = "Transporter";
@@ -42,6 +46,7 @@ namespace LabLife.Editor
             Dock.Children.Add(b1);
             DockPanel.SetDock(b1, System.Windows.Controls.Dock.Left);
 
+
             this.ListBox_ResourcePanels.MinWidth = 100;
             this.ListBox_ProjectionPanel.MinWidth = 100;
             this.ListBox_Transporters.MinWidth = 100;
@@ -56,10 +61,37 @@ namespace LabLife.Editor
 
 
             Border b2 = new Border();
+            b2.Height = 150;
             b2.Style = (Style)App.Current.Resources["Border_Default"];
             b2.Child = this.ListBox_Transporters;
             Dock.Children.Add(b2);
-            DockPanel.SetDock(b2, System.Windows.Controls.Dock.Left);
+            DockPanel.SetDock(b2, System.Windows.Controls.Dock.Top);
+
+            Border b4 = new Border();
+            b4.Style = (Style)App.Current.Resources["Border_Default"];
+            StackPanel stp = new StackPanel();
+            ScrollViewer sv = new ScrollViewer();
+            b4.Child = sv;
+            sv.Content = stp;
+            UniformGrid uniformgrid_header = new UniformGrid();
+            uniformgrid_header.Columns = 3;
+            stp.Children.Add(uniformgrid_header);
+
+            uniformgrid_header.Children.Add(this.TextBox_SaveFileName);
+            Button Button_SaveCallib = new Button();
+            Button_SaveCallib.Content = "SaveCallib";
+            Button_SaveCallib.Click += Button_SaveCallib_Click;
+            uniformgrid_header.Children.Add(Button_SaveCallib);
+
+            Button Button_LoadCallib = new Button();
+            Button_LoadCallib.Content = "LoadCallib";
+            Button_LoadCallib.Click += Button_LoadCallib_Click;
+            uniformgrid_header.Children.Add(Button_LoadCallib);
+
+            stp.Children.Add(this.ListBox_CallbPathList);
+            Dock.Children.Add(b4);
+            DockPanel.SetDock(b4, System.Windows.Controls.Dock.Bottom);
+
 
             StackPanel StackPanel_Control = new StackPanel();
             Button Button_Create = new Button();
@@ -84,6 +116,45 @@ namespace LabLife.Editor
             this.UpdateLists();
         }
 
+        private void Button_LoadCallib_Click(object sender, RoutedEventArgs e)
+        {
+            int index = this.ListBox_Transporters.SelectedIndex;
+            if (index < 0 || index >= this.ListBox_Transporters.Items.Count)
+            {
+                return;
+            }
+            int callibindex = this.ListBox_CallbPathList.SelectedIndex;
+            if (index < 0 || callibindex >= this.ListBox_CallbPathList.Items.Count)
+            {
+                return;
+            }
+            
+            Data.CallibrationData callibdata = new CallibrationData();
+            callibdata.LoadCallibration(
+                this.CallibrationDataPathList[this.ListBox_CallbPathList.SelectedIndex].FullName,
+                this.List_Transporter[index].src,
+                this.List_Transporter[index].dst
+                );
+            this.List_Transporter[index].SetupWrap(this.List_Transporter[index].src,
+                this.List_Transporter[index].dst);
+        }
+
+        void Button_SaveCallib_Click(object sender, RoutedEventArgs e)
+        {
+            int index = this.ListBox_Transporters.SelectedIndex;
+            if (index < 0 || index >= this.ListBox_Transporters.Items.Count)
+            {
+                return;
+            }
+            Data.CallibrationData callibdata = new CallibrationData();
+            callibdata.SaveCallibration(
+                LabLifeSettings.CallibrationPath + @"\" + this.TextBox_SaveFileName.Text + ".callib",
+                this.List_Transporter[index].src,
+                this.List_Transporter[index].dst
+                );
+            this.UpdateLists();
+        }
+
         private void Button_Update_Click(object sender, RoutedEventArgs e)
         {
             this.UpdateLists();
@@ -91,7 +162,7 @@ namespace LabLife.Editor
 
         private void Button_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if(this.ListBox_Transporters.SelectedIndex < 0)
+            if (this.ListBox_Transporters.SelectedIndex < 0)
             {
                 return;
             }
@@ -113,7 +184,7 @@ namespace LabLife.Editor
 
             var item = new Transporter(
                     this.Dictionary_ResourceImage.ElementAt(this.ListBox_ResourcePanels.SelectedIndex).Value,
-                    Grid.GetColumn( this.Dictionary_ResourceImage.ElementAt(this.ListBox_ResourcePanels.SelectedIndex).Key),
+                    Grid.GetColumn(this.Dictionary_ResourceImage.ElementAt(this.ListBox_ResourcePanels.SelectedIndex).Key),
                     base.m_MainWindow.GetPanels<ProjectionPanel>()[this.ListBox_ProjectionPanel.SelectedIndex]
                 );
 
@@ -149,6 +220,31 @@ namespace LabLife.Editor
                     this.ListBox_ProjectionPanel.Items.Add(p.TitleName);
                 }
                 this.ListBox_ProjectionPanel.SelectedIndex = 0;
+            }
+
+            this.UpdateTransportList();
+            this.UpdateTransportListBox();
+        }
+
+
+
+        private void UpdateTransportList()
+        {
+            this.CallibrationDataPathList.Clear();
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(LabLifeSettings.CallibrationPath);
+            var files = di.GetFiles("*.callib");
+            foreach (var p in files)
+            {
+                this.CallibrationDataPathList.Add(p);
+            }
+        }
+
+        private void UpdateTransportListBox()
+        {
+            this.ListBox_CallbPathList.Items.Clear();
+            foreach (var p in this.CallibrationDataPathList)
+            {
+                this.ListBox_CallbPathList.Items.Add(p.Name);
             }
         }
     }

@@ -32,8 +32,8 @@ namespace LabLife.Processer
         private List<Thumb> DstMarkList = new List<Thumb>();
         private List<Line> SrcLineList = new List<Line>();
         private List<Line> DstLineList = new List<Line>();
-        private Point2f[] src = new Point2f[4];
-        private Point2f[] dst = new Point2f[4];
+        public Point2f[] src = new Point2f[4];
+        public Point2f[] dst = new Point2f[4];
         private Color MainColor;
         private int m_EllipseSize = 30;
         private int m_EllipseThickness = 1;
@@ -414,7 +414,18 @@ namespace LabLife.Processer
 
             this.SetWarp();
         }
+        public void SetupWrap(Point2f[] src, Point2f[] dst)
+        {
+            this.SetCanvasCenter(this.SrcMarkList[0], src[0].X, src[0].Y);
+            this.SetCanvasCenter(this.SrcMarkList[1], src[1].X, src[1].Y);
+            this.SetCanvasCenter(this.SrcMarkList[2], src[2].X, src[2].Y);
+            this.SetCanvasCenter(this.SrcMarkList[3], src[3].X, src[3].Y);
 
+            this.SetCanvasCenter(this.DstMarkList[0], dst[0].X, dst[0].Y);
+            this.SetCanvasCenter(this.DstMarkList[1], dst[1].X, dst[1].Y);
+            this.SetCanvasCenter(this.DstMarkList[2], dst[2].X, dst[2].Y);
+            this.SetCanvasCenter(this.DstMarkList[3], dst[3].X, dst[3].Y);
+        }
         private void UpdateWarp()
         {
             this.src[0] = GetCanvasCenter(this.SrcMarkList[0]);

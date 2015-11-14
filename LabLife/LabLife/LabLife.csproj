@@ -106,6 +106,7 @@
     <Compile Include="Editor\ProjectionPanel.cs" />
     <Compile Include="Editor\RecoderPanel.cs" />
     <Compile Include="Editor\TransporterHostPanel.cs" />
+    <Compile Include="LabLife.cs" />
     <Compile Include="Processer\Recoder.cs" />
     <Compile Include="Processer\Transporter.cs" />
     <Compile Include="Project\AProject.cs" />
