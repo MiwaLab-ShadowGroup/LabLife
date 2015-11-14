@@ -93,6 +93,8 @@
     <Compile Include="Contorols\SliderAndTextControl.xaml.cs">
       <DependentUpon>SliderAndTextControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\AData.cs" />
+    <Compile Include="Data\CallibrationData.cs" />
     <Compile Include="Data\General.cs" />
     <Compile Include="Editor\AImageResourcePanel.cs" />
     <Compile Include="Editor\CommandLinePanel.cs" />
@@ -102,7 +104,9 @@
     <Compile Include="Editor\KinectPanel.cs" />
     <Compile Include="Editor\LogPanel.cs" />
     <Compile Include="Editor\ProjectionPanel.cs" />
+    <Compile Include="Editor\RecoderPanel.cs" />
     <Compile Include="Editor\TransporterHostPanel.cs" />
+    <Compile Include="Processer\Recoder.cs" />
     <Compile Include="Processer\Transporter.cs" />
     <Compile Include="Project\AProject.cs" />
     <Compile Include="Project\LLProject.cs" />
