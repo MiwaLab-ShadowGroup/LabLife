@@ -27,7 +27,9 @@ namespace LabLife.Editor
             Border bd = new Border();
             bd.Child = this.ListBox_ReceiverHostPanel;
             bd.Style = (Style)App.Current.Resources["Border_Default"];
-            
+
+            this.ListBox_ReceiverHostPanel.MinWidth = 200;
+
             this.AddContent(bd, Dock.Left);
 
             Button Button_AddImageReceiver = new Button();

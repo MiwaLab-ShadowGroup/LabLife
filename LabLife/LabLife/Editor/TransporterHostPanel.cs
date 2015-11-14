@@ -72,6 +72,8 @@ namespace LabLife.Editor
             b4.Style = (Style)App.Current.Resources["Border_Default"];
             StackPanel stp = new StackPanel();
             ScrollViewer sv = new ScrollViewer();
+            sv.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             b4.Child = sv;
             sv.Content = stp;
             UniformGrid uniformgrid_header = new UniformGrid();
