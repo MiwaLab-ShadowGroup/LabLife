@@ -34,7 +34,7 @@ namespace LabLife.Processer
         private List<Line> DstLineList = new List<Line>();
         public Point2f[] src = new Point2f[4];
         public Point2f[] dst = new Point2f[4];
-        private Color MainColor;
+        public Color MainColor;
         private int m_EllipseSize = 30;
         private int m_EllipseThickness = 1;
         private Mat m_LastReceivedImage;
@@ -56,7 +56,7 @@ namespace LabLife.Processer
             this.m_dstPanel.AddSenderList(this);
             this.m_srcPanel.ImageFrameArrived += M_srcPanel_ImageFrameArrived;
             Random r = new Random();
-            this.MainColor = Color.FromArgb(255, (byte)r.Next(0, 255), (byte)r.Next(0, 255), (byte)r.Next(0, 255));
+            this.MainColor = Color.FromArgb(255, (byte)r.Next(100, 255), (byte)r.Next(100, 255), (byte)r.Next(100, 255));
             this.AddCanvasSrc(srcPanel.Grid_Image, ImageIndex);
             this.AddCanvasDst(dstPanel.Grid_Image);
             this.IsInitWrap = false;
@@ -425,6 +425,19 @@ namespace LabLife.Processer
             this.SetCanvasCenter(this.DstMarkList[1], dst[1].X, dst[1].Y);
             this.SetCanvasCenter(this.DstMarkList[2], dst[2].X, dst[2].Y);
             this.SetCanvasCenter(this.DstMarkList[3], dst[3].X, dst[3].Y);
+
+            this.m_Mask = new Mat(this.m_LastReceivedImage.Size(), MatType.CV_8UC1, new Scalar(0));
+            List<List<Point>> polygons = new List<List<Point>>();
+            List<Point> polygon = new List<Point>();
+            polygons.Add(polygon);
+            foreach (var p in this.dst)
+            {
+                polygon.Add(new Point(p.X, p.Y));
+            }
+            Cv2.FillPoly(this.m_Mask, polygons, new Scalar(255));
+
+            this.UpdateLines();
+            this.SetWarp();
         }
         private void UpdateWarp()
         {

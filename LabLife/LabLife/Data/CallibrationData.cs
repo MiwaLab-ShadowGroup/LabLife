@@ -42,7 +42,7 @@ namespace LabLife.Data
                 this.srcx.Add(p.X);
                 this.srcy.Add(p.Y);
             }
-            foreach (var q in src)
+            foreach (var q in dst)
             {
                 this.dstx.Add(q.X);
                 this.dsty.Add(q.Y);

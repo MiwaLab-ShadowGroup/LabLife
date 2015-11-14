@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace LabLife.Editor
 {
@@ -74,7 +75,7 @@ namespace LabLife.Editor
             b4.Child = sv;
             sv.Content = stp;
             UniformGrid uniformgrid_header = new UniformGrid();
-            uniformgrid_header.Columns = 3;
+            uniformgrid_header.Columns = 4;
             stp.Children.Add(uniformgrid_header);
 
             uniformgrid_header.Children.Add(this.TextBox_SaveFileName);
@@ -87,6 +88,11 @@ namespace LabLife.Editor
             Button_LoadCallib.Content = "LoadCallib";
             Button_LoadCallib.Click += Button_LoadCallib_Click;
             uniformgrid_header.Children.Add(Button_LoadCallib);
+
+            Button Button_DeleteCallib = new Button();
+            Button_DeleteCallib.Content = "DeleteCallib";
+            Button_DeleteCallib.Click += Button_DeleteCallib_Click; ;
+            uniformgrid_header.Children.Add(Button_DeleteCallib);
 
             stp.Children.Add(this.ListBox_CallbPathList);
             Dock.Children.Add(b4);
@@ -114,6 +120,14 @@ namespace LabLife.Editor
             base.AddContent(Dock, System.Windows.Controls.Dock.Top);
 
             this.UpdateLists();
+        }
+
+        private void Button_DeleteCallib_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.ListBox_CallbPathList.SelectedIndex < 0) return;
+            this.CallibrationDataPathList[this.ListBox_CallbPathList.SelectedIndex].Delete();
+            this.UpdateTransportList();
+            this.UpdateTransportListBox();
         }
 
         private void Button_LoadCallib_Click(object sender, RoutedEventArgs e)
@@ -189,7 +203,11 @@ namespace LabLife.Editor
                 );
 
             this.List_Transporter.Add(item);
-            this.ListBox_Transporters.Items.Add(item.ToString());
+            TextBlock _item = new TextBlock();
+            _item.Text = item.ToString();
+            _item.Foreground = new SolidColorBrush(item.MainColor);
+            this.ListBox_Transporters.Items.Add(_item);
+            this.ListBox_Transporters.SelectedIndex = this.ListBox_Transporters.Items.Count - 1;
         }
 
         public void UpdateLists()
@@ -232,6 +250,10 @@ namespace LabLife.Editor
         {
             this.CallibrationDataPathList.Clear();
             System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(LabLifeSettings.CallibrationPath);
+            if (!di.Exists)
+            {
+                di.Create();
+            }
             var files = di.GetFiles("*.callib");
             foreach (var p in files)
             {
@@ -246,6 +268,11 @@ namespace LabLife.Editor
             {
                 this.ListBox_CallbPathList.Items.Add(p.Name);
             }
+            if (this.ListBox_CallbPathList.Items.Count > 0)
+            {
+                this.ListBox_CallbPathList.SelectedIndex = 0;
+            }
+            
         }
     }
 }
