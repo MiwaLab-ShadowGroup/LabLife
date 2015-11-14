@@ -93,6 +93,8 @@
     <Compile Include="Contorols\SliderAndTextControl.xaml.cs">
       <DependentUpon>SliderAndTextControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\AData.cs" />
+    <Compile Include="Data\CallibrationData.cs" />
     <Compile Include="Data\General.cs" />
     <Compile Include="Editor\AImageResourcePanel.cs" />
     <Compile Include="Editor\CommandLinePanel.cs" />
