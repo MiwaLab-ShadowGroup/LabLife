@@ -48,19 +48,46 @@ namespace LabLife
                 this.PanelList.Add(new WindowListPanel());
                 this.PanelList.Add(new DiagnocticsPanel());
                 this.PanelList.Add(new ImageReceiverHostPanel());
-                this.PanelList.Add(new KinectPanel());
+                this.PanelList.Add(new TransporterHostPanel());
+                this.PanelList.Add(new RecoderPanel());
+
+                if (System.Environment.Is64BitOperatingSystem)
+                {
+                    //this.PanelList.Add(new KinectPanel());
+                }
+                this.PanelList.Add(new ProjectionPanel(1));
+                this.PanelList.Add(new ProjectionPanel(2));
             }
             catch (Exception ex)
             {
                 General.Log(this, ex.Message);
             }
 
-            this.PanelList.Add(new ProjectionPanel(1));
-
             foreach (var p in this.PanelList)
             {
                 p.Initialize(this);
             }
+        }
+
+        public List<T> GetPanels<T>()
+            where T : ADefaultPanel
+        {
+            List<T> ListPanels = new List<T>();
+            foreach (var p in this.PanelList)
+            {
+                T item = p as T;
+                if (item != null)
+                {
+                    ListPanels.Add(item);
+                }
+            }
+            return ListPanels;
+        }
+
+        public ADefaultPanel GetPanel<T>()
+            where T : ADefaultPanel
+        {
+            return this.PanelList.Find(p => p.GetType() == typeof(T));
         }
 
         public void AddPanel(ADefaultPanel panel)

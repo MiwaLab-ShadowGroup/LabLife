@@ -1,0 +1,51 @@
+Initialize engine version: 5.0.1f1 (5a2e8fe35a68)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 770 (ID=0x1184)
+    Vendor:   NVIDIA
+    VRAM:     1985 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\CIPC_CS_Unity.dll (this message is harmless)
+Loading E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\CIPC_CS_Unity.dll into Unity Child Domain
+Platform assembly: E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\UDP_PACKETS_CLIANT_Unity.dll (this message is harmless)
+Loading E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\UDP_PACKETS_CLIANT_Unity.dll into Unity Child Domain
+Platform assembly: E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\UDP_PACKETS_CODER_Unity.dll (this message is harmless)
+Loading E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\UDP_PACKETS_CODER_Unity.dll into Unity Child Domain
+- Completed reload, in  0.112 seconds
+desktop: 1920x1080 60Hz; virtual: 3200x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: E:\workspace\mahoo\mahoo\ShdowRobot\test_Data\Managed\System.dll (this message is harmless)
+The referenced script on this Behaviour is missing!
+ 
+(Filename: C:/buildslave/unity/build/Runtime/Mono/MonoBehaviour.cpp Line: 1713)
+
+Light Robot
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+Robot.RobotControll:Start() (at E:\workspace\mahoo\mahoo\ShdowRobot\Assets\ShadowRobot\RobotControll.cs:51)
+ 
+(Filename: E:/workspace/mahoo/mahoo/ShdowRobot/Assets/ShadowRobot/RobotControll.cs Line: 51)
+
+Models View
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+ModelsView:Start() (at E:\workspace\mahoo\mahoo\ShdowRobot\Assets\Script\ModelsView.cs:23)
+ 
+(Filename: E:/workspace/mahoo/mahoo/ShdowRobot/Assets/Script/ModelsView.cs Line: 23)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 4814 -> priority: 1 
+  Thread -> id: 43cc -> priority: 1 
+Waiting for finish

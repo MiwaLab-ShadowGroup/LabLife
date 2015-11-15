@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using OpenCvSharp;
 using OpenCvSharp.CPlusPlus;
+using LabLife.Data;
 
 namespace LabLife.Editor
 {
@@ -30,8 +31,8 @@ namespace LabLife.Editor
         private WriteableBitmap m_WritableBitmap;
         private JpegBitmapDecoder jpegDec;
         private byte[] m_data;
-
-        OpenCvSharp.CPlusPlus.Mat mat;
+        private byte[] Received_data;
+        private Mat m_mat;
 
         public int ImageReceiveID
         {
@@ -82,21 +83,20 @@ namespace LabLife.Editor
             this.Image_Main.Margin = new Thickness(this.SliderAndTextControl_margin.Slider_Main.Value);
         }
 
-        byte[] data;
         private void ReceiveCallBack(IAsyncResult ar)
         {
             try
             {
                 IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
-                data = this.m_receiver.EndReceive(ar, ref remoteEP);
-                this.m_receivedMemory = new MemoryStream(data);
+                this.Received_data = this.m_receiver.EndReceive(ar, ref remoteEP);
+                this.m_receivedMemory = new MemoryStream(this.Received_data);
                 this.updateImage();
                 this.m_receivedMemory.Dispose();
                 this.m_receiver.BeginReceive(ReceiveCallBack, this.m_receiver);
             }
-            catch (SocketException ex)
+            catch (SocketException)
             {
-                Console.WriteLine(ex.Message);
+                General.Log(this, "close");
             }
             catch (Exception ex)
             {
@@ -110,19 +110,30 @@ namespace LabLife.Editor
             {
                 try
                 {
+                    //デコード
                     this.jpegDec = new JpegBitmapDecoder(this.m_receivedMemory, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.None);
                     this.bitmapsorce = this.jpegDec.Frames[0];
+
+                    //初期化
                     if (m_WritableBitmap == null)
                     {
                         this.m_WritableBitmap = new WriteableBitmap(this.bitmapsorce);
                         this.m_data = new byte[this.bitmapsorce.PixelWidth * this.bitmapsorce.PixelHeight * this.bitmapsorce.Format.BitsPerPixel / 8];
                         this.Image_Main.Source = this.m_WritableBitmap;
-                    }
-                    this.bitmapsorce.CopyPixels(this.m_data, this.bitmapsorce.PixelWidth * this.bitmapsorce.Format.BitsPerPixel / 8, 0);
 
-                    this.mat = new Mat(this.bitmapsorce.PixelWidth, this.bitmapsorce.PixelHeight, MatType.CV_8UC3, this.m_data);
-                    
+
+                    }
+
+                    //イベント発生・送信
+                    this.bitmapsorce.CopyPixels(this.m_data, this.bitmapsorce.PixelWidth * this.bitmapsorce.Format.BitsPerPixel / 8, 0);
+                    this.m_mat = new Mat(this.bitmapsorce.PixelHeight, this.bitmapsorce.PixelWidth, MatType.CV_8UC3, this.m_data);
+                    var e = new ImageFrameArrivedEventArgs(new Mat[] { this.m_mat });
+                    OnImageFrameArrived(e);
+
+                    //画像の更新
                     this.m_WritableBitmap.WritePixels(new Int32Rect(0, 0, this.m_WritableBitmap.PixelWidth, this.m_WritableBitmap.PixelHeight), this.m_data, this.bitmapsorce.PixelWidth * this.bitmapsorce.Format.BitsPerPixel / 8, 0);
+
+                    //最終処理
                     this.bitmapsorce = null;
                 }
                 catch (Exception ex)
@@ -133,6 +144,7 @@ namespace LabLife.Editor
 
             p.Wait();
         }
+
         public override void Close(object sender, RoutedEventArgs e)
         {
             base.Close(sender, e);

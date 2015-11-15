@@ -1288,7 +1288,11 @@
                         </GradientStopCollection>
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
-
+        
+                <ControlTemplate TargetType="Thumb" x:Key="ThumbEllipseTemplate">
+                    <Ellipse Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" StrokeThickness="1">
+                    </Ellipse>
+                </ControlTemplate>
     </Application.Resources>
 </Application>
     

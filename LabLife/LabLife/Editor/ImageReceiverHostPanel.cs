@@ -27,7 +27,9 @@ namespace LabLife.Editor
             Border bd = new Border();
             bd.Child = this.ListBox_ReceiverHostPanel;
             bd.Style = (Style)App.Current.Resources["Border_Default"];
-            
+
+            this.ListBox_ReceiverHostPanel.MinWidth = 200;
+
             this.AddContent(bd, Dock.Left);
 
             Button Button_AddImageReceiver = new Button();
@@ -37,12 +39,12 @@ namespace LabLife.Editor
 
             Button Button_RemoveImageReceiver = new Button();
             Button_RemoveImageReceiver.Content = "終了";
-            Button_RemoveImageReceiver.Click += Button_RemoveImageReceiver_Click; ;
+            Button_RemoveImageReceiver.Click += Button_RemoveImageReceiver_Click;
             this.AddContent(Button_RemoveImageReceiver, Dock.Top);
 
             Button Button_RemoveAllImageReceiver = new Button();
             Button_RemoveAllImageReceiver.Content = "全終了";
-            Button_RemoveAllImageReceiver.Click += Button_RemoveAllImageReceiver_Click; ; ;
+            Button_RemoveAllImageReceiver.Click += Button_RemoveAllImageReceiver_Click;
             this.AddContent(Button_RemoveAllImageReceiver, Dock.Top);
 
             StackPanel St = new StackPanel();
@@ -110,7 +112,7 @@ namespace LabLife.Editor
             foreach (var p in this.List_ImageReceiver)
             {
                 ListBoxItem item = new ListBoxItem();
-                item.Content = (p.TitleName + p.ImageReceiveID).ToString() + " Port:" + p.OpenPortNum.ToString();
+                item.Content = p.TitleName + " Port:" + p.OpenPortNum.ToString();
                 this.ListBox_ReceiverHostPanel.Items.Add(item);
             }
         }
