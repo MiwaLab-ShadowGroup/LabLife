@@ -2,20 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CIPCReceiver : MonoBehaviour {
+public class CIPCReceiver : MonoBehaviour 
+{
 
     public int serverPort;
     public string remoteIP;
     public int myPort;
     public string name;
-
+    public int fps;
     CIPC_CS_Unity.CLIENT.CLIENT client;
     byte[] data;
     public List<Human> List_Humans;
-
-    //Test用
-    Vector3 HumanPosition;
-    Quaternion Quat;
 
     bool IsCIPC;
 
@@ -25,23 +22,10 @@ public class CIPCReceiver : MonoBehaviour {
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
         this.IsCIPC = false;
-        this.List_Humans = new List<Human>();
-
-        /*
-        try
-        {
-            this.client = new CIPC_CS_Unity.CLIENT.CLIENT(this.myPort, this.remoteIP, this.serverPort, this.name, 30);
-            this.client.Setup(CIPC_CS_Unity.CLIENT.MODE.Receiver);
-            this.List_Humans = new List<Human>();
-            this.IsCIPC = true;
-            Debug.Log("CIPC");
-        }
-        catch { }
-        */
-        //Test用
-        //this.HumanPosition = new Vector3(0, 0, 0);
+        this.List_Humans = new List<Human>();     
 	}
 	
 	// Update is called once per frame
@@ -49,14 +33,7 @@ public class CIPCReceiver : MonoBehaviour {
         if (this.IsCIPC)
         {
             if (this.client.IsAvailable > 3) this.GetData();
-            //Debug.Log("CIPC");
-
-            if (this.List_Humans.Count > 0)
-            {
-                this.MovePoint();
-                //Debug.Log(this.HumanPosition.ToString());
-                //this.List_Humans[0].bones[0].position = this.HumanPosition;
-            }
+      
         }
         
 	}
@@ -100,7 +77,6 @@ public class CIPCReceiver : MonoBehaviour {
 
                     human.bones[j] = bone;
 
-                    //if(j == 0) Debug.Log(bone.position.ToString()) ;
                 }
 
                 this.List_Humans.Add(human);
@@ -119,52 +95,14 @@ public class CIPCReceiver : MonoBehaviour {
         this.client.Close();
     }
 
-    void MovePoint()
-    {
-        
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            this.HumanPosition += Vector3.forward / 10 ;
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            this.HumanPosition += Vector3.back / 10;
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            this.HumanPosition += Vector3.right / 10;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            this.HumanPosition += Vector3.left / 10;
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            this.Quat *= Quaternion.AngleAxis(1, Vector3.up);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            this.Quat *= Quaternion.AngleAxis(-1, Vector3.up);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            this.Quat *= Quaternion.AngleAxis(1, Vector3.up);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            this.Quat *= Quaternion.AngleAxis(-1, Vector3.up);
-        } 
-    }
-
-    public void ConnectCIPC(int myport, string ip, int serverport)
+    public void ConnectCIPC()
     {
         try
         {
-            this.client = new CIPC_CS_Unity.CLIENT.CLIENT(myport, ip, serverport, "Shadow", 30);
+            this.client = new CIPC_CS_Unity.CLIENT.CLIENT(this.myPort, this.remoteIP, this.serverPort, this.name, this.fps);
             this.client.Setup(CIPC_CS_Unity.CLIENT.MODE.Receiver);
             this.IsCIPC = true;
-            Debug.Log("CIPC");
+            Debug.Log("CIPCforKinect");
         }
         catch
         {
@@ -173,16 +111,5 @@ public class CIPCReceiver : MonoBehaviour {
         
     }
 
-    /*
-    void OnGUI()
-    {
-        int myPort;
-        int serverPort;
-        string IPAdress;
-        
-        myPort = int.Parse(GUI.TextField(new Rect(0,0,100,10), "51000")) ;
-        IPAdress =  GUI.TextField(new Rect(0, 0, 10, 100), "127.0.0.1");
-        serverPort = int.Parse(GUI.TextField(new Rect(0,0,10,100),"50000"));
-    }
-     * */
+  
 }

@@ -60,14 +60,14 @@
     <Reference Include="CIPC_CS_Unity">
       <HintPath>Assets\plugins\CIPC_CS_Unity.dll</HintPath>
     </Reference>
+    <Reference Include="FPSAdjuster">
+      <HintPath>Assets\plugins\FPSAdjuster.dll</HintPath>
+    </Reference>
     <Reference Include="UDP_PACKETS_CLIANT_Unity">
       <HintPath>Assets\plugins\UDP_PACKETS_CLIANT_Unity.dll</HintPath>
     </Reference>
     <Reference Include="UDP_PACKETS_CODER_Unity">
       <HintPath>Assets\plugins\UDP_PACKETS_CODER_Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="FPSAdjuster">
-      <HintPath>Assets\plugins\FPSAdjuster.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -79,16 +79,17 @@
   <ItemGroup>
     <Compile Include="Assets\3DModels\ModelScript.cs" />
     <Compile Include="Assets\3DModels\PointCloudModel.cs" />
-    <Compile Include="Assets\Class\Human.cs" />
+    <Compile Include="Assets\NewBehaviourScript.cs" />
+    <Compile Include="Assets\NewBehaviourScript1.cs" />
+    <Compile Include="Assets\PointClouds\PointCloud.cs" />
+    <Compile Include="Assets\PointClouds\TetrahedronScript.cs" />
     <Compile Include="Assets\Script\CIPCReceiver.cs" />
     <Compile Include="Assets\Script\CIPCReceiverLaserScaner.cs" />
     <Compile Include="Assets\Script\CIPCSender.cs" />
+    <Compile Include="Assets\Script\Class\Human.cs" />
     <Compile Include="Assets\Script\Lablife.cs" />
     <Compile Include="Assets\Script\ModelsView.cs" />
-    <Compile Include="Assets\Script\PointCloud.cs" />
     <Compile Include="Assets\Script\UIScript.cs" />
-    <Compile Include="Assets\Shadow\ColorShadow.cs" />
-    <Compile Include="Assets\Shadow\Particle.cs" />
     <Compile Include="Assets\ShadowRobot\Backup\Aizawa.cs" />
     <Compile Include="Assets\ShadowRobot\Backup\AizawaModel.cs" />
     <Compile Include="Assets\ShadowRobot\Backup\AizawaRobot.cs" />
@@ -102,13 +103,9 @@
     <Compile Include="Assets\ShadowRobot\Robot\LightAction.cs" />
     <Compile Include="Assets\ShadowRobot\Robot\RobotPosition.cs" />
     <Compile Include="Assets\ShadowRobot\Robot\RobotShape.cs" />
-    <Compile Include="Assets\ShadowRobot\RobotControll.cs" />
-    <Compile Include="Assets\TetrahedronScript.cs" />
+    <Compile Include="Assets\ShadowRobot\RobotActionControll.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Shadow\ShadowColor.shader" />
-    <None Include="Assets\Shadow\ShadowColor2.shader" />
-    <None Include="Assets\Shadow\ShadowColor3.shader" />
     <None Include="Assets\Stage\Shader-TwoSide.shader" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />

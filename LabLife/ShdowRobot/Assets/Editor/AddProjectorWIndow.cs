@@ -32,13 +32,44 @@ public class AddProjectorWIndow : EditorWindow
                 pw.projector = projector;
                 pw.SetUp();
                 pw.autoRepaintOnSceneChange = true;
-                pw.Show();
+                pw.ShowUtility();
+                
                 this.list_pw.Add(pw);
             }
             
         }
-       
+        if (GUILayout.Button("To Full Screen"))
+        {
+            if (this.list_pw.Count != 0)
+            {
+                for (int i = 0; i < this.list_pw.Count; i++)
+                {
+                    this.list_pw[i].ShowUtility();
+                }
+            }
 
+        }
+        if (GUILayout.Button("To Window"))
+        {
+            if (this.list_pw.Count != 0)
+            {
+                for (int i = 0; i < this.list_pw.Count; i++)
+                {
+                    this.list_pw[i].Show();
+                }
+            }
+
+        } if (GUILayout.Button("Close"))
+        {
+            if (this.list_pw.Count != 0)
+            {
+                for (int i = 0; i < this.list_pw.Count; i++)
+                {
+                    this.list_pw[i].Close();
+                }
+            }
+
+        }
     }
 
     bool CheckProjector(Camera obj)
