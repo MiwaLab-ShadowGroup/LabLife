@@ -7,15 +7,15 @@ using OpenCvSharp.CPlusPlus;
 
 namespace LabLife.Processer.ImageProcesser
 {
-    public class Reverse : AImageProcesser
+    public class CellAutomaton : AImageProcesser
     {
         public override void ImageProcess(ref Mat src, ref Mat dst)
         {
-            dst = ~src;
+            
         }
         public override string ToString()
         {
-            return "画像反転";
+            return "CellAutomaton";
         }
     }
 }
