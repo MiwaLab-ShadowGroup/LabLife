@@ -118,7 +118,7 @@ namespace LabLife.Editor
             }
             if (this.m_WritableBitmap == null)
             {
-                this.m_WritableBitmap = new WriteableBitmap(m_ProjectionImageMatrix.Width, m_ProjectionImageMatrix.Height, 96, 96, PixelFormats.Bgr24, null);
+                this.m_WritableBitmap = new WriteableBitmap(m_ProjectionImageMatrix.Width, m_ProjectionImageMatrix.Height, 96, 96, PixelFormats.Bgra32, null);
                 this.Image_Main.Source = this.m_WritableBitmap;
                 this.m_ProjectorWindow.Image_Project.Source = this.m_WritableBitmap;
                 this.Grid_Image.Width = m_ProjectionImageMatrix.Width;

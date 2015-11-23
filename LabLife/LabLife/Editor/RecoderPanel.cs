@@ -180,10 +180,10 @@ namespace LabLife.Editor
         private void Button_Save_Click(object sender, RoutedEventArgs e)
         {
 
-            CvSize sz = new CvSize(512, 424);
+            CvSize sz = new CvSize(320, 240);
             string strRECName = "video.avi";
 
-            int codec = 1;
+            int codec = 0;
             vw = new VideoWriter(strRECName, codec, 30, sz, true);
 
 
