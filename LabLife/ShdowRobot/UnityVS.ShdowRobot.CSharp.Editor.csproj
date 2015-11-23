@@ -93,6 +93,9 @@
     <Reference Include="CIPC_CS_Unity">
       <HintPath>Assets\plugins\CIPC_CS_Unity.dll</HintPath>
     </Reference>
+    <Reference Include="FPSAdjuster">
+      <HintPath>Assets\plugins\FPSAdjuster.dll</HintPath>
+    </Reference>
     <Reference Include="UDP_PACKETS_CLIANT_Unity">
       <HintPath>Assets\plugins\UDP_PACKETS_CLIANT_Unity.dll</HintPath>
     </Reference>
@@ -107,9 +110,6 @@
     </Reference>
     <Reference Include="UnityVS.VersionSpecific">
       <HintPath>Assets\UnityVS\Editor\UnityVS.VersionSpecific.dll</HintPath>
-    </Reference>
-    <Reference Include="FPSAdjuster">
-      <HintPath>Assets\plugins\FPSAdjuster.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -145,9 +145,6 @@
     <Compile Include="Assets\Editor\ProjectorWindow.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Shadow\ShadowColor.shader" />
-    <None Include="Assets\Shadow\ShadowColor2.shader" />
-    <None Include="Assets\Shadow\ShadowColor3.shader" />
     <None Include="Assets\Stage\Shader-TwoSide.shader" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
