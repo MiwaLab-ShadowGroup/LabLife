@@ -32,4 +32,6 @@ public class ProjectorWindow : EditorWindow
         this.projector.rect = this.preRect;
         this.projector.targetTexture = null;
     }
+
+    
 }

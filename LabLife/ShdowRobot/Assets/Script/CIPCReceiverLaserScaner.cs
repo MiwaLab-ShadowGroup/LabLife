@@ -9,6 +9,7 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
     public string remoteIP;
     public int myPort;
     public string name;
+    public int fps;
 
     CIPC_CS_Unity.CLIENT.CLIENT client;
     byte[] data;
@@ -57,12 +58,12 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
             int humanNum = dec.get_int();
             for (int i = 0; i < humanNum; i++)
             {
-                float x = (float)dec.get_double();
+                float x = - (float)dec.get_double();
                 float z = (float)dec.get_double();
                 list_position.Add(new Vector3(x, 0, z));
                 
             }
-            Debug.Log(list_position[0].ToString());
+            //Debug.Log(list_position[0].ToString());
         }
         catch
         {
@@ -77,14 +78,15 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
         this.client.Close();
     }
 
-    public void ConnectCIPC(int myport, string ip, int serverport)
+    public void ConnectCIPC()
     {
         try
         {
-            this.client = new CIPC_CS_Unity.CLIENT.CLIENT(myport, ip, serverport, "ShadowLS", 30);
+            //this.client = new CIPC_CS_Unity.CLIENT.CLIENT(myport, ip, serverport, "ShadowLS", 30);  
+            this.client = new CIPC_CS_Unity.CLIENT.CLIENT(this.myPort, this.remoteIP, this.serverPort, this.name, this.fps); 
             this.client.Setup(CIPC_CS_Unity.CLIENT.MODE.Receiver);
             this.IsCIPC = true;
-            Debug.Log("CIPC");
+            Debug.Log("CIPCforLaserScaner");
         }
         catch
         {
