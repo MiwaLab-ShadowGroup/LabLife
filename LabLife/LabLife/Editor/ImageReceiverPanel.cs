@@ -121,7 +121,6 @@ namespace LabLife.Editor
                         this.m_data = new byte[this.bitmapsorce.PixelWidth * this.bitmapsorce.PixelHeight * this.bitmapsorce.Format.BitsPerPixel / 8];
                         this.Image_Main.Source = this.m_WritableBitmap;
 
-
                     }
 
                     //イベント発生・送信

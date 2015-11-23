@@ -291,7 +291,7 @@ namespace LabLife.Editor
 
                 //this.bodyindexMat = WriteableBitmapConverter.ToMat(bodyIndexColorImage);
 
-                this.bodyindexMat = new Mat(424, 512, MatType.CV_8UC4, bodyIndexColorBuffer);
+                this.bodyindexMat = new Mat(424,512, MatType.CV_8UC4, bodyIndexColorBuffer);
                 
             }
 
@@ -340,6 +340,7 @@ namespace LabLife.Editor
                 this.depthImage.WritePixels(depthRect, depthBuffer, depthStride, 0);
 
                 depthMat = new Mat(424, 512, MatType.CV_16UC1, depthBuffer);
+
             }
         }
         #endregion

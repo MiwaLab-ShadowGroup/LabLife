@@ -13,5 +13,6 @@ namespace JPGPNGReceiveDecordeTest
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

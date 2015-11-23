@@ -29,7 +29,7 @@ namespace UDPDepthTest
 
         private static void Gd_DataReceived(object sender, ushort[] e)
         {
-            dc.Send("192.168.11.4", e);
+            dc.Send("127.0.0.1", e);
             //192.168.11.4
             //127.0.0.1
         }
