@@ -123,9 +123,14 @@ namespace LabLife.Editor
             this.updateLists();
         }
 
+
+        /// <summary>
+        /// 新しい画像処理の追加
+        /// </summary>
         private void InitImageProcesser()
         {
             this.m_ImageProcesserList.Add(new Processer.ImageProcesser.Reverse());
+            this.m_ImageProcesserList.Add(new Processer.ImageProcesser.CellAutomaton());
             this.updateLists();
         }
 
