@@ -21,6 +21,9 @@ namespace LabLife.Processer.ImageProcesser
         private Mat innerColorBuffer2;
         private Mat innerGrayBuffer2;
         private Mat outerGrayBuffer2;
+
+        private Mat m_element;
+
         public override void ImageProcess(ref Mat src, ref Mat dst)
         {
             if (!IsInit)
@@ -73,19 +76,11 @@ namespace LabLife.Processer.ImageProcesser
 
                 //    //////
 
-                Cv2.Dilate(bufimage, bufimage, new Mat());
-                Cv2.Dilate(bufimage, bufimage, new Mat());
-                Cv2.Dilate(bufimage, bufimage, new Mat());
-                Cv2.Dilate(bufimage, bufimage, new Mat());
-                Cv2.Dilate(bufimage, bufimage, new Mat());
-                Cv2.Dilate(bufimage, bufimage, new Mat());
+                Cv2.Dilate(bufimage, bufimage, m_element);
+                Cv2.Dilate(bufimage, bufimage, m_element);
 
-                Cv2.Erode(bufimage, bufimage, new Mat());
-                Cv2.Erode(bufimage, bufimage, new Mat());
-                Cv2.Erode(bufimage, bufimage, new Mat());
-                Cv2.Erode(bufimage, bufimage, new Mat());
-                Cv2.Erode(bufimage, bufimage, new Mat());
-                Cv2.Erode(bufimage, bufimage, new Mat());
+                Cv2.Erode(bufimage, bufimage, m_element);
+                Cv2.Erode(bufimage, bufimage, m_element);
                 
 
 
@@ -127,7 +122,7 @@ namespace LabLife.Processer.ImageProcesser
 
                 
                 innerGrayBuffer2 -= 0.2;        //param.slider[0];
-                outerGrayBuffer2 -= 10.0;   //param.slider[1];
+                outerGrayBuffer2 -= 0.2;   //param.slider[1];
 
                 outerGrayBuffer2 += tmp_bufImage_next3;
 
@@ -136,12 +131,12 @@ namespace LabLife.Processer.ImageProcesser
 
                 for (int i = 0; i < 3; i++)
                 {       //(int)param.slider[2]
-                    Cv2.Erode(innerGrayBuffer2, innerGrayBuffer2, new Mat());
+                    Cv2.Erode(innerGrayBuffer2, innerGrayBuffer2, m_element);
                 }
 
                 for (int i = 0; i < 1; i++)
                 {       //(int)param.slider[3]
-                    Cv2.Erode(outerGrayBuffer2, outerGrayBuffer2, new Mat());
+                    Cv2.Erode(outerGrayBuffer2, outerGrayBuffer2, m_element);
                 }
 
 
@@ -183,6 +178,12 @@ namespace LabLife.Processer.ImageProcesser
             this.outerGrayBuffer2 = new Mat(new Size(_w, _h), MatType.CV_8UC1, new Scalar(0));
             this.outerColorBuffer2 = new Mat(new Size(_w, _h), MatType.CV_8UC3, new Scalar(255, 255, 255));
             this.innerColorBuffer2 = new Mat(new Size(_w, _h), MatType.CV_8UC3, new Scalar(255, 255, 255));
+
+            this.m_element = new Mat(3, 3, MatType.CV_8UC1, new Scalar(1));
+            this.m_element.Set<byte>(0, 0, 0);
+            this.m_element.Set<byte>(2, 0, 0);
+            this.m_element.Set<byte>(0, 2, 0);
+            this.m_element.Set<byte>(2, 2, 0);
 
             this.bufimage = new Mat(new Size(_w, _h), MatType.CV_8UC1, new Scalar(0));
             for (int i = 0; i < h; i++)
