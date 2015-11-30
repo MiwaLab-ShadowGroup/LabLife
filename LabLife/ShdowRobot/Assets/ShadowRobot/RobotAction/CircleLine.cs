@@ -67,10 +67,10 @@ public class CircleLine : MonoBehaviour
         }
         switch (this.mode)
         {
-            case _mode.range: this.Move();  break;
+            case _mode.range:     this.Move();           break;
             case _mode.CenterPos: this.NoisePreCenter(); break;
-            case _mode.SD: this.NoiseSD(); break;
-            case _mode.RBM: this.NoiseBoxMuller(); break;
+            case _mode.SD:        this.NoiseSD();        break;
+            case _mode.RBM:       this.NoiseBoxMuller(); break;
         }
         
 

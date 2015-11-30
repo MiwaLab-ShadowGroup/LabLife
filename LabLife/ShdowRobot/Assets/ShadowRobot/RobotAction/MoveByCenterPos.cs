@@ -19,14 +19,21 @@ public class MoveByCenterPos : MonoBehaviour
     public GameObject robot;
     public GameObject CIPCforLaserScaner;
     public GameObject CIPCforKinect;
+    public GameObject depth;
+    //Local
+    CIPCReceiver cipcKinect;
+    CIPCReceiverLaserScaner cipcLS;
+    PointCloud pointCloud;
     //モード
+    public enum _Mode { Random, KinectStation, LaserScaner, Depth, };
+    public _Mode DataMode;
     bool IsKinectHuman;
     //CIPC
+    Vector3 centerPos;
     List<Vector3> list_humanpos;
     List<Human> List_Human;
     //計算クラス
     CalculatePosition cp;
-
     #endregion
 
     //実験用　randonな動き
@@ -40,6 +47,10 @@ public class MoveByCenterPos : MonoBehaviour
 
     void Start()
     {
+        this.cipcKinect = this.CIPCforKinect.GetComponent<CIPCReceiver>();
+        this.cipcLS = this.CIPCforLaserScaner.GetComponent<CIPCReceiverLaserScaner>();
+        this.pointCloud = this.depth.GetComponent<PointCloud>();
+
         this.List_Human = new List<Human>();
         this.list_humanpos = new List<Vector3>();
 
@@ -54,19 +65,63 @@ public class MoveByCenterPos : MonoBehaviour
         //this.robotPosition = new RobotPosition();
         //this.lightAction = new LightAction();
         Debug.Log("Light Robot");
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this.IsRandom) { this.MoveRandom(); }
-        else if (this.IsKinectHuman) { this.MoveByKinectHuman(this.robot); }
-        else { this.MoveByPosition(); }
+        //データもとによってそれぞれ計算
+        switch (this.DataMode)
+        {
+            case _Mode.Random: this.MoveRandom(); break;
+            case _Mode.KinectStation: this.MoveByKinectHuman(this.robot); break;
+            case _Mode.LaserScaner: this.MoveByPosition(); break;
+            case _Mode.Depth: this.MoveByDepth(); break;
+        }
+        
+
     }
+
+    void Bone()
+    {
+        this.List_Human = this.cipcKinect.List_Humans;
+        if (this.List_Human.Count != 0)
+        {
+            //位置
+            Vector3 center = this.cp.CenterPosition(this.List_Human);
+            Vector3 vec = center - this.robot.transform.position;
+            vec = new Vector3(vec.x, 0, vec.z);
+            vec /= vec.magnitude;
+            robot.transform.position += vec / this.velparameter;
+            //this.lightAction.Action(this.List_Human, ref this.robot);
+        }
+    }
+    List<Vector3> LaserRangeFinder()
+    {
+        return this.cipcLS.list_humanpos;
+    }
+    void Depth()
+    {
+        try
+        {
+            Vector3 center = -this.pointCloud.centerPos;
+            if (center.magnitude > 0)
+            {
+                Vector3 vec = center - this.robot.transform.position;
+                vec = new Vector3(vec.x, 0, vec.z);
+                vec /= vec.magnitude;
+                this.robot.transform.position += vec / this.velparameter;
+            }
+        }
+        catch { }
+    }
+
 
     void MoveByKinectHuman(GameObject robot)
     {
-        this.List_Human = this.CIPCforKinect.GetComponent<CIPCReceiver>().List_Humans;
+        this.List_Human = this.cipcKinect.List_Humans;
         if (this.List_Human.Count != 0)
         {
             //位置
@@ -80,7 +135,7 @@ public class MoveByCenterPos : MonoBehaviour
     }
     void MoveByPosition()
     {
-        this.list_humanpos = this.CIPCforLaserScaner.GetComponent<CIPCReceiverLaserScaner>().list_humanpos;
+        this.list_humanpos = this.cipcLS.list_humanpos;
         if (this.list_humanpos.Count != 0)
         {
             Vector3 center = -this.cp.CenterPosition(this.list_humanpos);
@@ -91,6 +146,23 @@ public class MoveByCenterPos : MonoBehaviour
             //this.robot.transform.position += new Vector3(vec.x, 0, vec.z);
 
         }
+
+    }
+    void MoveByDepth()
+    {
+        try
+        {
+            Vector3 center = -this.pointCloud.centerPos;
+            if (center.magnitude > 0)
+            {
+                Vector3 vec = center - this.robot.transform.position;
+                vec = new Vector3(vec.x, 0, vec.z);
+                vec /= vec.magnitude;
+                this.robot.transform.position += vec / this.velparameter;
+            }
+        }
+        catch { }
+ 
 
     }
     void MoveRandom()

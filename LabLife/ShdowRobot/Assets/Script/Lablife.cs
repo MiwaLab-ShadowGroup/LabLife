@@ -69,6 +69,7 @@ public class Lablife : MonoBehaviour
         if (this.renderTexture == null)
         {
             return;
+            
         }
         
         RenderTexture.active = this.renderTexture;
