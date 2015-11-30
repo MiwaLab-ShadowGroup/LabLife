@@ -8,7 +8,9 @@ public class PointCloud : MonoBehaviour
     private List<GameObject> ListCube = new List<GameObject>();
     public Windows.Kinect.KinectSensor sensor;
     private ushort[] RawData;
+
     private Windows.Kinect.CameraSpacePoint[] cameraSpacePoints;
+
     public Windows.Kinect.DepthFrameReader depthreader { get; set; }
 
     public GameObject kinect;
@@ -21,19 +23,39 @@ public class PointCloud : MonoBehaviour
     public int range;
     public int particulsnum;
 
+    //Save
+    [HideInInspector]
+    public ushort[] SaveRawData;
+    public bool IsArchive;
+    public GameObject ReadDepth;
+    ReadDepth saveData;
+    
+    
     // Use this for initialization
     void Start()
     {
         this.sensor = Windows.Kinect.KinectSensor.GetDefault();
         this.depthreader = this.sensor.DepthFrameSource.OpenReader();
-        this.depthreader.FrameArrived += depthreader_FrameArrived;
         this.RawData = new ushort[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
-
+        this.SaveRawData = new ushort[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
         this.ListCube = new List<GameObject>();
 
         this.cameraSpacePoints = new Windows.Kinect.CameraSpacePoint[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
-        this.sensor.Open();
-        
+
+        if (!this.IsArchive)
+        {
+            this.depthreader.FrameArrived += depthreader_FrameArrived;
+            this.sensor.Open();
+        }
+        if (this.IsArchive)
+        {
+            this.saveData = this.ReadDepth.GetComponent<ReadDepth>();
+            
+        }
+
+
+
+       
     }
 
     void depthreader_FrameArrived(object sender, Windows.Kinect.DepthFrameArrivedEventArgs e)
@@ -41,23 +63,37 @@ public class PointCloud : MonoBehaviour
         using (var frame = e.FrameReference.AcquireFrame())
         {
             frame.CopyFrameDataToArray(this.RawData);
+            this.SaveRawData = this.RawData;
             sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.RawData, this.cameraSpacePoints);
             
         }
+        //if(ReadData != null)
+        //{
+        //    sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.ReadData, this.cameraSpacePoints2);
+            
+        //}
     }
 
     // Update is called once per frame
     void Update()
-    {        
+    {
+
+        if (this.IsArchive)
+        {
+            this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveData.readData, this.cameraSpacePoints);
+            //Debug.Log("pc");
+        }
 
         int cubeCount = 0;
         int pointCount = 0;
         
         for (int i = 0; i < cameraSpacePoints.Length; i++)
         {
+           
             //奥の壁排除
             if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && this.ListCube.Count < this.maxCubeNum)
             {
+               // Debug.Log("OK");
                 //三次元位置に変更
                 Vector3 point = new Vector3(this.cameraSpacePoints[i].X,this.cameraSpacePoints[i].Y,this.cameraSpacePoints[i].Z);
                 
@@ -85,6 +121,8 @@ public class PointCloud : MonoBehaviour
                 }
                 pointCount++;
             }
+
+            
 
         }
 
@@ -130,5 +168,8 @@ public class PointCloud : MonoBehaviour
     {
         this.kinect.transform.position = vec;
     }
+
+    
+
 
 }

@@ -8,7 +8,7 @@ public class CIPCReceiver : MonoBehaviour
     public int serverPort;
     public string remoteIP;
     public int myPort;
-    public string name;
+    public string ClientName;
     public int fps;
     CIPC_CS_Unity.CLIENT.CLIENT client;
     byte[] data;
@@ -49,7 +49,7 @@ public class CIPCReceiver : MonoBehaviour
             //データ格納
             this.List_Humans.Clear();
 
-            int MaxofHuman = (int)dec.get_byte();
+            //int MaxofHuman = (int)dec.get_byte();
             int NumofHuman = (int)dec.get_byte();
 
             this.List_Humans = new List<Human>();
@@ -99,7 +99,7 @@ public class CIPCReceiver : MonoBehaviour
     {
         try
         {
-            this.client = new CIPC_CS_Unity.CLIENT.CLIENT(this.myPort, this.remoteIP, this.serverPort, this.name, this.fps);
+            this.client = new CIPC_CS_Unity.CLIENT.CLIENT(this.myPort, this.remoteIP, this.serverPort, this.ClientName, this.fps);
             this.client.Setup(CIPC_CS_Unity.CLIENT.MODE.Receiver);
             this.IsCIPC = true;
             Debug.Log("CIPCforKinect");
