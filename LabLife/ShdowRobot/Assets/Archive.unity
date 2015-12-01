@@ -1041,7 +1041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &493547225
 Transform:
   m_ObjectHideFlags: 0
@@ -1539,9 +1539,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 681121669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2f227125b5d20249bbce2a76c079d43, type: 3}
+  m_Script: {fileID: 11500000, guid: f4cb41468e5daad4588bbf31e8e47c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointCloudShadow: {fileID: 493547224}
+  IsSaveStop: 0
+  SaveFileName: a
 --- !u!4 &681121671
 Transform:
   m_ObjectHideFlags: 0
@@ -2152,9 +2155,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1215108038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c70e406aba73524db6fd1d278a616b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 2444b9b9cd7ee4d4eb5591d6777f16b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serverPort: 12000
+  remoteIP: 127.0.0.1
+  myPort: 56000
+  clientName: UnitySave_SYNCREC
+  fps: 30
 --- !u!1 &1454568097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2179,9 +2187,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1454568097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4204acb75b471304f959903f0685ce2c, type: 3}
+  m_Script: {fileID: 11500000, guid: bfe4fa2f897e0ee4489bc58e0a6dede0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  readData: 
+  ReadFileName: a
 --- !u!4 &1454568099
 Transform:
   m_ObjectHideFlags: 0

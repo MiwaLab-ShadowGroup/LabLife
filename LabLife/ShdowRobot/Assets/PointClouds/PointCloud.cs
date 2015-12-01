@@ -70,6 +70,7 @@ public class PointCloud : MonoBehaviour
         using (var frame = e.FrameReference.AcquireFrame())
         {
             frame.CopyFrameDataToArray(this.RawData);
+            this.SaveRawData = this.RawData;
             sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.RawData, this.cameraSpacePoints);
             
         }

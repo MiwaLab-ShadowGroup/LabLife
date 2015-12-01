@@ -10,10 +10,13 @@ public class ReadDepth : MonoBehaviour {
     public ushort[] readData;
     int datalength;
     public string ReadFileName;
-    // Use this for initialization
+    
     bool Isreader = true;
     Thread thread;
 
+    FPSAdjuster.FPSAdjuster FpsAd;
+
+    // Use this for initialization
     void Start () {
 
 
@@ -22,6 +25,10 @@ public class ReadDepth : MonoBehaviour {
         this.reader = new BinaryReader(File.OpenRead("C:\\Users\\yamakawa\\Documents\\UnitySave" + @"\" + ReadFileName));
         this.thread = new Thread(new ThreadStart(this.ReadData));
         this.thread.Start();
+
+        this.FpsAd = new FPSAdjuster.FPSAdjuster();
+        this.FpsAd.Fps = 30;
+        this.FpsAd.Start();
     }
 	
 	// Update is called once per frame
@@ -52,6 +59,8 @@ public class ReadDepth : MonoBehaviour {
     {
         while (true)
         {
+            FpsAd.Adjust();
+
             if (Isreader == true)
             {
 
