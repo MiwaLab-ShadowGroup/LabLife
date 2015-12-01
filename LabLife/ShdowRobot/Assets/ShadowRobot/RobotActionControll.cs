@@ -20,6 +20,7 @@ namespace Robot
         void Start()
         {
             MonoBehaviour[] array = this.GetComponents<MonoBehaviour>();
+            this.list_robotaction = new MonoBehaviour[array.Length - 1];
             for (int i = 0; i < array.Length - 1; i++)
             {
                 this.list_robotaction[i] = array[i + 1];

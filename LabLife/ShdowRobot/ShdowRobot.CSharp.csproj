@@ -51,11 +51,17 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
@@ -89,19 +95,21 @@
     <Compile Include="Assets\3DModels\ModelScript.cs" />
     <Compile Include="Assets\3DModels\ModelsView.cs" />
     <Compile Include="Assets\PointClouds\PointCloud.cs" />
+    <Compile Include="Assets\PointClouds\Shape.cs" />
+    <Compile Include="Assets\PointClouds\ShapeLookAt.cs" />
     <Compile Include="Assets\PointClouds\TetrahedronScript.cs" />
     <Compile Include="Assets\Script\CIPCReceiver.cs" />
     <Compile Include="Assets\Script\CIPCReceiverLaserScaner.cs" />
+    <Compile Include="Assets\Script\CIPCReceiverforSave.cs" />
     <Compile Include="Assets\Script\Class\Human.cs" />
+    <Compile Include="Assets\Script\FPSAdjuster.cs" />
+    <Compile Include="Assets\Script\Folder.cs" />
+    <Compile Include="Assets\Script\ImageEffect.cs" />
     <Compile Include="Assets\Script\Lablife.cs" />
+    <Compile Include="Assets\Script\ReadDepth.cs" />
+    <Compile Include="Assets\Script\SaveDepth.cs" />
     <Compile Include="Assets\Script\UIScript.cs" />
-    <Compile Include="Assets\ShadowRobot\Backup\Aizawa.cs" />
-    <Compile Include="Assets\ShadowRobot\Backup\AizawaModel.cs" />
-    <Compile Include="Assets\ShadowRobot\Backup\AizawaRobot.cs" />
-    <Compile Include="Assets\ShadowRobot\Backup\ChangeSize.cs" />
-    <Compile Include="Assets\ShadowRobot\Backup\GouseiRobot.cs" />
-    <Compile Include="Assets\ShadowRobot\Backup\PastPlayer.cs" />
-    <Compile Include="Assets\ShadowRobot\Backup\RobotSamePlace.cs" />
+    <Compile Include="Assets\ShadowRobot\RobotAction\ActionTest.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\CalculatePosition.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\CircleLine.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\LightAction.cs" />
