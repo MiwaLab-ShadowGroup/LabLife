@@ -69,7 +69,7 @@ public class ReadDepth : MonoBehaviour {
                     Isreader = false;
                 }
 
-                Debug.Log("OK");
+                //Debug.Log("OK");
             }
             else { break; }
         }
