@@ -50,6 +50,7 @@ namespace LabLife
                 this.PanelList.Add(new ImageReceiverHostPanel());
                 this.PanelList.Add(new TransporterHostPanel());
                 this.PanelList.Add(new RecoderPanel());
+                this.PanelList.Add(new SyncRecordManagerCIPCPanel());
 
                 if (System.Environment.Is64BitOperatingSystem)
                 {

@@ -107,6 +107,7 @@
     <Compile Include="Editor\LogPanel.cs" />
     <Compile Include="Editor\ProjectionPanel.cs" />
     <Compile Include="Editor\RecoderPanel.cs" />
+    <Compile Include="Editor\SyncRecordManagerCIPCPanel.cs" />
     <Compile Include="Editor\TransporterHostPanel.cs" />
     <Compile Include="LabLife.cs" />
     <Compile Include="Processer\ImageProcesser\AImageProcesser.cs" />
@@ -181,7 +182,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\CIPC_CS.csproj">
+      <Project>{b98d919a-06a5-4db5-b79b-92c30497e83e}</Project>
+      <Name>CIPC_CS</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
