@@ -21,8 +21,7 @@ namespace Robot
         {
             MonoBehaviour[] array = this.GetComponents<MonoBehaviour>();
             this.list_robotaction = new MonoBehaviour[array.Length - 1];
-            //Debug.Log(array.Length.ToString());
-            for (int i = 0; i < array.Length - 1 ; i++)
+            for (int i = 0; i < array.Length - 1; i++)
             {
                 this.list_robotaction[i] = array[i + 1];
             }
@@ -41,10 +40,10 @@ namespace Robot
                     {
                         if (this.list_robotaction[i].enabled) this.list_robotaction[i].enabled = false;
                     }
-                    this.list_robotaction[this.robotActionID].enabled = true;
+                        this.list_robotaction[this.robotActionID].enabled = true;
                 }
             }
-
+            
         }
 
        

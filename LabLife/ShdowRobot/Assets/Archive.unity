@@ -117,6 +117,8 @@ MonoBehaviour:
   robot: {fileID: 146498708}
   CIPCforLaserScaner: {fileID: 1527814823}
   CIPCforKinect: {fileID: 638825755}
+  depth: {fileID: 493547224}
+  DataMode: 0
   IsRandom: 0
   velparameter: 100
   fieldSize: {x: -2, y: 2, z: -.5, w: 1.79999995}
@@ -675,7 +677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &225518045
 Transform:
   m_ObjectHideFlags: 0
@@ -702,12 +704,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 131304, guid: fa990871743347f4d89828a607d6e3de, type: 2}
   kinect: {fileID: 391702736}
+  mode: 0
   maxCubeNum: 20000
   rangex: {x: -1, y: 1}
   rangez: {x: 1, y: 3}
   roophight: 2
   range: 5
   particulsnum: 0
+  centerPos: {x: 0, y: 0, z: 0}
   SaveRawData: 
   IsArchive: 1
   ReadDepth: {fileID: 1454568097}
@@ -1064,12 +1068,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 131304, guid: fa990871743347f4d89828a607d6e3de, type: 2}
   kinect: {fileID: 749055555}
+  mode: 0
   maxCubeNum: 20000
   rangex: {x: -1, y: 1}
   rangez: {x: 1, y: 3}
   roophight: 2
   range: 5
   particulsnum: 0
+  centerPos: {x: 0, y: 0, z: 0}
   SaveRawData: 
   IsArchive: 0
   ReadDepth: {fileID: 0}
@@ -1278,7 +1284,7 @@ MonoBehaviour:
   serverPort: 50000
   remoteIP: 127.0.0.1
   myPort: 55000
-  ClientName: 
+  clinteName: 
   fps: 30
 --- !u!4 &638825757
 Transform:
@@ -1536,9 +1542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f227125b5d20249bbce2a76c079d43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointCloudShadow: {fileID: 493547224}
-  IsSaveStop: 0
-  SaveFileName: test10
 --- !u!4 &681121671
 Transform:
   m_ObjectHideFlags: 0
@@ -2152,11 +2155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c70e406aba73524db6fd1d278a616b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverPort: 0
-  remoteIP: 
-  myPort: 0
-  clientName: 
-  fps: 0
 --- !u!1 &1454568097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,8 +2182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4204acb75b471304f959903f0685ce2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readData: 
-  ReadFileName: test10
 --- !u!4 &1454568099
 Transform:
   m_ObjectHideFlags: 0
@@ -2382,7 +2378,7 @@ MonoBehaviour:
   serverPort: 50000
   remoteIP: 127.0.0.1
   myPort: 55000
-  clientName: 
+  clinteName: 
   fps: 30
   list_humanpos: []
 --- !u!1 &1702246437
