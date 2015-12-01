@@ -26,10 +26,18 @@ public class PointCloud : MonoBehaviour
     public float roophight;
     public int range;
 
+
     //監視
     public int particulsnum;
     [HideInInspector]
     public Vector3 centerPos;
+
+    //Save
+    [HideInInspector]
+    public ushort[] SaveRawData;
+    public bool IsArchive;
+    public GameObject ReadDepth;
+    ReadDepth saveData;
 
     #endregion
     // Use this for initialization
@@ -37,15 +45,22 @@ public class PointCloud : MonoBehaviour
     {
         this.sensor = Windows.Kinect.KinectSensor.GetDefault();
         this.depthreader = this.sensor.DepthFrameSource.OpenReader();
-        this.imageWidth = 512;
-        this.imageHeight = 424;
-        this.depthreader.FrameArrived += depthreader_FrameArrived;
         this.RawData = new ushort[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
-
+        this.SaveRawData = new ushort[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
         this.ListCube = new List<GameObject>();
 
         this.cameraSpacePoints = new Windows.Kinect.CameraSpacePoint[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
-        this.sensor.Open();
+
+        if (!this.IsArchive)
+        {
+            this.depthreader.FrameArrived += depthreader_FrameArrived;
+            this.sensor.Open();
+        }
+        if (this.IsArchive)
+        {
+            this.saveData = this.ReadDepth.GetComponent<ReadDepth>();
+
+        }
 
         this.centerPos = new Vector3();        
     }
@@ -64,7 +79,12 @@ public class PointCloud : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
+        if (this.IsArchive)
+        {
+            this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveData.readData, this.cameraSpacePoints);
+            //Debug.Log("pc");
+        }
 
         int cubeCount = 0;
 

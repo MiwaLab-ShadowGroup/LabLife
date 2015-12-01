@@ -168,7 +168,7 @@ public class MoveByCenterPos : MonoBehaviour
     void MoveRandom()
     {
 
-        if (this.frame % (this.interval * 60) == 0)
+        if (Time.deltaTime % this.interval == 0)
         {
             //位置
             this.vec = new Vector3(Random.Range(-50, 50), 0, Random.Range(-50, 50));

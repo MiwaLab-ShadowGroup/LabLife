@@ -45,7 +45,7 @@ public class SaveDepth : MonoBehaviour {
         while (true)
         {
             
-            Debug.Log(framecount);
+            //Debug.Log(framecount);
             writer.Write(pointcloud.SaveRawData.Length);
 
             for (int i = 0; i < pointcloud.SaveRawData.Length; i++)
