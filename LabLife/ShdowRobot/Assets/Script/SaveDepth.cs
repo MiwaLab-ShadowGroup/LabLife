@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using UnityEditor;
 
+
 public class SaveDepth : MonoBehaviour {
 
     public GameObject pointCloudShadow;
@@ -12,27 +13,47 @@ public class SaveDepth : MonoBehaviour {
 
     BinaryWriter writer;
     int framecount;
-    public string SaveFileName;
+    //public string SaveFileName;
     Thread thread;
 
-    string FolderPath;
+    string FilePath;
+
+    FPSAdjuster.FPSAdjuster FpsAd;
+
+    public bool OpenFileChoose = false;
+
     // Use this for initialization
     void Start () {
 
-        this.pointcloud = this.pointCloudShadow.GetComponent<PointCloud>();
+        this.pointcloud = pointCloudShadow.GetComponent<PointCloud>();
+        
         //保存するフォルダ
-        //this.writer = new BinaryWriter(File.OpenWrite("C:\\Users\\yamakawa\\Documents\\UnitySave" + @"\"+ "test"));
-        this.writer = new BinaryWriter(File.OpenWrite("C:\\Users\\yamakawa\\Documents\\UnitySave" + @"\"+ SaveFileName));
-        framecount = 0;
-        thread = new Thread(new ThreadStart(Save));
-        thread.Start();
-        //FolderPath = EditorUtility.OpenFilePanel("ファイル選択", "", "");
+        
     }
 
     // Update is called once per frame
     void Update () {
 
-        
+        if (OpenFileChoose)
+        {
+            FilePath = EditorUtility.SaveFilePanel("ファイル選択", " "," ", " ");
+
+            if (FilePath != null)
+            {
+
+                this.writer = new BinaryWriter(File.OpenWrite(FilePath));
+                framecount = 0;
+                thread = new Thread(new ThreadStart(Save));
+                thread.Start();
+
+                this.FpsAd = new FPSAdjuster.FPSAdjuster();
+                this.FpsAd.Fps = 30;
+                this.FpsAd.Start();
+            }
+
+            OpenFileChoose = false;
+        }
+
     }
 
     //void OnApplicationQuit()
@@ -42,30 +63,35 @@ public class SaveDepth : MonoBehaviour {
 
     void Save()
     {
-        while (true)
+        try
         {
-            
-            //Debug.Log(framecount);
-            writer.Write(pointcloud.SaveRawData.Length);
 
-            for (int i = 0; i < pointcloud.SaveRawData.Length; i++)
-            {
+                while (true)
+                {
+                    this.FpsAd.Adjust();
+                    //Debug.Log(framecount);
+                    writer.Write(pointcloud.SaveRawData.Length);
 
-                writer.Write(pointcloud.SaveRawData[i]);
-            }
+                    for (int i = 0; i < pointcloud.SaveRawData.Length; i++)
+                    {
 
-            framecount++;
-            if (this.IsSaveStop)
-            {
-                //thread.Abort();
-                break;
-            }
+                        writer.Write(pointcloud.SaveRawData[i]);
+                    }
+
+                    //framecount++;
+                    if (this.IsSaveStop)
+                    {
+                        //thread.Abort();
+                        break;
+                    }
+
+                }
 
         }
+        catch
+        {
 
-
+        }
     }
-
-    
 
 }

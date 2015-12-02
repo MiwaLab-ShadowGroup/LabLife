@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Threading;
+using UnityEditor;
 
 public class ReadDepth : MonoBehaviour {
 
@@ -10,48 +11,60 @@ public class ReadDepth : MonoBehaviour {
     public ushort[] readData;
     int datalength;
     public string ReadFileName;
-    // Use this for initialization
+    
     bool Isreader = true;
     Thread thread;
 
+    FPSAdjuster.FPSAdjuster FpsAd;
+
+    public bool OpenFileChoose = false;
+
+    string FilePath;
+
+
+    // Use this for initialization
     void Start () {
 
 
         readData = new ushort[512 * 424];
 
-        this.reader = new BinaryReader(File.OpenRead("C:\\Users\\yamakawa\\Documents\\UnitySave" + @"\" + ReadFileName));
-        this.thread = new Thread(new ThreadStart(this.ReadData));
-        this.thread.Start();
+        
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-        //if (Isreader == true)
-        //{
+    // Update is called once per frame
+    void Update()
+    {
 
-            //this.datalength = this.reader.ReadInt32();
+        if (OpenFileChoose)
+        {
+            FilePath = EditorUtility.OpenFilePanel("ファイル選択", "　", "　");
 
-            //for (int i = 0; i < datalength; i++)
-            //{
-            //    this.readData[i] = this.reader.ReadUInt16();
+            if(FilePath != null)
+            {
+                this.reader = new BinaryReader(File.OpenRead("C:\\Users\\yamakawa\\Documents\\UnitySave" + @"\" + ReadFileName));
+                this.thread = new Thread(new ThreadStart(this.ReadData));
+                this.thread.Start();
 
-            //}
+                this.FpsAd = new FPSAdjuster.FPSAdjuster();
+                this.FpsAd.Fps = 30;
+                this.FpsAd.Start();
+            }
 
-            //if (reader.PeekChar() == -1)
-            //{
-            //    reader.Close();
-            //    //Isreader = false;
-            //}
+            OpenFileChoose = false;
+        }
 
-            //Debug.Log("OK");
-        //}
+
     }
+
+
+
 
     void ReadData()
     {
         while (true)
         {
+            FpsAd.Adjust();
+
             if (Isreader == true)
             {
 
