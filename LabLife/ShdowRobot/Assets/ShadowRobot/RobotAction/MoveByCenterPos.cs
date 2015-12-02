@@ -25,22 +25,20 @@ public class MoveByCenterPos : MonoBehaviour
     CIPCReceiverLaserScaner cipcLS;
     PointCloud pointCloud;
     //モード
-    public enum _Mode { Random, KinectStation, LaserScaner, Depth, };
+    public enum _Mode { KinectStation, LaserScaner, Depth, };
     public _Mode DataMode;
-    bool IsKinectHuman;
+    
     //CIPC
     Vector3 centerPos;
+    Vector3 preCenterPos;
     List<Vector3> list_humanpos;
     List<Human> List_Human;
     //計算クラス
     CalculatePosition cp;
     #endregion
 
-    //実験用　randonな動き
-    Vector3 vec;
-    int frame;
-    int interval;
-    public bool IsRandom;
+   
+    
     // Use this for initialization
     public int velparameter;
     public Vector4 fieldSize;
@@ -54,19 +52,11 @@ public class MoveByCenterPos : MonoBehaviour
         this.List_Human = new List<Human>();
         this.list_humanpos = new List<Vector3>();
 
-        this.vec = Vector3.zero;
-        this.frame = 0;
-        this.interval = 5;
-
-        this.IsKinectHuman = true;
-
         this.cp = new CalculatePosition(0);
-
-        //this.robotPosition = new RobotPosition();
-        //this.lightAction = new LightAction();
-        Debug.Log("Light Robot");
-
-        
+        this.centerPos = new Vector3();
+        this.preCenterPos = new Vector3();
+       
+        Debug.Log("Light Robot");       
     }
 
     // Update is called once per frame
@@ -75,47 +65,72 @@ public class MoveByCenterPos : MonoBehaviour
         //データもとによってそれぞれ計算
         switch (this.DataMode)
         {
-            case _Mode.Random: this.MoveRandom(); break;
             case _Mode.KinectStation: this.MoveByKinectHuman(this.robot); break;
             case _Mode.LaserScaner: this.MoveByPosition(); break;
             case _Mode.Depth: this.MoveByDepth(); break;
         }
-        
 
     }
 
+    //データ取得
     void Bone()
     {
         this.List_Human = this.cipcKinect.List_Humans;
         if (this.List_Human.Count != 0)
         {
             //位置
-            Vector3 center = this.cp.CenterPosition(this.List_Human);
-            Vector3 vec = center - this.robot.transform.position;
-            vec = new Vector3(vec.x, 0, vec.z);
-            vec /= vec.magnitude;
-            robot.transform.position += vec / this.velparameter;
-            //this.lightAction.Action(this.List_Human, ref this.robot);
+            this.centerPos = this.cp.CenterPosition(this.List_Human);
+            
         }
     }
-    List<Vector3> LaserRangeFinder()
+    void LaserRangeFinder()
     {
-        return this.cipcLS.list_humanpos;
+        this.centerPos = this.cp.CenterPosition(this.cipcLS.list_humanpos);
     }
     void Depth()
     {
         try
         {
-            Vector3 center = -this.pointCloud.centerPos;
-            if (center.magnitude > 0)
-            {
-                Vector3 vec = center - this.robot.transform.position;
-                vec = new Vector3(vec.x, 0, vec.z);
-                vec /= vec.magnitude;
-                this.robot.transform.position += vec / this.velparameter;
-            }
+            this.centerPos = this.pointCloud.centerPos;
+            
         }
         catch { }
+    }
+    
+    //動き
+    void TwoDMoveCenter()
+    {
+        //位置
+        Vector3 vec = - this.centerPos - this.robot.transform.position;
+        vec = new Vector3(vec.x, 0, vec.z);
+        vec /= vec.magnitude;
+        robot.transform.position += vec / this.velparameter;
+    }
+    void ThreeDMoveCeneter()
+    {
+        //位置
+        Vector3 vec = - this.centerPos - this.robot.transform.position;
+        vec /= vec.magnitude;
+        robot.transform.position += vec / this.velparameter;
+    }
+    void HeightSine()
+    {
+        //位置
+        Vector3 vec = - this.centerPos - this.robot.transform.position;
+        //Sinで高さ決定
+        vec.y = 0.5f * Mathf.Sin(Time.deltaTime);
+        vec /= vec.magnitude;
+        robot.transform.position += vec / this.velparameter;
+    }
+    void HeightPrePos()
+    {
+        this.centerPos.y += this.cp.CulculateVelocity(this.centerPos, this.preCenterPos).y;
+        Vector3 vec = - this.centerPos - this.robot.transform.position;
+        vec /= vec.magnitude;
+        robot.transform.position += vec / this.velparameter;
+
+
+        this.preCenterPos = this.centerPos;
     }
 
 
@@ -124,13 +139,7 @@ public class MoveByCenterPos : MonoBehaviour
         this.List_Human = this.cipcKinect.List_Humans;
         if (this.List_Human.Count != 0)
         {
-            //位置
-            Vector3 center = this.cp.CenterPosition(this.List_Human);
-            Vector3 vec = center - this.robot.transform.position;
-            vec = new Vector3(vec.x, 0, vec.z);
-            vec /= vec.magnitude;
-            robot.transform.position += vec / this.velparameter;
-            //this.lightAction.Action(this.List_Human, ref this.robot);
+            
         }
     }
     void MoveByPosition()
@@ -165,50 +174,6 @@ public class MoveByCenterPos : MonoBehaviour
  
 
     }
-    void MoveRandom()
-    {
-
-        if (Time.deltaTime % this.interval == 0)
-        {
-            //位置
-            this.vec = new Vector3(Random.Range(-50, 50), 0, Random.Range(-50, 50));
-            this.interval = Random.Range(0, 7);
-            this.frame = 1;
-        }
-        //位置
-        this.vec /= (this.vec.magnitude * this.velparameter);
-        Vector3 pos = this.robot.transform.position + vec;
-        if (pos.x > this.fieldSize.x && pos.x < this.fieldSize.y && pos.z > this.fieldSize.z && pos.z < this.fieldSize.w)
-        {
-            this.robot.transform.position += vec;
-            this.frame++;
-
-        }
-        else { this.frame = 0; }
-        //this.lightAction.Action(this.List_Human, ref this.robot);
-
-    }
-
-    //パラメータ
-    public void ChangeMode(bool Iskinecthuman)
-    {
-        this.IsKinectHuman = Iskinecthuman;
-    }
-    public void ChangeVel(bool Is)
-    {
-        //this.robotPosition.ChangeVel(Is);
-    }
-    public void ChangeIsHigh(bool Is)
-    {
-        //this.robotPosition.ChangeIsHigh(Is);
-    }
-    public void ChangeIsJumpVel(bool Is)
-    {
-        //this.robotPosition.ChangeIsJumpVel(Is);
-    }
-    public void ChangeJump(bool Is)
-    {
-        //this.robotPosition.ChangeJump(Is);
-    }
+    
 
 }

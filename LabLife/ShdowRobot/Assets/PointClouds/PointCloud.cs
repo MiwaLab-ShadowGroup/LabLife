@@ -25,7 +25,7 @@ public class PointCloud : MonoBehaviour
     public Vector2 rangez;
     public float roophight;
     public int range;
-
+    public bool IsReset = false;
 
     //監視
     public int particulsnum;
@@ -115,7 +115,9 @@ public class PointCloud : MonoBehaviour
         }
 
         this.particulsnum = this.ListCube.Count;
-      
+
+        //Reset
+        if (this.IsReset) this.Reset();
     }        
 
    
@@ -257,4 +259,20 @@ public class PointCloud : MonoBehaviour
 
         }
     }
+
+    void Reset()
+    {
+        try
+        {
+            for (int i =0; i < this.ListCube.Count; i++)
+            {
+                Destroy(this.ListCube[0]);
+                this.ListCube.RemoveAt(0);
+            }
+            this.IsReset = false;
+        }
+        catch { }
+            
+    }
+
 }

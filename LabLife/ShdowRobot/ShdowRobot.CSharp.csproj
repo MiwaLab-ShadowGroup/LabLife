@@ -107,10 +107,12 @@
     <Compile Include="Assets\ShadowRobot\RobotAction\CircleLine.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\LightAction.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\MoveByCenterPos.cs" />
+    <Compile Include="Assets\ShadowRobot\RobotAction\RandomMove.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\RobotPosition.cs" />
     <Compile Include="Assets\ShadowRobot\RobotActionControll.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\NewImageEffectShader.shader" />
     <None Include="Assets\Stage\Shader-TwoSide.shader" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />

@@ -120,6 +120,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Twirl.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Vortex.cs" />
+    <Compile Include="Assets\Standard Assets\Effects\TestShader.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
     <Compile Include="Assets\Standard Assets\EventPump.cs" />
     <Compile Include="Assets\Standard Assets\ExceptionHelper.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Assets\Standard Assets\Windows\Kinect\Vector4.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\NewImageEffectShader.shader" />
     <None Include="Assets\Stage\Shader-TwoSide.shader" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
