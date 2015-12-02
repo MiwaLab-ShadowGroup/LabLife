@@ -1041,7 +1041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &493547225
 Transform:
   m_ObjectHideFlags: 0
@@ -1544,7 +1544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointCloudShadow: {fileID: 493547224}
   IsSaveStop: 0
-  SaveFileName: a
+  FileChoose: 0
 --- !u!4 &681121671
 Transform:
   m_ObjectHideFlags: 0
@@ -2159,10 +2159,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverPort: 12000
-  remoteIP: 127.0.0.1
+  remoteIP: 192.168.11.15
   myPort: 56000
   clientName: UnitySave_SYNCREC
   fps: 30
+  CIPCSetup: 0
 --- !u!1 &1454568097
 GameObject:
   m_ObjectHideFlags: 0
