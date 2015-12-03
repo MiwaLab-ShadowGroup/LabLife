@@ -1,9 +1,11 @@
-﻿using System;
+﻿using LabLife.Contorols;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace LabLife.Editor
 {
@@ -14,6 +16,11 @@ namespace LabLife.Editor
     {
         public CIPC_CS.CLIENT.CLIENT client;
 
+        public TextAndTextBoxControl TextTextBox_CIPCRemoteIP = new TextAndTextBoxControl();
+        public TextAndTextBoxControl TextTextBox_CIPCRemotePort = new TextAndTextBoxControl();
+        public TextAndTextBoxControl TextTextBox_CIPCMyPort = new TextAndTextBoxControl();
+        
+
         public SyncRecordManagerCIPCPanel()
         {
             this.TitleName = "SyncRecordManagerCIPCPanel";
@@ -22,8 +29,86 @@ namespace LabLife.Editor
         public override void Initialize(MainWindow mainwindow)
         {
             base.Initialize(mainwindow);
-            
+
+            Border b1 = new Border();
+            StackPanel stp1 = new StackPanel();
+            b1.Style = (Style)App.Current.Resources["Border_Default"];
+            b1.Child = stp1;
+            b1.MinWidth = 150;
+            TextBlock tb1 = new TextBlock();
+            tb1.Text = "CIPCConnect";
+            stp1.Children.Add(tb1);
+            this.TextTextBox_CIPCRemoteIP.HeaderText.Text = "RemoteIP";
+            stp1.Children.Add(this.TextTextBox_CIPCRemoteIP);
+            this.TextTextBox_CIPCRemotePort.HeaderText.Text = "RemotePort";
+            stp1.Children.Add(this.TextTextBox_CIPCRemotePort);
+            this.TextTextBox_CIPCMyPort.HeaderText.Text = "MyPort";
+            stp1.Children.Add(this.TextTextBox_CIPCMyPort);
+            Button Button_CipcConnect = new Button();
+            Button_CipcConnect.Content = "Connect";
+            Button_CipcConnect.Click += Button_CipcConnect_Click;
+            stp1.Children.Add(Button_CipcConnect);
+
+            Button Button_CipcClose = new Button();
+            Button_CipcClose.Content = "Close";
+            Button_CipcClose.Click += Button_CipcClose_Click; ;
+            stp1.Children.Add(Button_CipcClose);
+
+            Border b2 = new Border();
+            StackPanel stp2 = new StackPanel();
+            b2.Style = (Style)App.Current.Resources["Border_Default"];
+            b2.Child = stp2;
+            TextBlock tb2 = new TextBlock();
+            tb2.Text = "Control";
+            Button Button_CIPCSenderSTART = new Button();
+            Button_CIPCSenderSTART.Content = "START";
+            Button_CIPCSenderSTART.Click += Button_CIPCSender_Click;
+
+            Button Button_CIPCSenderSTOP = new Button();
+            Button_CIPCSenderSTOP.Content = "STOP";
+            Button_CIPCSenderSTOP.Click += Button_CIPCSenderSTOP_Click; ;
+
+            stp2.Children.Add(tb2);
+            stp2.Children.Add(Button_CIPCSenderSTART);
+            stp2.Children.Add(Button_CIPCSenderSTOP);
+
+
+            base.AddContent(b1, Dock.Left);
+            base.AddContent(b2, Dock.Left);
         }
+
+        private void Button_CipcClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.client.Close();
+        }
+
+        private void Button_CIPCSenderSTOP_Click(object sender, RoutedEventArgs e)
+        {
+            byte[] data = null;
+            UDP_PACKETS_CODER.UDP_PACKETS_ENCODER enc = new UDP_PACKETS_CODER.UDP_PACKETS_ENCODER();
+            enc += "STOP";
+            data = enc.data;
+            this.client.Update(ref data);
+        }
+
+        private void Button_CIPCSender_Click(object sender, RoutedEventArgs e)
+        {
+            byte[] data = null;
+            UDP_PACKETS_CODER.UDP_PACKETS_ENCODER enc = new UDP_PACKETS_CODER.UDP_PACKETS_ENCODER();
+            enc += "START";
+            data = enc.data;
+            this.client.Update(ref data);
+        }
+
+        private void Button_CipcConnect_Click(object sender, RoutedEventArgs e)
+        {
+            this.client = new CIPC_CS.CLIENT.CLIENT(int.Parse(this.TextTextBox_CIPCMyPort.ContentText.Text),
+                this.TextTextBox_CIPCRemoteIP.ContentText.Text,
+                int.Parse(this.TextTextBox_CIPCRemotePort.ContentText.Text),"SyncManager",30);
+            
+            this.client.Setup(CIPC_CS.CLIENT.MODE.Sender);
+        }
+
         public override void Close(object sender, RoutedEventArgs e)
         {
             base.Close(sender, e);

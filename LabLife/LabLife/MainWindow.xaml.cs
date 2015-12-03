@@ -58,6 +58,10 @@ namespace LabLife
                 }
                 this.PanelList.Add(new ProjectionPanel(1));
                 this.PanelList.Add(new ProjectionPanel(2));
+                this.PanelList.Add(new ProjectionPanel(3));
+                this.PanelList.Add(new ProjectionPanel(4));
+                this.PanelList.Add(new ProjectionPanel(5));
+                this.PanelList.Add(new ProjectionPanel(6));
             }
             catch (Exception ex)
             {

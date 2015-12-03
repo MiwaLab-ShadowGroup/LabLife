@@ -95,6 +95,9 @@
     <Compile Include="Contorols\SliderAndTextControl.xaml.cs">
       <DependentUpon>SliderAndTextControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Contorols\TextAndTextBoxControl.xaml.cs">
+      <DependentUpon>TextAndTextBoxControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\AData.cs" />
     <Compile Include="Data\CallibrationData.cs" />
     <Compile Include="Data\General.cs" />
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Contorols\SliderAndTextControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Contorols\TextAndTextBoxControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,6 +193,10 @@
     <ProjectReference Include="..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\CIPC_CS.csproj">
       <Project>{b98d919a-06a5-4db5-b79b-92c30497e83e}</Project>
       <Name>CIPC_CS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\UdpDllsCS\UDP_PACKETS_CODER\UDP_PACKETS_CODER\UDP_PACKETS_MAKER.csproj">
+      <Project>{308fb561-55f7-41a1-bfe0-f47652b0fe22}</Project>
+      <Name>UDP_PACKETS_MAKER</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
