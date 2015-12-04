@@ -27,8 +27,8 @@ public class CIPCReceiverforSave : MonoBehaviour {
 
     FPSAdjuster.FPSAdjuster FpsAd;
 
-    Thread thread;
-    Thread thread1;
+    Thread CIPCthread;
+    Thread Savethread;
 
     public bool CIPCSetup = false;
 
@@ -132,14 +132,20 @@ public class CIPCReceiverforSave : MonoBehaviour {
         {
             this.client.Close();
         }
-        if (this.thread != null)
+        if (this.CIPCthread != null)
         {
-            thread.Abort();
+            CIPCthread.Abort();
 
         }
-        if(thread1 != null)
+        if(Savethread != null)
         {
-            thread1.Abort();
+            Savethread.Abort();
+        }
+
+        if(writer != null)
+        {
+            writer.Close();
+
         }
     }
 
@@ -148,8 +154,8 @@ public class CIPCReceiverforSave : MonoBehaviour {
         try
         {
 
-            this.thread = new Thread(new ThreadStart(GetData));
-            this.thread.Start();
+            this.CIPCthread = new Thread(new ThreadStart(GetData));
+            this.CIPCthread.Start();
 
             this.client = new CIPC_CS_Unity.CLIENT.CLIENT(this.myPort, this.remoteIP, this.serverPort, this.clientName, this.fps);
             this.client.Setup(CIPC_CS_Unity.CLIENT.MODE.Receiver);
@@ -169,9 +175,9 @@ public class CIPCReceiverforSave : MonoBehaviour {
         {
             if (FolderPath != null)
             {
-                thread1 = new Thread(new ThreadStart(Save));
-                thread1.Start();
-                Debug.Log("start1");
+                Savethread = new Thread(new ThreadStart(Save));
+                Savethread.Start();
+                Debug.Log("start");
                 RecState = false;
             }
         }
@@ -205,7 +211,7 @@ public class CIPCReceiverforSave : MonoBehaviour {
 
                 }
             }
-            Debug.Log("stop1");
+            Debug.Log("stop");
 
             this.writer.Close();
         }

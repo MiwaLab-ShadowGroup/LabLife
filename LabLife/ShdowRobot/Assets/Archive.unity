@@ -2168,7 +2168,7 @@ MonoBehaviour:
   pointCloudShadow: {fileID: 493547224}
   CIPCSetup: 0
   OpenFileChoose: 0
-  filename: synctest4
+  filename: test
 --- !u!1 &1454568097
 GameObject:
   m_ObjectHideFlags: 0
