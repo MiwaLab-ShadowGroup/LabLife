@@ -21,6 +21,7 @@ public class ReadDepth : MonoBehaviour {
 
     string FilePath;
 
+    public bool Readstart; 
 
     // Use this for initialization
     void Start () {
