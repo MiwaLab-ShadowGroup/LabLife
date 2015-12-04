@@ -94,7 +94,6 @@ namespace LabLife.Processer
                 {
                     var __image = _image.Clone();
                     __image.SetTo(new Scalar(0, 0, 0));
-                    _image = ~_image;
                     _image.CopyTo(__image, m_Mask);
                     this.m_dstPanel.m_ProjectionImageMatrix += __image;
                     __image.Dispose();
