@@ -31,6 +31,15 @@ namespace LabLife.Editor
 
         public ProjectorWindow m_ProjectorWindow = new ProjectorWindow();
 
+        /// <summary>
+        /// 使用可能な画像処理のリスト
+        /// </summary>
+        public List<Processer.ImageProcesser.AImageProcesser> m_ImageProcesserList = new List<Processer.ImageProcesser.AImageProcesser>();
+        public List<Processer.ImageProcesser.AImageProcesser> m_AdaptedImageProcesserList = new List<Processer.ImageProcesser.AImageProcesser>();
+        public ListBox ListBox_ImageProcesser = new ListBox();
+        public ListBox ListBox_AdaptedImageProcesser = new ListBox();
+
+
         public int ImageWidth
         {
             get
@@ -67,6 +76,33 @@ namespace LabLife.Editor
             this.AddContent(this.TextBlock_Header, Dock.Top);
             this.AddContent(this.SliderAndTextControl_margin, Dock.Top);
             this.AddContent(this.LLCheckBox_ProjectorWindow, Dock.Top);
+
+            Border b1 = new Border();
+            b1.Style = (Style)App.Current.Resources["Border_Default"];
+            b1.Child = this.ListBox_AdaptedImageProcesser;
+            b1.MinWidth =150;
+            Border b2 = new Border();
+            b2.Style = (Style)App.Current.Resources["Border_Default"];
+            b2.Child = this.ListBox_ImageProcesser;
+            b2.MinWidth = 150;
+
+            
+
+            StackPanel sp = new StackPanel();
+            sp.Orientation = Orientation.Horizontal;
+
+            Button Button_Add = new Button();
+            Button_Add.Content = "追加";
+            Button_Add.Click += Button_Add_Click;
+            sp.Children.Add(Button_Add);
+            Button Button_Delete = new Button();
+            Button_Delete.Content = "削除";
+            Button_Delete.Click += Button_Delete_Click;
+            sp.Children.Add(Button_Delete);
+            
+            this.AddContent(sp, Dock.Top);
+            this.AddContent(b2, Dock.Left);
+            this.AddContent(b1, Dock.Left);
             this.AddContent(this.Grid_Image, Dock.Top);
 
             this.Grid_Image.Children.Add(Image_Main);
@@ -81,6 +117,41 @@ namespace LabLife.Editor
             this.m_data = new byte[256 * 256 * 3];
             this.m_ProjectionImageMatrix = new OpenCvSharp.CPlusPlus.Mat(256, 256, OpenCvSharp.CPlusPlus.MatType.CV_8UC3, new Scalar(0, 0, 0));
             this.Image_Main.Source = this.m_WritableBitmap;
+
+            this.InitImageProcesser();
+            this.m_AdaptedImageProcesserList.Add(new Processer.ImageProcesser.Reverse());
+            this.updateLists();
+        }
+
+
+        /// <summary>
+        /// 新しい画像処理の追加
+        /// </summary>
+        private void InitImageProcesser()
+        {
+            this.m_ImageProcesserList.Add(new Processer.ImageProcesser.Reverse());
+            this.m_ImageProcesserList.Add(new Processer.ImageProcesser.CellAutomaton());
+            this.updateLists();
+        }
+
+        private void Button_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if(this.ListBox_AdaptedImageProcesser.SelectedIndex < 0)
+            {
+                return;
+            }
+            this.m_AdaptedImageProcesserList.RemoveAt(this.ListBox_AdaptedImageProcesser.SelectedIndex);
+            this.updateLists();
+        }
+
+        private void Button_Add_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.ListBox_ImageProcesser.SelectedIndex < 0)
+            {
+                return;
+            }
+            this.m_AdaptedImageProcesserList.Add(m_ImageProcesserList[this.ListBox_ImageProcesser.SelectedIndex]);
+            this.updateLists();
         }
 
         private void LLCheckBox_ProjectorWindow_Click(object sender, RoutedEventArgs e)
@@ -118,12 +189,17 @@ namespace LabLife.Editor
             }
             if (this.m_WritableBitmap == null)
             {
-                this.m_WritableBitmap = new WriteableBitmap(m_ProjectionImageMatrix.Width, m_ProjectionImageMatrix.Height, 96, 96, PixelFormats.Bgra32, null);
+                this.m_WritableBitmap = new WriteableBitmap(m_ProjectionImageMatrix.Width, m_ProjectionImageMatrix.Height, 96, 96, PixelFormats.Bgr24, null);
                 this.Image_Main.Source = this.m_WritableBitmap;
                 this.m_ProjectorWindow.Image_Project.Source = this.m_WritableBitmap;
                 this.Grid_Image.Width = m_ProjectionImageMatrix.Width;
                 this.Grid_Image.Height = m_ProjectionImageMatrix.Height;
             }
+            foreach (var p in this.m_AdaptedImageProcesserList)
+            {
+                p.ImageProcess(ref this.m_ProjectionImageMatrix, ref this.m_ProjectionImageMatrix);
+            }
+
             this.m_WritableBitmap.WritePixels(new Int32Rect(0, 0, m_ProjectionImageMatrix.Width, m_ProjectionImageMatrix.Height), m_ProjectionImageMatrix.Data, m_ProjectionImageMatrix.Width * m_ProjectionImageMatrix.Height * m_ProjectionImageMatrix.Type().Channels, m_ProjectionImageMatrix.Width * m_ProjectionImageMatrix.Type().Channels);
             this.m_ProjectionImageMatrix.Dispose();
 #if USE_GC
@@ -177,6 +253,21 @@ namespace LabLife.Editor
         public void RemoveSenderList(Transporter Sender)
         {
             this.m_SenderList.Remove(Sender);
+        }
+
+        public void updateLists()
+        {
+            this.ListBox_ImageProcesser.Items.Clear();
+            this.ListBox_AdaptedImageProcesser.Items.Clear();
+            
+            foreach(var p in this.m_ImageProcesserList)
+            {
+                this.ListBox_ImageProcesser.Items.Add(p.ToString());
+            }
+            foreach (var p in this.m_AdaptedImageProcesserList)
+            {
+                this.ListBox_AdaptedImageProcesser.Items.Add(p.ToString());
+            }
         }
 
         public override void Close(object sender, RoutedEventArgs e)
