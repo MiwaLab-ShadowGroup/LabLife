@@ -49,10 +49,12 @@ public class MoveByCenterPos : MonoBehaviour
 
     void Start()
     {
+        this.robotLight = this.robot.transform.FindChild("RobotLight").gameObject;
+
         this.cipcKinect = this.CIPCforKinect.GetComponent<CIPCReceiver>();
         this.cipcLS = this.CIPCforLaserScaner.GetComponent<CIPCReceiverLaserScaner>();
         this.pointCloud = this.depth.GetComponent<PointCloud>();
-
+        
         this.List_Human = new List<Human>();
         this.list_humanpos = new List<Vector3>();
 
