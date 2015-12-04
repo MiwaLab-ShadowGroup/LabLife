@@ -139,6 +139,7 @@ GameObject:
   - 114: {fileID: 25280758}
   - 114: {fileID: 25280759}
   - 114: {fileID: 25280756}
+  - 114: {fileID: 25280760}
   m_Layer: 0
   m_Name: RobotControll
   m_TagString: Generator
@@ -152,7 +153,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5c47310de0b185458a148737f0ce6ae, type: 3}
   m_Name: 
@@ -212,6 +213,19 @@ MonoBehaviour:
   IsUseKinet: 0
   range: 1
   radian: 10
+--- !u!114 &25280760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 25280755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf301f7ad51a7b24baf972c5b97fc099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robot: {fileID: 146498708}
+  CIPCforRobotSync: {fileID: 1231506366}
 --- !u!1 &98804732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,6 +1766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 0}
 --- !u!1 &818641835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,7 +2249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CIPCforKinect: {fileID: 638825755}
   CIPCforLS: {fileID: 1527814823}
-  CIPCforRobotSync: {fileID: 0}
+  CIPCforRobotSync: {fileID: 1231506366}
   SaveCIPC: {fileID: 0}
   SaveButton: {fileID: 0}
 --- !u!1 &1110937057
@@ -2469,6 +2484,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53133e3b73ea52a49b213eac6de2401e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
+  serverPort: 50000
+  remoteIP: 127.0.0.1
+  myPort: 56001
+  clinteName: 
+  fps: 30
+  robot: {fileID: 146498708}
+  robotPos: {x: 0, y: 0, z: 0}
+  robotLightPos: {x: 0, y: 0, z: 0}
 --- !u!4 &1231506368
 Transform:
   m_ObjectHideFlags: 0

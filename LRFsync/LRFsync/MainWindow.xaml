@@ -1,0 +1,104 @@
+﻿<Window x:Class="LRFsync.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kinect Station" Height="361" Width="742.243">
+
+    <Grid Margin="0,0,2,-1" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="222*"/>
+            <ColumnDefinition Width="144*"/>
+            <ColumnDefinition Width="143*"/>
+            <ColumnDefinition Width="205*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Margin="10,0,11,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="CIPCClient" x:Name="TextBlock_TitleName" Margin="10,10,26,13"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="ClientName"/>
+                <TextBlock Text="ClientPort" Grid.Row="1"/>
+                <TextBlock Text="ServerIPAdress" Grid.Row="2"/>
+                <TextBlock Text="ServerPort" Grid.Row="3"/>
+                <TextBlock Text="Mode" Grid.Row="4"/>
+                <TextBlock Text="FPS" Grid.Row="5"/>
+
+
+                <TextBox Text="CIPCClient0" TextAlignment="Right" x:Name="TextBlock_ClientName" Grid.Column="1"/>
+                <TextBox Text="54000" TextAlignment="Right" x:Name="TextBlock_ClientPort" Grid.Row="1" Grid.Column="1"/>
+                <TextBox Text="50000" TextAlignment="Right" x:Name="TextBlock_ServerPort" Grid.Row="3" Grid.Column="1"/>
+                <TextBox Text="127.0.0.1" TextAlignment="Right" x:Name="TextBlock_ServerIPAdress" Grid.Row="2" Grid.Column="1"/>
+                <WrapPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                    <RadioButton Content="Sender" x:Name="RadioButton_Mode_Sender" GroupName="Group_CIPCMode"/>
+                    <RadioButton Content="Receiver" x:Name="RadioButton_Mode_Receiver" GroupName="Group_CIPCMode"/>
+                    <RadioButton Content="Both" x:Name="RadioButton_Mode_Both" IsChecked="True" GroupName="Group_CIPCMode"/>
+                    <RadioButton Content="Direct" x:Name="RadioButton_Mode_Direct"  GroupName="Group_CIPCMode"/>
+                </WrapPanel>
+
+                <TextBox Text="30" TextAlignment="Right" x:Name="TextBlock_FPS" Grid.Row="5" Grid.Column="1"/>
+                <TextBlock Text="ID" Grid.Row="6" Margin="0,1,0,0"/>
+                <TextBox x:Name="TextBox_Id" Text="0" TextAlignment="Right"  Grid.Row="5" Grid.Column="1" Margin="0,24,0,3" Grid.RowSpan="2"/>
+
+
+            </Grid>
+
+        </Grid>
+            <Button x:Name="Add_Client" Content="Add Client" HorizontalAlignment="Left" Margin="136,281,0,0" VerticalAlignment="Top" Width="75" Click="Add_Client_Click" Height="24"/>
+        <Button x:Name="Add_SendClient" Content="connect" Grid.Column="3" HorizontalAlignment="Left" Margin="120,153,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Add_SendClient_Click"/>
+        <!--<Button x:Name="Send_data" Content="Send" Grid.Column="3" HorizontalAlignment="Left" Margin="120,281,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Send_data_Click"/>-->
+
+
+        <Grid Grid.Column="3" HorizontalAlignment="Left" Height="91" Margin="10,170,0,0" VerticalAlignment="Top" Width="185">
+
+            
+        </Grid>
+
+        <Grid Grid.Column="3" HorizontalAlignment="Left" Height="91" Margin="10,40,0,0" VerticalAlignment="Top" Width="185">
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="SendClientPort" Grid.Row="1"/>
+                <TextBlock Text="SendServerIP" Grid.Row="2"/>
+                <TextBlock Text="SendServerPort" Grid.Row="3"/>
+
+                <TextBox Text="54100" TextAlignment="Right" x:Name="TextBlock_SendClientPort" Grid.Row="1" Grid.Column="1"/>
+                <TextBox Text="50000" TextAlignment="Right" x:Name="TextBlock_SendServerPort" Grid.Row="3" Grid.Column="1"/>
+                <TextBox Text="127.0.0.1" TextAlignment="Right" x:Name="TextBlock_SendServerIPAdress" Grid.Row="2" Grid.Column="1"/>
+
+            </Grid>
+        </Grid>
+        <Label Content="send" Grid.Column="3" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Height="29" Width="73"/>
+
+
+
+        
+    </Grid>
+
+
+
+</Window>
