@@ -137,10 +137,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 25280757}
   - 114: {fileID: 25280758}
-  - 114: {fileID: 25280756}
-  - 114: {fileID: 25280760}
   - 114: {fileID: 25280759}
-  - 114: {fileID: 25280761}
+  - 114: {fileID: 25280756}
   m_Layer: 0
   m_Name: RobotControll
   m_TagString: Generator
@@ -165,9 +163,9 @@ MonoBehaviour:
   depth: {fileID: 493547224}
   DataMode: 1
   Mode: 0
-  IsLight: 1
+  IsLight: 0
   velparameter: 50
-  angularVelocity: .5
+  angularVelocity: 0
 --- !u!4 &25280757
 Transform:
   m_ObjectHideFlags: 0
@@ -214,36 +212,6 @@ MonoBehaviour:
   IsUseKinet: 0
   range: 1
   radian: 10
---- !u!114 &25280760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 25280755}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 505d20d2ae3955e4da06cf4e4d28679c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  robot: {fileID: 146498708}
-  velparameter: 100
-  Field: {x: 3.79999995, y: 4}
-  localO: {x: 1.89999998, y: 1.60000002}
-  IsHeigh: 0
-  IsLight: 0
---- !u!114 &25280761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 25280755}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf301f7ad51a7b24baf972c5b97fc099, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  robot: {fileID: 146498708}
-  CIPCforRobotSync: {fileID: 1231506366}
 --- !u!1 &98804732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1784,7 +1752,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: ad825168672818042993726b2ed48b6c, type: 3}
 --- !u!1 &818641835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2502,15 +2469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53133e3b73ea52a49b213eac6de2401e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
-  serverPort: 50000
-  remoteIP: 
-  myPort: 55002
-  clinteName: SRforRobotSync
-  fps: 30
-  robot: {fileID: 146498708}
-  robotPos: {x: 0, y: 0, z: 0}
-  robotLightPos: {x: 0, y: 0, z: 0}
 --- !u!4 &1231506368
 Transform:
   m_ObjectHideFlags: 0
@@ -2703,7 +2661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverPort: 50000
   remoteIP: 192.168.11.8
-  myPort: 55001
+  myPort: 56001
   clinteName: SRforLRF
   fps: 30
   list_humanpos: []
