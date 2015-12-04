@@ -127,6 +127,7 @@ MonoBehaviour:
   readData: 
   ReadFileName: 
   OpenFileChoose: 0
+  Readstart: 0
 --- !u!1 &25280755
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,8 +2307,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointCloudShadow: {fileID: 493547224}
-  IsSaveStop: 0
   OpenFileChoose: 0
+  Savestart: 0
+  IsSaveStop: 0
+  filename: 
 --- !u!1 &1419482177
 GameObject:
   m_ObjectHideFlags: 0
