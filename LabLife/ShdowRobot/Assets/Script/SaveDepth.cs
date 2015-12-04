@@ -37,6 +37,7 @@ public class SaveDepth : MonoBehaviour {
         if (OpenFileChoose)
         {
             FilePath = EditorUtility.SaveFilePanel("ファイル選択", " "," ", " ");
+            //FilePath = EditorUtility.SaveFolderPanel("ファイル選択", " ", " ", " ");
 
             if (FilePath != null)
             {

@@ -16,7 +16,7 @@ public class PointCloud : MonoBehaviour
 
     public GameObject kinect;
 
-    public enum _Mode {Random, Boder, Contour, ContourBoder,}
+    public enum _Mode {Random, Boder, Contour, ContourBoder, Check,}
     public _Mode mode;
 
     //パラメータ
@@ -43,6 +43,9 @@ public class PointCloud : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        this.imageHeight = 424;
+        this.imageWidth = 512;
+
         this.sensor = Windows.Kinect.KinectSensor.GetDefault();
         this.depthreader = this.sensor.DepthFrameSource.OpenReader();
         this.RawData = new ushort[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
@@ -96,13 +99,14 @@ public class PointCloud : MonoBehaviour
             case _Mode.Boder:  this.Border(ref cubeCount); break;
             case _Mode.Contour: this.Contour(ref cubeCount); break;
             case _Mode.ContourBoder: this.ContourBoder(ref cubeCount); break;
+            case _Mode.Check: this.Check(ref cubeCount); break;
         }
         //this.Contour(ref cubeCount);
 
         ////重心位置算出
         //this.centerPos /= cubeCount;
         //this.centerPos += this.kinect.transform.position;
-
+        this.CenterPos();
 
         //消す処理
         if (this.ListCube.Count > (cubeCount + 100) )
@@ -135,7 +139,6 @@ public class PointCloud : MonoBehaviour
             this.ListCube[this.ListCube.Count - 1].transform.localPosition = point;
         }
     }
-
     void Contemporary(ref int cubeCount)
     {
         int pointCount = 0;
@@ -260,7 +263,49 @@ public class PointCloud : MonoBehaviour
 
         }
     }
+    void Check(ref int cubeCount)
+    {
+        //int pointCount = 0;
+        for (int i = 0; i < cameraSpacePoints.Length; i++)
+        {
+            //奥の壁排除
+            if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && this.ListCube.Count < this.maxCubeNum)
+            {
+                //三次元位置に変更
+                Vector3 point = new Vector3(-this.cameraSpacePoints[i].X, this.cameraSpacePoints[i].Y, this.cameraSpacePoints[i].Z);
 
+                //床排除と左右の壁排除                       
+                if (point.y < this.roophight && point.y > -this.kinect.transform.position.y && point.x > this.rangex.x && point.x < this.rangex.y)
+                {
+                    int x = i % this.imageWidth;
+                    int y = i / this.imageHeight;
+                    if (x % this.range == 0 && y % this.range == 0)
+                    {
+                        //条件クリアした粒子
+
+                        this.CubeControll(cubeCount, point);
+
+                        cubeCount++;
+                    }
+
+                    
+                }
+                //pointCount++;
+            }
+
+
+        }
+    }
+
+    void CenterPos()
+    {
+        this.centerPos = Vector3.zero;
+        for(int i = 0; i< this.ListCube.Count; i++)
+        {
+            this.centerPos += this.ListCube[i].transform.position;
+        }
+        this.centerPos /= this.ListCube.Count;
+    }
     void Reset()
     {
         try

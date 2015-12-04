@@ -17,6 +17,8 @@ public class MoveByCenterPos : MonoBehaviour
     #region
     //public GameObject model;
     public GameObject robot;
+    public GameObject robotLight;
+
     public GameObject CIPCforLaserScaner;
     public GameObject CIPCforKinect;
     public GameObject depth;
@@ -25,9 +27,11 @@ public class MoveByCenterPos : MonoBehaviour
     CIPCReceiverLaserScaner cipcLS;
     PointCloud pointCloud;
     //モード
-    public enum _Mode { KinectStation, LaserScaner, Depth, };
-    public _Mode DataMode;
-    
+    public enum _DataMode { KinectStation, LaserScaner, Depth, };
+    public _DataMode DataMode;
+    public enum _Mode { field, hight, randomhight, sinhight,}
+    public _Mode Mode;
+    public bool IsLight;
     //CIPC
     Vector3 centerPos;
     Vector3 preCenterPos;
@@ -35,13 +39,13 @@ public class MoveByCenterPos : MonoBehaviour
     List<Human> List_Human;
     //計算クラス
     CalculatePosition cp;
+    float pretime;
+    float randomy;
     #endregion
 
-   
-    
     // Use this for initialization
     public int velparameter;
-    public Vector4 fieldSize;
+    public float angularVelocity;
 
     void Start()
     {
@@ -53,9 +57,11 @@ public class MoveByCenterPos : MonoBehaviour
         this.list_humanpos = new List<Vector3>();
 
         this.cp = new CalculatePosition(0);
-        this.centerPos = new Vector3();
+        this.centerPos = Vector3.zero;
         this.preCenterPos = new Vector3();
-       
+
+        this.pretime = 0;
+
         Debug.Log("Light Robot");       
     }
 
@@ -65,10 +71,23 @@ public class MoveByCenterPos : MonoBehaviour
         //データもとによってそれぞれ計算
         switch (this.DataMode)
         {
-            case _Mode.KinectStation: this.MoveByKinectHuman(this.robot); break;
-            case _Mode.LaserScaner: this.MoveByPosition(); break;
-            case _Mode.Depth: this.MoveByDepth(); break;
+            case _DataMode.KinectStation: this.Bone(); break;
+            case _DataMode.LaserScaner: this.LaserRangeFinder(); break;
+            case _DataMode.Depth: this.Depth(); break;
         }
+
+        if(this.centerPos != Vector3.zero)
+        {
+            switch (this.Mode)
+            {
+                case _Mode.field: this.Field(); break;
+                case _Mode.hight: this.CenterHight(); break;
+                case _Mode.randomhight: this.RandomHight(); break;
+                case _Mode.sinhight: this.SinHight(); break;
+            }
+        }
+        
+
 
     }
 
@@ -92,36 +111,93 @@ public class MoveByCenterPos : MonoBehaviour
         try
         {
             this.centerPos = this.pointCloud.centerPos;
+            //this.centerPos.x = -this.centerPos.x;
             
         }
         catch { }
     }
     
     //動き
-    void TwoDMoveCenter()
+    void Field()
     {
         //位置
         Vector3 vec = - this.centerPos - this.robot.transform.position;
-        vec = new Vector3(vec.x, 0, vec.z);
+        vec.y = 0;
+        vec /= vec.magnitude;
+        this.robot.transform.position += vec / this.velparameter;
+
+    }
+    void CenterHight()
+    {
+        //位置
+        this.centerPos.x *= -1;
+        this.centerPos.z *= -1;
+        Vector3 vec = this.centerPos - this.robot.transform.position;
+        if (this.IsLight)
+        {
+            Vector3 lightVec = this.centerPos - this.robotLight.transform.position;
+            lightVec.x = 0;
+            lightVec.z = 0;
+            this.robotLight.transform.position += lightVec;
+            vec.y = 0;
+        }
         vec /= vec.magnitude;
         robot.transform.position += vec / this.velparameter;
     }
-    void ThreeDMoveCeneter()
+    void SinHight()
     {
         //位置
-        Vector3 vec = - this.centerPos - this.robot.transform.position;
-        vec /= vec.magnitude;
-        robot.transform.position += vec / this.velparameter;
-    }
-    void HeightSine()
-    {
-        //位置
-        Vector3 vec = - this.centerPos - this.robot.transform.position;
+        Vector3 vec =  - this.centerPos - this.robot.transform.position;
         //Sinで高さ決定
-        vec.y = 0.5f * Mathf.Sin(Time.deltaTime);
+        float y = 1 + Mathf.Sin(this.angularVelocity * Time.fixedTime);
+
+        if (this.IsLight)
+        {
+            Vector3 lightVec = new Vector3(0, 1 + y - this.robotLight.transform.position.y, 0) ;
+            
+            this.robotLight.transform.position += lightVec;
+            //Debug.Log(lightVec);
+            vec.y = 0;
+        }
+        else vec.y = y ;
+
         vec /= vec.magnitude;
-        robot.transform.position += vec / this.velparameter;
+        this.robot.transform.position += vec / this.velparameter;
     }
+
+    void RandomHight()
+    {
+        
+        //位置
+        //ランダムで高さ決定
+        
+        float time = Time.fixedTime;
+        if ((int)time % 5 == 0 && ((time - this.pretime) > 1f || this.pretime == 0))
+        {
+            this.randomy = Random.Range(-50, 50);
+            this.pretime = time;
+            //Debug.Log("change +" + this.centerPos);
+
+        }
+
+        this.centerPos.y = this.randomy;
+        Vector3 vec = - this.centerPos - this.robot.transform.position;
+
+        if (this.IsLight)
+        {
+            Vector3 lightVec = new Vector3(0, this.randomy - this.robotLight.transform.position.y, 0);
+            lightVec /= lightVec.magnitude;
+            float y = this.robotLight.transform.position.y + lightVec.y / this.velparameter;
+            if ( y > 0.5f && y < 2.5f ) this.robotLight.transform.position += lightVec / this.velparameter;
+            else this.randomy = Random.Range(-50, 50);
+            vec.y = 0;
+        }
+
+        vec /= vec.magnitude;
+        //Debug.Log(vec);
+        this.robot.transform.position += vec / this.velparameter;
+    }
+
     void HeightPrePos()
     {
         this.centerPos.y += this.cp.CulculateVelocity(this.centerPos, this.preCenterPos).y;
@@ -132,7 +208,6 @@ public class MoveByCenterPos : MonoBehaviour
 
         this.preCenterPos = this.centerPos;
     }
-
 
     void MoveByKinectHuman(GameObject robot)
     {
