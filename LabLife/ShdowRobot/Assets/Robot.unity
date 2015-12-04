@@ -102,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &25280756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
   CIPCforLaserScaner: {fileID: 1527814823}
   CIPCforKinect: {fileID: 638825755}
   depth: {fileID: 493547224}
-  mode: 3
+  DataMode: 0
   IsRandom: 0
   velparameter: 100
   fieldSize: {x: -2, y: 2, z: -.5, w: 1.79999995}
@@ -1048,13 +1048,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 131304, guid: fa990871743347f4d89828a607d6e3de, type: 2}
   kinect: {fileID: 749055555}
+  mode: 0
   maxCubeNum: 20000
   rangex: {x: -1, y: 1}
   rangez: {x: 1, y: 3.5}
   roophight: 1.79999995
   range: 2
+  IsReset: 0
   particulsnum: 0
   centerPos: {x: 0, y: 0, z: 0}
+  SaveRawData: 
+  IsArchive: 0
+  ReadDepth: {fileID: 0}
 --- !u!1 &553897115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,7 +1265,7 @@ MonoBehaviour:
   serverPort: 50000
   remoteIP: 3132372e302e302e31
   myPort: 55000
-  name: 536861646f77666f724b696e656374
+  clinteName: 
   fps: 30
 --- !u!4 &638825757
 Transform:
@@ -2021,6 +2026,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CIPCforKinect: {fileID: 638825755}
   CIPCforLS: {fileID: 1527814823}
+  SaveCIPC: {fileID: 0}
+  SaveButton: {fileID: 0}
 --- !u!1 &1176549881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2160,7 +2167,7 @@ MonoBehaviour:
   serverPort: 50000
   remoteIP: 3132372e302e302e31
   myPort: 55001
-  name: 43495043666f724c617365725363616e6572
+  clinteName: 
   fps: 30
   list_humanpos: []
 --- !u!1 &1702246437

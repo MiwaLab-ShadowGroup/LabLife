@@ -162,6 +162,7 @@
     <Compile Include="Assets\Editor\ProjectorWindow.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\NewImageEffectShader.shader" />
     <None Include="Assets\Stage\Shader-TwoSide.shader" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
