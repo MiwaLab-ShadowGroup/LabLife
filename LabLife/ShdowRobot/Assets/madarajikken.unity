@@ -160,11 +160,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   robot: {fileID: 146498708}
-  robotLight: {fileID: 0}
   CIPCforLaserScaner: {fileID: 1527814823}
   CIPCforKinect: {fileID: 638825755}
   depth: {fileID: 493547224}
-  DataMode: 2
+  DataMode: 1
   Mode: 0
   IsLight: 1
   velparameter: 50
@@ -393,7 +392,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1098169794}
-        m_MethodName: ConnectCIPC
+        m_MethodName: ConnectCIPCforLS
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -787,7 +786,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LaserScaner
+  m_Text: RobotSync
 --- !u!222 &234507493
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2703,7 +2702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverPort: 50000
-  remoteIP: 3132372e302e302e31
+  remoteIP: 192.168.11.8
   myPort: 55001
   clinteName: SRforLRF
   fps: 30
@@ -3016,7 +3015,7 @@ GameObject:
   - 135: {fileID: 2139291269}
   - 23: {fileID: 2139291268}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: RobotHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

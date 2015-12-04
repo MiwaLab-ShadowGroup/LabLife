@@ -17,7 +17,7 @@ public class MoveByCenterPos : MonoBehaviour
     #region
     //public GameObject model;
     public GameObject robot;
-    public GameObject robotLight;
+    GameObject robotLight;
 
     public GameObject CIPCforLaserScaner;
     public GameObject CIPCforKinect;
