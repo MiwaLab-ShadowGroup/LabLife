@@ -154,7 +154,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5c47310de0b185458a148737f0ce6ae, type: 3}
   m_Name: 
@@ -163,11 +163,11 @@ MonoBehaviour:
   CIPCforLaserScaner: {fileID: 1527814823}
   CIPCforKinect: {fileID: 638825755}
   depth: {fileID: 493547224}
-  DataMode: 1
-  Mode: 0
+  DataMode: 2
+  Mode: 3
   IsLight: 1
   velparameter: 50
-  angularVelocity: .5
+  angularVelocity: 1
 --- !u!4 &25280757
 Transform:
   m_ObjectHideFlags: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 505d20d2ae3955e4da06cf4e4d28679c, type: 3}
   m_Name: 
@@ -1200,8 +1200,8 @@ MonoBehaviour:
   maxCubeNum: 20000
   rangex: {x: -1.79999995, y: 1.79999995}
   rangez: {x: 1, y: 4}
-  roophight: 1.79999995
-  range: 2
+  roophight: 1.60000002
+  range: 5
   IsReset: 0
   particulsnum: 0
   centerPos: {x: 0, y: 0, z: 0}
@@ -1274,7 +1274,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 6
   m_Type: 2
-  m_Color: {r: .161656573, g: .845588207, b: .392778367, a: 1}
+  m_Color: {r: .26211071, g: .742647052, b: .325077593, a: 1}
   m_Intensity: 1.97000003
   m_Range: 50
   m_SpotAngle: 30
@@ -1684,7 +1684,6 @@ GameObject:
   - 92: {fileID: 782920425}
   - 81: {fileID: 782920424}
   - 114: {fileID: 782920428}
-  - 114: {fileID: 782920429}
   m_Layer: 0
   m_Name: Projector0-Back
   m_TagString: Untagged
@@ -1717,14 +1716,14 @@ Behaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 782920422}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!124 &782920426
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 782920422}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &782920427
 Camera:
   m_ObjectHideFlags: 0
@@ -1749,13 +1748,13 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967241
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
-  m_OcclusionCulling: 0
+  m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
   m_StereoMirrorMode: 0
@@ -1773,18 +1772,6 @@ MonoBehaviour:
   renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
   IPAdress: 
   portNumber: 15000
---- !u!114 &782920429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 782920422}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: ad825168672818042993726b2ed48b6c, type: 3}
 --- !u!1 &818641835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,7 +2254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CIPCforKinect: {fileID: 638825755}
   CIPCforLS: {fileID: 1527814823}
-  CIPCforRobotSync: {fileID: 0}
+  CIPCforRobotSync: {fileID: 1231506366}
   SaveCIPC: {fileID: 0}
   SaveButton: {fileID: 0}
 --- !u!1 &1110937057
@@ -2502,9 +2489,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53133e3b73ea52a49b213eac6de2401e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
+  mode: 1
   serverPort: 50000
-  remoteIP: 
+  remoteIP: 192.168.11.8
   myPort: 55002
   clinteName: SRforRobotSync
   fps: 30
@@ -2849,7 +2836,7 @@ BoxCollider:
   m_GameObject: {fileID: 1787675841}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2905,14 +2892,14 @@ Behaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1949880836}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!124 &1949880839
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1949880836}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1949880840
 Camera:
   m_ObjectHideFlags: 0
@@ -2937,7 +2924,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967241
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
   m_TargetDisplay: 0
@@ -2965,7 +2952,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1949880836}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 

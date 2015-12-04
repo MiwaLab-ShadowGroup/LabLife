@@ -68,7 +68,9 @@ public class Lablife : MonoBehaviour
 
         if (this.renderTexture == null)
         {
+            Debug.Log("no");
             return;
+            
             
         }
         

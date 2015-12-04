@@ -148,21 +148,21 @@ public class MoveByCenterPos : MonoBehaviour
     }
     void SinHight()
     {
-        //位置
-        Vector3 vec =  - this.centerPos - this.robot.transform.position;
+        
         //Sinで高さ決定
-        float y = 1 + Mathf.Sin(this.angularVelocity * Time.fixedTime);
+        float y = 1.5f + Mathf.Sin(this.angularVelocity * Time.fixedTime);
 
         if (this.IsLight)
         {
-            Vector3 lightVec = new Vector3(0, 1 + y - this.robotLight.transform.position.y, 0) ;
+            Vector3 lightVec = new Vector3(0, 0.5f + y - this.robotLight.transform.position.y, 0) ;
             
             this.robotLight.transform.position += lightVec;
             //Debug.Log(lightVec);
-            vec.y = 0;
+            this.centerPos.y = 0;
         }
-        else vec.y = y ;
-
+        else this.centerPos.y = - y ;
+        //位置
+        Vector3 vec = -this.centerPos - this.robot.transform.position;
         vec /= vec.magnitude;
         this.robot.transform.position += vec / this.velparameter;
     }
