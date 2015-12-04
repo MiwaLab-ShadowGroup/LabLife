@@ -32,7 +32,7 @@ public class UIScript : MonoBehaviour
     public void ConnectCIPCforRobotSync()
     {
 
-        this.CIPCforRobotSync.GetComponent<CIPCRobotSync>().ConnectCIPC();
+      //  this.CIPCforRobotSync.GetComponent<CIPCRobotSync>().ConnectCIPC();
 
     }
 
