@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
+using System.IO;
+using UnityEditor;
 
 public class CIPCReceiverforSave : MonoBehaviour {
 
@@ -11,16 +14,31 @@ public class CIPCReceiverforSave : MonoBehaviour {
 
     CIPC_CS_Unity.CLIENT.CLIENT client;
 
-    bool IsCIPC;
-
+    bool IsCIPC = false;
 
     byte[] data;
 
-    bool RecState;
+    bool RecState = false;
 
     string CIPCKey;
 
-    SaveDepth savedepth;
+    public GameObject pointCloudShadow;
+    PointCloud pointcloud;
+
+    FPSAdjuster.FPSAdjuster FpsAd;
+
+    Thread CIPCthread;
+    Thread Savethread;
+
+    public bool CIPCSetup = false;
+
+    BinaryWriter writer;
+    string FolderPath;
+
+    public bool OpenFileChoose = false;
+
+    bool SaveStop;
+    public string filename;
 
 
     void Awake()
@@ -31,70 +49,118 @@ public class CIPCReceiverforSave : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        this.IsCIPC = false;
+        this.pointcloud = pointCloudShadow.GetComponent<PointCloud>();
 
-        this.RecState = false;
+
+        this.FpsAd = new FPSAdjuster.FPSAdjuster();
+        this.FpsAd.Fps = 30;
+        this.FpsAd.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        if (CIPCSetup)
+        {
+            ConnectCIPC();
+            this.CIPCSetup = false;
+
+        }
+
         if (this.IsCIPC)
         {
-            GetData();      
+            if (CIPCKey != null)
+            {
+                if (CIPCKey == "START")
+                {
+                    //Debug.Log("start");
+                    this.RecState = true;
+                    CIPCKey = null;
+                }
+                if (CIPCKey == "STOP")
+                {
+                    this.SaveStop = true;
+                    //Debug.Log("stop");
+                    CIPCKey = null;
+                }
+            }
 
-            if(CIPCKey == "START")
-            {
-                this.RecState = true;
-            }
-            if(CIPCKey == "STOP")
-            {
-                this.RecState = false;
-            }
+        }
+
+        if (OpenFileChoose)
+        {
+            FolderPath = EditorUtility.SaveFolderPanel("フォルダ選択", " ", " ");
+
+            OpenFileChoose = false;
+
         }
         CIPCSave();
 
     }
 
-    string GetData()
+    void GetData()
     {
         
         try
         {
 
-            this.client.Update(ref this.data);
-            UDP_PACKETS_CODER.UDP_PACKETS_DECODER dec = new UDP_PACKETS_CODER.UDP_PACKETS_DECODER();
-            dec.Source = this.data;
+            while (true)
+            {
+                if (IsCIPC && this.client.IsAvailable > 0)
+                {
+                    this.client.Update(ref this.data);
+                    UDP_PACKETS_CODER.UDP_PACKETS_DECODER dec = new UDP_PACKETS_CODER.UDP_PACKETS_DECODER();
+                    dec.Source = this.data;
 
-            //データ取得
-            CIPCKey = dec.get_string();
-            
+                    //データ取得
+                    CIPCKey = dec.get_string();
+                }
+            }
+
         }
         catch
         {
 
         }
-        return CIPCKey;
-
+       
     }
 
-
-
-    void OnAppLicatinQuit()
+    void OnApplicationQuit()
     {
-        this.client.Close();
+        if (this.client != null)
+        {
+            this.client.Close();
+        }
+        if (this.CIPCthread != null)
+        {
+            CIPCthread.Abort();
+
+        }
+        if(Savethread != null)
+        {
+            Savethread.Abort();
+        }
+
+        if(writer != null)
+        {
+            writer.Close();
+
+        }
     }
 
     public void ConnectCIPC()
     {
         try
         {
-           
+
+            this.CIPCthread = new Thread(new ThreadStart(GetData));
+            this.CIPCthread.Start();
+
             this.client = new CIPC_CS_Unity.CLIENT.CLIENT(this.myPort, this.remoteIP, this.serverPort, this.clientName, this.fps);
             this.client.Setup(CIPC_CS_Unity.CLIENT.MODE.Receiver);
             this.IsCIPC = true;
-           // Debug.Log("CIPCforSave");
+
         }
         catch
         {
@@ -103,18 +169,56 @@ public class CIPCReceiverforSave : MonoBehaviour {
 
     }
 
-
     void CIPCSave()
     {
-
         if (RecState)
         {
-
+            if (FolderPath != null)
+            {
+                Savethread = new Thread(new ThreadStart(Save));
+                Savethread.Start();
+                Debug.Log("start");
+                RecState = false;
+            }
         }
-        if (!RecState)
+        
+    }
+
+    void Save()
+    {
+        try
+        {
+            this.writer = new BinaryWriter(File.OpenWrite(FolderPath + @"\" + filename));
+
+
+            while (true)
+            {
+                this.FpsAd.Adjust();
+                //Debug.Log(framecount);
+                writer.Write(pointcloud.SaveRawData.Length);
+
+                for (int i = 0; i < pointcloud.SaveRawData.Length; i++)
+                {
+
+                    writer.Write(pointcloud.SaveRawData[i]);
+                }
+
+                //framecount++;
+                if (this.SaveStop)
+                {
+                    SaveStop = false;
+                    break;
+
+                }
+            }
+            Debug.Log("stop");
+
+            this.writer.Close();
+        }
+        catch
         {
 
         }
-
     }
+
 }
