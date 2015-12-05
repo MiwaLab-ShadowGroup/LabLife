@@ -8,6 +8,7 @@ public class SendRenderTexture : MonoBehaviour {
 
     public RenderTexture renderTexture;
     public Color difColor;
+    public bool IsInvert;
     //通信
     public string IPAdress;
     public int portNumber;
@@ -36,7 +37,7 @@ public class SendRenderTexture : MonoBehaviour {
             this.IPAdress = "127.0.0.1";
         }
 
-
+        
     }
 
     private void sendimage()
@@ -64,7 +65,13 @@ public class SendRenderTexture : MonoBehaviour {
         for (int i = 0; i < colors.Length; i++)
         {
             //colors[i] -= this.difColor;
-            Color color =  this.difColor - colors[i];
+            Color color;
+            if (this.IsInvert)
+            {
+                color =  colors[i] - (Color.white - this.difColor );
+            }
+            else { color = this.difColor - colors[i]; }
+
             if (color.b < 0.000001f && color.g < 0.000001f && color.r < 0.000001f)
             {
                 colors[i] = Color.white;
