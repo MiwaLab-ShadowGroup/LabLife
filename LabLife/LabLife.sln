@@ -21,6 +21,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIPCTerminal", "..\CIPCSyst
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalConnectionSettings", "..\CIPCSystem\CentralInterProcessComunicationServer\TerminalConnectionSettings\TerminalConnectionSettings.csproj", "{2ACB6A94-3875-487A-8DF1-0084A628D556}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPSAdjuster", "..\CIPCSystem\FPSAdjuster\FPSAdjuster\FPSAdjuster.csproj", "{3026A57B-2010-4756-935D-6883926E46ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamController", "..\CIPCSystem\CentralInterProcessComunicationServer\StreamController\StreamController.csproj", "{383997CE-AB1A-4128-A63B-3BE75965531C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoCommunication", "..\CIPCSystem\CentralInterProcessComunicationServer\ArduinoCommunication\ArduinoCommunication.csproj", "{2D0897E7-010B-448A-B2FF-C4024537804F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamAnalyzer", "..\CIPCSystem\CentralInterProcessComunicationServer\StreamAnalyzer\StreamAnalyzer.csproj", "{A9F224F7-F36A-46C6-8903-F4A7CC194D39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +71,22 @@ Global
 		{2ACB6A94-3875-487A-8DF1-0084A628D556}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ACB6A94-3875-487A-8DF1-0084A628D556}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ACB6A94-3875-487A-8DF1-0084A628D556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3026A57B-2010-4756-935D-6883926E46ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3026A57B-2010-4756-935D-6883926E46ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3026A57B-2010-4756-935D-6883926E46ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3026A57B-2010-4756-935D-6883926E46ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{383997CE-AB1A-4128-A63B-3BE75965531C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{383997CE-AB1A-4128-A63B-3BE75965531C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{383997CE-AB1A-4128-A63B-3BE75965531C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{383997CE-AB1A-4128-A63B-3BE75965531C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D0897E7-010B-448A-B2FF-C4024537804F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D0897E7-010B-448A-B2FF-C4024537804F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D0897E7-010B-448A-B2FF-C4024537804F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D0897E7-010B-448A-B2FF-C4024537804F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9F224F7-F36A-46C6-8903-F4A7CC194D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9F224F7-F36A-46C6-8903-F4A7CC194D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9F224F7-F36A-46C6-8903-F4A7CC194D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9F224F7-F36A-46C6-8903-F4A7CC194D39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

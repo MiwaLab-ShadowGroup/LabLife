@@ -91,6 +91,9 @@
     <Compile Include="Contorols\KinectPanelControl.xaml.cs">
       <DependentUpon>KinectPanelControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Contorols\LauncherControl.xaml.cs">
+      <DependentUpon>LauncherControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contorols\LLCheckBox.cs" />
     <Compile Include="Contorols\SliderAndTextControl.xaml.cs">
       <DependentUpon>SliderAndTextControl.xaml</DependentUpon>
@@ -107,6 +110,7 @@
     <Compile Include="Editor\ImageReceiverHostPanel.cs" />
     <Compile Include="Editor\ImageReceiverPanel.cs" />
     <Compile Include="Editor\KinectPanel.cs" />
+    <Compile Include="Editor\LauncherPanel.cs" />
     <Compile Include="Editor\LogPanel.cs" />
     <Compile Include="Editor\ProjectionPanel.cs" />
     <Compile Include="Editor\RecoderPanel.cs" />
@@ -127,6 +131,10 @@
       <DependentUpon>ProjectorWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Contorols\KinectPanelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Contorols\LauncherControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -190,9 +198,37 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\ArduinoCommunication\ArduinoCommunication.csproj">
+      <Project>{2d0897e7-010b-448a-b2ff-c4024537804f}</Project>
+      <Name>ArduinoCommunication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\CentralInterProcessComunicationServer\CentralInterProcessCommunicationServer.csproj">
+      <Project>{8cb97b5b-242e-46af-9278-8d3b97607560}</Project>
+      <Name>CentralInterProcessCommunicationServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\CIPCTerminal\CIPCTerminal.csproj">
+      <Project>{95104dce-0668-43f1-a76b-c4c3e6a7399b}</Project>
+      <Name>CIPCTerminal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\StreamAnalyzer\StreamAnalyzer.csproj">
+      <Project>{a9f224f7-f36a-46c6-8903-f4a7cc194d39}</Project>
+      <Name>StreamAnalyzer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\StreamController\StreamController.csproj">
+      <Project>{383997ce-ab1a-4128-a63b-3be75965531c}</Project>
+      <Name>StreamController</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\TerminalConnectionSettings\TerminalConnectionSettings.csproj">
+      <Project>{2acb6a94-3875-487a-8df1-0084a628d556}</Project>
+      <Name>TerminalConnectionSettings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\CIPC_CS.csproj">
       <Project>{b98d919a-06a5-4db5-b79b-92c30497e83e}</Project>
       <Name>CIPC_CS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\FPSAdjuster\FPSAdjuster\FPSAdjuster.csproj">
+      <Project>{3026a57b-2010-4756-935d-6883926e46ed}</Project>
+      <Name>FPSAdjuster</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\CIPCSystem\UdpDllsCS\UDP_PACKETS_CLIANT\UDP_PACKETS_CLIANT\UDP_PACKETS_CLIANT.csproj">
       <Project>{4797c667-4908-430a-9796-9d5b095810b6}</Project>
