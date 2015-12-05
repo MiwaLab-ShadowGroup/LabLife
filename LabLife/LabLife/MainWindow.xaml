@@ -25,8 +25,8 @@
             <StatusBar DockPanel.Dock="Bottom">
                 <TextBlock x:Name="TextBlock_Status"/>
             </StatusBar>
-            <DockPanel x:Name="DockPanel_MainDock" DockPanel.Dock="Bottom">
-            </DockPanel>
+            <UniformGrid x:Name="DockPanel_MainDock" DockPanel.Dock="Bottom">
+            </UniformGrid>
         </DockPanel>
     </Grid>
 </Window>
