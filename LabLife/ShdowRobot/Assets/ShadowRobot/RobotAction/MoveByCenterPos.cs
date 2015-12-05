@@ -154,7 +154,7 @@ public class MoveByCenterPos : MonoBehaviour
 
         if (this.IsLight)
         {
-            Vector3 lightVec = new Vector3(0, 0.5f + y - this.robotLight.transform.position.y, 0) ;
+            Vector3 lightVec = new Vector3(0, 1f + y - this.robotLight.transform.position.y, 0) ;
             
             this.robotLight.transform.position += lightVec;
             //Debug.Log(lightVec);

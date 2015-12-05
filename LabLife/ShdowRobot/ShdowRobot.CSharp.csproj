@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Assets\3DModels\ModelScript.cs" />
     <Compile Include="Assets\3DModels\ModelsView.cs" />
+    <Compile Include="Assets\MyEffect\Invert.cs" />
     <Compile Include="Assets\PointClouds\PointCloud.cs" />
     <Compile Include="Assets\PointClouds\Shape.cs" />
     <Compile Include="Assets\PointClouds\ShapeLookAt.cs" />
@@ -120,7 +121,8 @@
     <Compile Include="Assets\ShadowRobot\RobotActionControll.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\NewImageEffectShader.shader" />
+    <None Include="Assets\InvertEffect.shader" />
+    <None Include="Assets\Shadow.shader" />
     <None Include="Assets\Stage\Shader-TwoSide.shader" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
@@ -199,6 +201,7 @@
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
+    <None Include="Assets\TransparentShadowCollector.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

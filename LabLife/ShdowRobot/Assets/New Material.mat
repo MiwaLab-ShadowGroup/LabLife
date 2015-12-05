@@ -127,6 +127,10 @@ Material:
         first:
           name: _Mode
         second: 0
+      data:
+        first:
+          name: _ShadowInt
+        second: 1
     m_Colors:
       data:
         first:
