@@ -194,6 +194,10 @@
       <Project>{b98d919a-06a5-4db5-b79b-92c30497e83e}</Project>
       <Name>CIPC_CS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\UdpDllsCS\UDP_PACKETS_CLIANT\UDP_PACKETS_CLIANT\UDP_PACKETS_CLIANT.csproj">
+      <Project>{4797c667-4908-430a-9796-9d5b095810b6}</Project>
+      <Name>UDP_PACKETS_CLIANT</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CIPCSystem\UdpDllsCS\UDP_PACKETS_CODER\UDP_PACKETS_CODER\UDP_PACKETS_MAKER.csproj">
       <Project>{308fb561-55f7-41a1-bfe0-f47652b0fe22}</Project>
       <Name>UDP_PACKETS_MAKER</Name>

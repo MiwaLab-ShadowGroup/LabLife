@@ -16,6 +16,7 @@ namespace LabLife.Editor
     {
         public CIPC_CS.CLIENT.CLIENT client;
 
+
         public TextAndTextBoxControl TextTextBox_CIPCRemoteIP = new TextAndTextBoxControl();
         public TextAndTextBoxControl TextTextBox_CIPCRemotePort = new TextAndTextBoxControl();
         public TextAndTextBoxControl TextTextBox_CIPCMyPort = new TextAndTextBoxControl();
@@ -84,6 +85,8 @@ namespace LabLife.Editor
 
         private void Button_CIPCSenderSTOP_Click(object sender, RoutedEventArgs e)
         {
+
+
             byte[] data = null;
             UDP_PACKETS_CODER.UDP_PACKETS_ENCODER enc = new UDP_PACKETS_CODER.UDP_PACKETS_ENCODER();
             enc += "STOP";

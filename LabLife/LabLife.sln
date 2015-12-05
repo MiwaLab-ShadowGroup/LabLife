@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralInterProcessCommunic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDP_PACKETS_MAKER", "..\CIPCSystem\UdpDllsCS\UDP_PACKETS_CODER\UDP_PACKETS_CODER\UDP_PACKETS_MAKER.csproj", "{308FB561-55F7-41A1-BFE0-F47652B0FE22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDP_PACKETS_CLIANT", "..\CIPCSystem\UdpDllsCS\UDP_PACKETS_CLIANT\UDP_PACKETS_CLIANT\UDP_PACKETS_CLIANT.csproj", "{4797C667-4908-430A-9796-9D5B095810B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIPCTerminal", "..\CIPCSystem\CentralInterProcessComunicationServer\CIPCTerminal\CIPCTerminal.csproj", "{95104DCE-0668-43F1-A76B-C4C3E6A7399B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalConnectionSettings", "..\CIPCSystem\CentralInterProcessComunicationServer\TerminalConnectionSettings\TerminalConnectionSettings.csproj", "{2ACB6A94-3875-487A-8DF1-0084A628D556}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +51,18 @@ Global
 		{308FB561-55F7-41A1-BFE0-F47652B0FE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{308FB561-55F7-41A1-BFE0-F47652B0FE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{308FB561-55F7-41A1-BFE0-F47652B0FE22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4797C667-4908-430A-9796-9D5B095810B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4797C667-4908-430A-9796-9D5B095810B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4797C667-4908-430A-9796-9D5B095810B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4797C667-4908-430A-9796-9D5B095810B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95104DCE-0668-43F1-A76B-C4C3E6A7399B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95104DCE-0668-43F1-A76B-C4C3E6A7399B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95104DCE-0668-43F1-A76B-C4C3E6A7399B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95104DCE-0668-43F1-A76B-C4C3E6A7399B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ACB6A94-3875-487A-8DF1-0084A628D556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ACB6A94-3875-487A-8DF1-0084A628D556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ACB6A94-3875-487A-8DF1-0084A628D556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ACB6A94-3875-487A-8DF1-0084A628D556}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
