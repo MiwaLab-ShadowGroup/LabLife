@@ -4,27 +4,22 @@ using System.Collections;
 using System.Net;
 using System.Threading;
 
+public class SendRenderTexture : MonoBehaviour {
 
-public class Lablife : MonoBehaviour
-{
     public RenderTexture renderTexture;
-
+    public Color difColor;
     //通信
     public string IPAdress;
     public int portNumber;
-    //public int serverPort;
+
     private Texture2D sendtexture;
 
     private UdpClient client;
-    //private CIPC_CS_Unity.CLIENT.CLIENT CIPCclient;
-    //private Thread thred;
-    //private FPSAdjuster.FPSAdjuster fps;
-    // Use this for initialization
-    
+
 
     void Start()
     {
-        if (this.renderTexture == null )
+        if (this.renderTexture == null)
         {
             return;
         }
@@ -35,34 +30,19 @@ public class Lablife : MonoBehaviour
         {
             this.portNumber = 15000;
         }
-        //if (this.serverPort == 0)
-        //{
-        //    this.serverPort = 50000;
-        //}
+
         if (this.IPAdress == "")
         {
             this.IPAdress = "127.0.0.1";
         }
-        
-        
-        //this.CIPCclient = new CIPC_CS_Unity.CLIENT.CLIENT(this.portNumber, this.IPAdress, this.serverPort);
-        //this.CIPCclient.Setup(CIPC_CS_Unity.CLIENT.MODE.Sender);
 
-        //this.fps = new FPSAdjuster.FPSAdjuster();
-        //this.fps.Fps = 30;
-        //this.fps.Start();
-        //this.thred = new Thread (new ThreadStart(this.sendimage));
-        //this.thred.Start();
+
     }
 
     private void sendimage()
     {
-        //while (true)
-        //{
+      
 
-        //    this.fps.Adjust();
-        //}
-        
     }
 
     // Update is called once per frame
@@ -70,24 +50,38 @@ public class Lablife : MonoBehaviour
     {
 
         if (this.renderTexture == null)
-        {           
+        {
             return;
-         
+
         }
-        
+
         RenderTexture.active = this.renderTexture;
         this.sendtexture.ReadPixels(new Rect(0, 0, this.renderTexture.width, this.renderTexture.height), 0, 0);
 
+        //バック処理
 
+        Color[] colors = this.sendtexture.GetPixels();
+        for (int i = 0; i < colors.Length; i++)
+        {
+            //colors[i] -= this.difColor;
+            Color color =  this.difColor - colors[i];
+            if (color.b < 0.000001f && color.g < 0.000001f && color.r < 0.000001f)
+            {
+                colors[i] = Color.white;
+            }
+        }
+
+
+
+        this.sendtexture.SetPixels(colors);
         this.sendtexture.Apply();
 
-        
+
         var bytes = this.sendtexture.EncodeToJPG();
         //this.CIPCclient.Update(ref bytes);
-        
+
         this.client.Send(bytes, bytes.Length, this.IPAdress, this.portNumber);
         //Debug.Log(this.client.Send(bytes, bytes.Length, this.IPAdress, this.portNumber));
     }
 
-   
 }

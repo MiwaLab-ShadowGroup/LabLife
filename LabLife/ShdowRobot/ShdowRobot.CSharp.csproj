@@ -51,17 +51,11 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
@@ -99,6 +93,7 @@
     <Compile Include="Assets\PointClouds\Shape.cs" />
     <Compile Include="Assets\PointClouds\ShapeLookAt.cs" />
     <Compile Include="Assets\PointClouds\TetrahedronScript.cs" />
+    <Compile Include="Assets\Script\AddTextrure.cs" />
     <Compile Include="Assets\Script\CIPCReceiver.cs" />
     <Compile Include="Assets\Script\CIPCReceiverLaserScaner.cs" />
     <Compile Include="Assets\Script\CIPCReceiverforSave.cs" />
@@ -109,6 +104,7 @@
     <Compile Include="Assets\Script\Lablife.cs" />
     <Compile Include="Assets\Script\ReadDepth.cs" />
     <Compile Include="Assets\Script\SaveDepth.cs" />
+    <Compile Include="Assets\Script\SendRenderTexture.cs" />
     <Compile Include="Assets\Script\UIScript.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\ActionTest.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\CalculatePosition.cs" />
@@ -119,10 +115,11 @@
     <Compile Include="Assets\ShadowRobot\RobotAction\RobotPosition.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\RobotSync.cs" />
     <Compile Include="Assets\ShadowRobot\RobotActionControll.cs" />
+    <Compile Include="Assets\ShadowRobot\ShadowRobotStage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\InvertEffect.shader" />
-    <None Include="Assets\Shadow.shader" />
+    <None Include="Assets\MyEffect\InvertEffect.shader" />
+    <None Include="Assets\MyEffect\TransparentShadowCollector.shader" />
     <None Include="Assets\Stage\Shader-TwoSide.shader" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
@@ -201,7 +198,6 @@
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
-    <None Include="Assets\TransparentShadowCollector.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
