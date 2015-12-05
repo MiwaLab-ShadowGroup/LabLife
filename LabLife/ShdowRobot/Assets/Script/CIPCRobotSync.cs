@@ -94,6 +94,8 @@ public class CIPCRobotSync : MonoBehaviour {
             enc += this.robotLightPos.z;
             this.data = enc.data;
             this.client.Update(ref this.data);
+            Debug.Log("Send");
+
         }
         catch
         {

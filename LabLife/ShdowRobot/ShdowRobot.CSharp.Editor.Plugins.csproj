@@ -138,7 +138,8 @@
     <Compile Include="Assets\Standard Assets\Editor\KinectCopyPluginDataHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\NewImageEffectShader.shader" />
+    <None Include="Assets\MyEffect\InvertEffect.shader" />
+    <None Include="Assets\MyEffect\TransparentShadowCollector.shader" />
     <None Include="Assets\Stage\Shader-TwoSide.shader" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />

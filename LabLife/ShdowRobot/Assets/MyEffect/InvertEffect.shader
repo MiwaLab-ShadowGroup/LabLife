@@ -1,4 +1,4 @@
-﻿Shader "Hidden/NewImageEffectShader"
+﻿Shader "Hidden/InvertEffect"
 {
 	Properties
 	{
