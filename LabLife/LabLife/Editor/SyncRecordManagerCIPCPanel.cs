@@ -106,7 +106,7 @@ namespace LabLife.Editor
             data = enc.data;
             this.client.Update(ref data);
 
-            Thread.Sleep(100);
+            Thread.Sleep(2000);
 
             Udp_Send(new TerminalConnectionSettings.TerminalProtocols.AllDisConnect());
 

@@ -19,7 +19,7 @@ namespace LabLife.Editor
         {
             base.Initialize(mainwindow);
 
-
+            ScrollViewer sv = new ScrollViewer();
             StackPanel stp = new StackPanel();
 
             this.Initialize_List();
@@ -28,8 +28,8 @@ namespace LabLife.Editor
             {
                 stp.Children.Add(p);
             }
-            
-            this.AddContent(stp, Dock.Top);
+            sv.Content = stp;
+            this.AddContent(sv, Dock.Top);
 
         }
 
