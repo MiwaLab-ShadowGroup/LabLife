@@ -1726,6 +1726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
   difColor: {r: 1, g: 1, b: .792156935, a: 0}
+  IsInvert: 0
   IPAdress: 
   portNumber: 0
 --- !u!114 &782920430
@@ -2624,7 +2625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1111110751
 Transform:
   m_ObjectHideFlags: 0
@@ -2898,6 +2899,10 @@ Prefab:
     - target: {fileID: 192228, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_Name
       value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 13673698, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
@@ -3395,6 +3400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
   difColor: {r: 1, g: 1, b: .713235259, a: 0}
+  IsInvert: 1
   IPAdress: 
   portNumber: 15001
 --- !u!114 &1949880844
