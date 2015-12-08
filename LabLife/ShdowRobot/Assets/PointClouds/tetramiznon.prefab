@@ -77,10 +77,10 @@ MonoBehaviour:
   mesh: {fileID: 0}
   indices: 000000000100000002000000000000000200000003000000000000000300000001000000010000000200000003000000
   Vertices:
-  - {x: -1, y: -1, z: -1}
-  - {x: 1, y: 1, z: -1}
-  - {x: 1, y: -1, z: 1}
-  - {x: -1, y: 1, z: 1}
+  - {x: -.5, y: -.5, z: -.5}
+  - {x: .5, y: .5, z: -.5}
+  - {x: .5, y: -.5, z: .5}
+  - {x: -.5, y: .5, z: .5}
   UvMaps:
   - {x: 0, y: 0}
   - {x: 0, y: 1}
@@ -108,6 +108,54 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.z
       value: .00999999978
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[0].x
+      value: -.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[0].y
+      value: -.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[0].z
+      value: -.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[1].x
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[1].y
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[1].z
+      value: -.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[2].x
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[2].y
+      value: -.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[2].z
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[3].x
+      value: -.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[3].y
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Vertices.Array.data[3].z
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -8,6 +8,7 @@ public class UIScript : MonoBehaviour
 {
     public GameObject CIPCforKinect;
     public GameObject CIPCforLS;
+    public GameObject CIPCforRobotSync;
     public GameObject SaveCIPC;
     public GameObject SaveButton;
     // Use this for initialization
@@ -26,6 +27,12 @@ public class UIScript : MonoBehaviour
     {
 
         this.CIPCforLS.GetComponent<CIPCReceiverLaserScaner>().ConnectCIPC();
+
+    }
+    public void ConnectCIPCforRobotSync()
+    {
+
+        this.CIPCforRobotSync.GetComponent<CIPCRobotSync>().ConnectCIPC();
 
     }
 
