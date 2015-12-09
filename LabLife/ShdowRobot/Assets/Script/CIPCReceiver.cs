@@ -8,10 +8,12 @@ public class CIPCReceiver : MonoBehaviour
     public int serverPort;
     public string remoteIP;
     public int myPort;
-    public string name;
+    public string clinteName;
     public int fps;
     CIPC_CS_Unity.CLIENT.CLIENT client;
     byte[] data;
+
+    [HideInInspector]
     public List<Human> List_Humans;
 
     bool IsCIPC;
@@ -99,7 +101,7 @@ public class CIPCReceiver : MonoBehaviour
     {
         try
         {
-            this.client = new CIPC_CS_Unity.CLIENT.CLIENT(this.myPort, this.remoteIP, this.serverPort, this.name, this.fps);
+            this.client = new CIPC_CS_Unity.CLIENT.CLIENT(this.myPort, this.remoteIP, this.serverPort, this.clinteName, this.fps);
             this.client.Setup(CIPC_CS_Unity.CLIENT.MODE.Receiver);
             this.IsCIPC = true;
             Debug.Log("CIPCforKinect");
