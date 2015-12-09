@@ -32,7 +32,7 @@ public class AddProjectorWIndow : EditorWindow
                 pw.projector = projector;
                 pw.SetUp();
                 pw.autoRepaintOnSceneChange = true;
-                pw.Show();
+                pw.ShowUtility();
                 
                 this.list_pw.Add(pw);
             }

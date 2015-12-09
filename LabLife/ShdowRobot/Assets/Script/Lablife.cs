@@ -8,13 +8,11 @@ using System.Threading;
 public class Lablife : MonoBehaviour
 {
     public RenderTexture renderTexture;
-
     //通信
     public string IPAdress;
     public int portNumber;
     //public int serverPort;
     private Texture2D sendtexture;
-
     private UdpClient client;
     //private CIPC_CS_Unity.CLIENT.CLIENT CIPCclient;
     //private Thread thred;
@@ -24,13 +22,12 @@ public class Lablife : MonoBehaviour
 
     void Start()
     {
-        if (this.renderTexture == null )
+        if (this.renderTexture == null)
         {
             return;
         }
         this.client = new UdpClient();
         this.sendtexture = new Texture2D(this.renderTexture.width, this.renderTexture.height);
-
         if (this.portNumber == 0)
         {
             this.portNumber = 15000;
@@ -70,18 +67,13 @@ public class Lablife : MonoBehaviour
     {
 
         if (this.renderTexture == null)
-        {           
+        {
             return;
-         
         }
         
         RenderTexture.active = this.renderTexture;
         this.sendtexture.ReadPixels(new Rect(0, 0, this.renderTexture.width, this.renderTexture.height), 0, 0);
-
-
         this.sendtexture.Apply();
-
-        
         var bytes = this.sendtexture.EncodeToJPG();
         //this.CIPCclient.Update(ref bytes);
         
@@ -89,5 +81,5 @@ public class Lablife : MonoBehaviour
         //Debug.Log(this.client.Send(bytes, bytes.Length, this.IPAdress, this.portNumber));
     }
 
-   
+    
 }
