@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: .114, g: .125, b: .133000001, a: 1}
   m_AmbientGroundColor: {r: .0469999984, g: .0430000015, b: .0350000001, a: 1}
-  m_AmbientIntensity: .819999993
+  m_AmbientIntensity: 0
   m_AmbientMode: 3
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: .5
@@ -126,9 +126,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   readData: 
+  ReadFileName: 
   OpenFileChoose: 0
-  ReadStart: 0
-  ReadStop: 0
+  Readstart: 0
 --- !u!1 &25280755
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5c47310de0b185458a148737f0ce6ae, type: 3}
   m_Name: 
@@ -164,8 +164,8 @@ MonoBehaviour:
   CIPCforLaserScaner: {fileID: 1527814823}
   CIPCforKinect: {fileID: 638825755}
   depth: {fileID: 493547224}
-  DataMode: 2
-  Mode: 3
+  DataMode: 1
+  Mode: 0
   IsLight: 1
   velparameter: 50
   angularVelocity: 1
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 505d20d2ae3955e4da06cf4e4d28679c, type: 3}
   m_Name: 
@@ -1106,8 +1106,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 6
   m_Type: 2
-  m_Color: {r: 1, g: .13333334, b: .13333334, a: 1}
-  m_Intensity: 1.59000003
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: .930000007
   m_Range: 50
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -1125,7 +1125,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967241
   m_Lightmapping: 4
-  m_BounceIntensity: 1.70000005
+  m_BounceIntensity: .119999997
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
@@ -1349,7 +1349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &493547225
 Transform:
   m_ObjectHideFlags: 0
@@ -1376,7 +1376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 131304, guid: fa990871743347f4d89828a607d6e3de, type: 2}
   kinect: {fileID: 749055555}
-  mode: 0
+  mode: 2
   maxCubeNum: 20000
   rangex: {x: -3.5, y: 3.5}
   rangez: {x: 1, y: 5.80000019}
@@ -1968,7 +1968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &818641836
 Transform:
   m_ObjectHideFlags: 0
@@ -2995,7 +2995,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1111110751
 Transform:
   m_ObjectHideFlags: 0
@@ -3015,12 +3015,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1111110750}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 998f357c85460ae479f47c24a171999f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cube: {fileID: 131304, guid: fa990871743347f4d89828a607d6e3de, type: 2}
+  cube: {fileID: 152866, guid: 2124d7b8cae19c749b0a5ae1efd47af1, type: 2}
   kinect: {fileID: 1419482177}
   mode: 0
   maxCubeNum: 20000
@@ -3077,7 +3077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1176549882
 Transform:
   m_ObjectHideFlags: 0
@@ -3246,7 +3246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1250662611
 Transform:
   m_ObjectHideFlags: 0
@@ -3619,11 +3619,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 10896066, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 10896066, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_Color.g
-      value: .815686285
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 10896066, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_Color.a
@@ -3631,15 +3631,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 10896066, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_Intensity
-      value: 1.98000002
+      value: 1.13999999
       objectReference: {fileID: 0}
-    - target: {fileID: 192228, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 197692, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 10896066, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
+      propertyPath: m_BounceIntensity
+      value: .00999999978
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
@@ -3759,8 +3755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0386cae653af09499b4321f17803032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverPort: 50000
-  remoteIP: 192.168.11.8
+  serverPort: 12000
+  remoteIP: 192.168.11.3
   myPort: 55001
   clinteName: SRforLRF
   fps: 30
@@ -4359,8 +4355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2444b9b9cd7ee4d4eb5591d6777f16b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverPort: 50000
-  remoteIP: 127.0.0.1
+  serverPort: 12000
+  remoteIP: 192.168.11.3
   myPort: 56000
   clientName: UnitySave_SYNCREC
   fps: 30

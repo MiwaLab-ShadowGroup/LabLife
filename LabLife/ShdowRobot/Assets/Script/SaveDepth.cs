@@ -58,7 +58,6 @@ public class SaveDepth : MonoBehaviour {
                     thread = new Thread(new ThreadStart(Save));
                     thread.Start();
                     
-                    
                     Savestart = false;
                    
                 }

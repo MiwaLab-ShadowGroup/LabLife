@@ -10,7 +10,7 @@ public class ReadDepth : MonoBehaviour {
     BinaryReader reader;
     public ushort[] readData;
     int datalength;
-    public string ReadFileName;
+    //public string ReadFileName;
     
     bool Isreader = true;
     Thread thread;
@@ -21,15 +21,19 @@ public class ReadDepth : MonoBehaviour {
 
     string FilePath;
 
-    public bool Readstart; 
+    public bool ReadStart = false;
+
+    public bool ReadStop = false;
+
+    bool IsStart = false;
 
     // Use this for initialization
     void Start () {
 
-
         readData = new ushort[512 * 424];
-
-        
+        this.FpsAd = new FPSAdjuster.FPSAdjuster();
+        this.FpsAd.Fps = 30;
+        this.FpsAd.Start();
     }
 
     // Update is called once per frame
@@ -42,53 +46,63 @@ public class ReadDepth : MonoBehaviour {
 
             if(FilePath != null)
             {
-                this.reader = new BinaryReader(File.OpenRead("C:\\Users\\yamakawa\\Documents\\UnitySave" + @"\" + ReadFileName));
-                this.thread = new Thread(new ThreadStart(this.ReadData));
-                this.thread.Start();
+                IsStart = true;
+                OpenFileChoose = false;
 
-                this.FpsAd = new FPSAdjuster.FPSAdjuster();
-                this.FpsAd.Fps = 30;
-                this.FpsAd.Start();
             }
 
-            OpenFileChoose = false;
         }
 
-
+        if (IsStart)
+        {
+            this.reader = new BinaryReader(File.OpenRead(FilePath));
+            this.thread = new Thread(new ThreadStart(this.ReadData));
+            this.thread.Start();
+            IsStart = false;
+            //Debug.Log("isstart");
+        }
     }
-
-
 
 
     void ReadData()
     {
+        //Debug.Log("ok");
+
         while (true)
         {
             FpsAd.Adjust();
-
-            if (Isreader == true)
+            if (ReadStart)
             {
-
-                this.datalength = this.reader.ReadInt32();
-
-                for (int i = 0; i < datalength; i++)
+                if (Isreader)
                 {
-                    this.readData[i] = this.reader.ReadUInt16();
+                    //Debug.Log("ok2");
+                    this.datalength = this.reader.ReadInt32();
 
+                    for (int i = 0; i < datalength; i++)
+                    {
+                        this.readData[i] = this.reader.ReadUInt16();
+                       // Debug.Log("aaaaaa");
+                    }
+
+                    if (reader.PeekChar() == -1)
+                    {
+                        //Debug.Log("ok3");
+                        reader.Close();
+                        Isreader = false;
+                    }
+
+                    if (ReadStop)
+                    {
+                        Isreader = false;
+                        ReadStop = false;
+                    }
+
+                    //Debug.Log("OK");
                 }
+                else { break; }
 
-                if (reader.PeekChar() == -1)
-                {
-                    reader.Close();
-                    Isreader = false;
-                }
-
-                //Debug.Log("OK");
             }
-            else { break; }
+
         }
-
-
     }
-
 }

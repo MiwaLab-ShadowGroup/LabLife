@@ -104,6 +104,7 @@
     <Compile Include="Assets\Script\CIPCReceiverLaserScaner.cs" />
     <Compile Include="Assets\Script\CIPCReceiverforSave.cs" />
     <Compile Include="Assets\Script\CIPCRobotSync.cs" />
+    <Compile Include="Assets\Script\CIPCforDCP.cs" />
     <Compile Include="Assets\Script\Class\Human.cs" />
     <Compile Include="Assets\Script\FPSAdjuster.cs" />
     <Compile Include="Assets\Script\ImageEffect.cs" />

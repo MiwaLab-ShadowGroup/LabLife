@@ -101,7 +101,6 @@ public class CIPCReceiverforSave : MonoBehaviour {
 
     void GetData()
     {
-        
         try
         {
 

@@ -11,7 +11,7 @@ public class SendImage : MonoBehaviour {
     public string[] list_IP;
     public int[] list_PortNum;
 
-    public bool IsdiColor;
+    public bool IsdifColor;
     public Color difColor;
     public bool IsInvert;
     private List<UdpClient> list_client;
@@ -57,7 +57,7 @@ public class SendImage : MonoBehaviour {
         RenderTexture.active = this.renderTexture;
         this.sendtexture.ReadPixels(new Rect(0, 0, this.renderTexture.width, this.renderTexture.height), 0, 0);
 
-        if (this.IsdiColor)
+        if (this.IsdifColor)
         {
             //バック処理
 
