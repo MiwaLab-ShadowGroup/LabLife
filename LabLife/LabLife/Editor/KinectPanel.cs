@@ -270,9 +270,9 @@ namespace LabLife.Editor
                     {
 
                         var color = bodyIndexColors[index];
-                        bodyIndexColorBuffer[colorIndex + 0] = 0;
-                        bodyIndexColorBuffer[colorIndex + 1] = 0;
-                        bodyIndexColorBuffer[colorIndex + 2] = 0;
+                        bodyIndexColorBuffer[colorIndex + 0] = color.B;
+                        bodyIndexColorBuffer[colorIndex + 1] = color.G;
+                        bodyIndexColorBuffer[colorIndex + 2] = color.R;
                         bodyIndexColorBuffer[colorIndex + 3] = 255;
 
                     }

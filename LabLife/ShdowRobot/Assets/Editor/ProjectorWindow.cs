@@ -9,7 +9,7 @@ public class ProjectorWindow : EditorWindow
     [MenuItem("Camera/ProjectorWindow")]
     public void SetUp()
     {
-        this.renderTexture = projector.targetTexture;
+        this.renderTexture = new RenderTexture(320, 240, 255);
         this.preRect = this.projector.rect;
         this.projector.rect = new Rect(0, 0, 1, 1);
         this.projector.targetTexture = this.renderTexture;
@@ -30,7 +30,7 @@ public class ProjectorWindow : EditorWindow
     void OnDestroy()
     {
         this.projector.rect = this.preRect;
-        //this.projector.targetTexture = null;
+        this.projector.targetTexture = null;
     }
 
     
