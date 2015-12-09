@@ -582,6 +582,7 @@
             <Setter Property="Background" Value="#01000000"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="#77FFFFFF"/>
+            <Setter Property="Cursor" Value="Hand"/>
         </Style>
         <Style TargetType="Separator">
             <Setter Property="Background" Value="#FFBDBDBD"/>
