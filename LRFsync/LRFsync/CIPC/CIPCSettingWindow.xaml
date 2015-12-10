@@ -1,0 +1,59 @@
+﻿<Window x:Class="CIPCClientWindow.CIPCSettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="240" Width="320" WindowStyle="None" ResizeMode="CanMinimize" Background="{x:Null}" AllowsTransparency="True" Activated="Window_Activated" Deactivated="Window_Deactivated" Topmost="True">
+    <Grid>
+        <Border BorderBrush="Blue" Margin="8" BorderThickness="5" x:Name="Border_Focus">
+            <Border.Effect>
+                <BlurEffect Radius="10"/>
+            </Border.Effect>
+        </Border>
+        <Grid Margin="10" Background="White">
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="CIPCClient" x:Name="TextBlock_TitleName"/>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="ClientName"/>
+                    <TextBlock Text="ClientPort" Grid.Row="1"/>
+                    <TextBlock Text="ServerIPAdress" Grid.Row="2"/>
+                    <TextBlock Text="ServerPort" Grid.Row="3"/>
+                    <TextBlock Text="Mode" Grid.Row="4"/>
+                    <TextBlock Text="FPS" Grid.Row="5"/>
+
+
+                    <TextBox Text="CIPCClient" TextAlignment="Right" x:Name="TextBlock_ClientName" Grid.Column="1"/>
+                    <TextBox Text="54000" TextAlignment="Right" x:Name="TextBlock_ClientPort" Grid.Row="1" Grid.Column="1"/>
+                    <TextBox Text="50000" TextAlignment="Right" x:Name="TextBlock_ServerPort" Grid.Row="3" Grid.Column="1"/>
+                    <TextBox Text="127.0.0.1" TextAlignment="Right" x:Name="TextBlock_ServerIPAdress" Grid.Row="2" Grid.Column="1"/>
+                    <WrapPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                        <RadioButton Content="Sender" x:Name="RadioButton_Mode_Sender" GroupName="Group_CIPCMode"/>
+                        <RadioButton Content="Receiver" x:Name="RadioButton_Mode_Receiver" GroupName="Group_CIPCMode"/>
+                        <RadioButton Content="Both" x:Name="RadioButton_Mode_Both" IsChecked="True" GroupName="Group_CIPCMode"/>
+                        <RadioButton Content="Direct" x:Name="RadioButton_Mode_Direct"  GroupName="Group_CIPCMode"/>
+                    </WrapPanel>
+                    <TextBox Text="30" TextAlignment="Right" x:Name="TextBlock_FPS" Grid.Row="5" Grid.Column="1"/>
+                </Grid>
+                <StackPanel Grid.Row="2" FlowDirection="RightToLeft" Orientation="Horizontal">
+                    <Button Content="Connect" x:Name="Button_Connect" Click="Button_Connect_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
