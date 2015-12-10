@@ -63,7 +63,6 @@ public class ReadDepth : MonoBehaviour {
         }
     }
 
-
     void ReadData()
     {
         //Debug.Log("ok");
@@ -81,7 +80,7 @@ public class ReadDepth : MonoBehaviour {
                     for (int i = 0; i < datalength; i++)
                     {
                         this.readData[i] = this.reader.ReadUInt16();
-                       // Debug.Log("aaaaaa");
+                        //Debug.Log("aaaaaa");
                     }
 
                     if (reader.PeekChar() == -1)
@@ -97,12 +96,36 @@ public class ReadDepth : MonoBehaviour {
                         ReadStop = false;
                     }
 
-                    //Debug.Log("OK");
                 }
-                else { break; }
+                else
+                {
+                    Debug.Log("OK");
+
+                    reader.Close();
+
+                    break;
+                }
 
             }
 
+        }
+
+    }
+
+    void OnApplicationQuit()
+    {
+        if (thread != null)
+        {
+            thread.Abort();
+
+        }
+        if (FilePath != null)
+        {
+            FilePath = null;
+        }
+        if(reader!= null)
+        {
+            reader.Close();
         }
     }
 }

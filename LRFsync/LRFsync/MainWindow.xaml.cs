@@ -90,7 +90,7 @@ namespace LRFsync
             CIPCClient.ReceiveClient newClient = new CIPCClient.ReceiveClient(myPort, serverIP, serverPort, clientName, fps, id);
             try
             {
-                newClient.Setup(CIPC_CS.CLIENT.MODE.Both);
+                newClient.Setup(CIPC_CS.CLIENT.MODE.Receiver);
                 newClient.DataReceived += this.DataReceived;
 
             }
@@ -155,7 +155,7 @@ namespace LRFsync
 
             try
             {
-                client.Setup(CIPC_CS.CLIENT.MODE.Both);
+                client.Setup(CIPC_CS.CLIENT.MODE.Sender);
                 this.timer = new System.Threading.Timer(new System.Threading.TimerCallback(this.senddata), client, 0, 33);
 
 

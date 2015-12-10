@@ -32,7 +32,6 @@ public class SaveDepth : MonoBehaviour {
 
         this.pointcloud = pointCloudShadow.GetComponent<PointCloud>();
 
-
         this.FpsAd = new FPSAdjuster.FPSAdjuster();
         this.FpsAd.Fps = 30;
         this.FpsAd.Start();
@@ -65,7 +64,6 @@ public class SaveDepth : MonoBehaviour {
             }
 
     }
-
 
     void OnApplicationQuit()
     {
@@ -100,9 +98,7 @@ public class SaveDepth : MonoBehaviour {
                 //framecount++;
                 if (this.IsSaveStop)
                 {
-
                     break;
-
                 }
 
             }
