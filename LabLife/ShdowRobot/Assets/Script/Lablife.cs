@@ -16,6 +16,7 @@ public class Lablife : MonoBehaviour
     private Texture2D sendtexture;
 
     private UdpClient client;
+
     //private CIPC_CS_Unity.CLIENT.CLIENT CIPCclient;
     //private Thread thred;
     //private FPSAdjuster.FPSAdjuster fps;
@@ -86,6 +87,7 @@ public class Lablife : MonoBehaviour
         //this.CIPCclient.Update(ref bytes);
         
         this.client.Send(bytes, bytes.Length, this.IPAdress, this.portNumber);
+
         //Debug.Log(this.client.Send(bytes, bytes.Length, this.IPAdress, this.portNumber));
     }
 

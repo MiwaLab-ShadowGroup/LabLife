@@ -7,7 +7,8 @@ public class AddTextrure : MonoBehaviour {
 
     public RenderTexture renderTexture;
     public RenderTexture renderTexture1;
-
+    public Color backColor;
+    public bool IsInvert;
     //通信
     public string IPAdress;
     public int portNumber;
@@ -64,15 +65,40 @@ public class AddTextrure : MonoBehaviour {
         
         for (int i = 0; i < colors.Length; i++)
         {
-            Color color = colors[i] - colors1[i];
-            if (colors[i] != Color.white )
+            if (this.IsInvert)
             {
-                
+                Color color = colors[i] - (Color.white - this.backColor);
+                Color color1 = colors1[i] - (Color.white - this.backColor);
+                if (color.b > 0.000001f && color.g > 0.000001f && color.r > 0.000001f)
+                {
+                    //colors[i] = Color.black;
+                }
+                else if (color1.b > 0.000001f && color1.g > 0.000001f && color1.r > 0.000001f)
+                {
+                    colors[i] = colors1[i];
+                }
+                else
+                {
+                    colors[i] = Color.white;
+                }
             }
-            else if(colors1[i] != Color.white)
+            else
             {
-                colors[i] = colors1[i];
+                Color color = colors[i] - colors1[i];
+                if (colors[i] != this.backColor)
+                {
+                    //colors[i] = Color.black;
+                }
+                else if (colors1[i] != this.backColor)
+                {
+                    colors[i] = colors1[i];
+                }
+                else
+                {
+                    colors[i] = Color.white;
+                }
             }
+           
             
         }
 
