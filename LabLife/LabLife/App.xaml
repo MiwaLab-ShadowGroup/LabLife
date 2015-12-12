@@ -21,7 +21,14 @@
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal" />
-                        <VisualState x:Name="MouseOver"/>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetName="Border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                To="#BF444444" Duration="0"/>
+                            </Storyboard>
+                        </VisualState>
+
                         <VisualState x:Name="Pressed" />
                         <VisualState x:Name="Disabled"/>
                     </VisualStateGroup>
@@ -33,7 +40,7 @@
                 </VisualStateManager.VisualStateGroups>
                 <Border x:Name="Border"
             Grid.ColumnSpan="2"
-            BorderThickness="2" Background="Black" BorderBrush="Black"/>
+            BorderThickness="2" Background="Transparent" BorderBrush="#4CFFFFFF"/>
                 <Border Grid.Column="0"
             Margin="1" Background="Transparent" />
                 <Path x:Name="Arrow"
@@ -78,14 +85,15 @@
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="MouseOver" />
+                                    <VisualState x:Name="MouseOver" >
+                                    </VisualState>
                                     <VisualState x:Name="Disabled">
-                                       
+
                                     </VisualState>
                                 </VisualStateGroup>
                                 <VisualStateGroup x:Name="EditStates">
                                     <VisualState x:Name="Editable">
-                                        
+
                                     </VisualState>
                                     <VisualState x:Name="Uneditable" />
                                 </VisualStateGroup>
@@ -125,12 +133,12 @@
                   MinWidth="{TemplateBinding ActualWidth}"
                   MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                     <Border x:Name="DropDownBorder"
-                      BorderThickness="1">
+                      BorderThickness="2">
                                         <Border.BorderBrush>
-                                            <SolidColorBrush Color="#FFA03E3E" />
+                                            <SolidColorBrush Color="#43FFFFFF" />
                                         </Border.BorderBrush>
                                         <Border.Background>
-                                            <SolidColorBrush Color="White" />
+                                            <SolidColorBrush Color="#43000000" />
                                         </Border.Background>
                                     </Border>
                                     <ScrollViewer Margin="4,6,4,6"
@@ -157,9 +165,6 @@
                    Property="AllowsTransparency"
                    Value="true">
                                 <Setter TargetName="DropDownBorder"
-                    Property="CornerRadius"
-                    Value="4" />
-                                <Setter TargetName="DropDownBorder"
                     Property="Margin"
                     Value="0,2,0,0" />
                             </Trigger>
@@ -185,10 +190,29 @@
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="SelectionStates">
                                     <VisualState x:Name="Unselected" />
+
                                     <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                To="#BF444444" Duration="0"/>
+                                        </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="SelectedUnfocused">
+
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup>
+                                    <VisualState x:Name="Normal">
                                         
+                                    </VisualState>
+
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                To="#BF440000" Duration="0"/>
+                                        </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
@@ -1103,7 +1127,7 @@
                   BorderThickness="1"
                   CornerRadius="0" Background="Transparent">
                                 <Border.BorderBrush>
-                                    <SolidColorBrush Color="{StaticResource BorderMediumColor}" />
+                                    <SolidColorBrush Color="#33FFFFFF" />
                                 </Border.BorderBrush>
 
                                 <ContentPresenter Margin="4"
@@ -1115,7 +1139,7 @@
                   BorderThickness="1,0,1,1"
                   CornerRadius="0" Background="Transparent">
                                 <Border.BorderBrush>
-                                    <SolidColorBrush Color="{StaticResource BorderMediumColor}" />
+                                    <SolidColorBrush Color="#33FFFFFF" />
                                 </Border.BorderBrush>
                                 <ContentPresenter Margin="4" />
                             </Border>

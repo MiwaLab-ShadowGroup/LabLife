@@ -1,4 +1,5 @@
 ﻿using LabLife.Contorols;
+using LabLife.Data;
 using LabLife.Processer;
 using OpenCvSharp;
 using OpenCvSharp.CPlusPlus;
@@ -17,6 +18,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 //using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace LabLife.Editor
 {
@@ -33,6 +35,7 @@ namespace LabLife.Editor
 
         private DateTime starttime;
         public bool IsRecStarted { get; set; }
+        public FileInfo[] LoadFileList { get; private set; }
 
         private uint currentframe;
         private BinaryWriter writer;
@@ -60,6 +63,11 @@ namespace LabLife.Editor
         Mat loadmat;
         WriteableBitmap loadbit;
 
+
+        public DispatcherTimer m_DispatcherTimer;
+        private ListBox ListBox_LoadFileList = new ListBox();
+        private bool isEqualPrevious;
+
         public RecoderPanel()
         {
             base.TitleName = "Recoder";
@@ -78,9 +86,17 @@ namespace LabLife.Editor
             this.ListBox_ResourcePanels.SelectionChanged += ListBox_ResourcePanels_SelectionChanged;
             //UniformGrid SaveGrid = new UniformGrid();
             //SaveGrid.Rows = 2;
+
+            GroupBox group_save = new GroupBox();
+            group_save.Header = "保存用";
+
             StackPanel savestack = new StackPanel();
-            TextBlock textblock_save = new TextBlock();
-            textblock_save.Text = "保存用";
+            ScrollViewer scr_save = new ScrollViewer();
+            scr_save.Content = savestack;
+            scr_save.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scr_save.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            group_save.Content = scr_save;
+
             Button Button_Save = new Button();
             Button_Save.Click += Button_Save_Click;
             Button_Save.Content = "保存";
@@ -96,6 +112,10 @@ namespace LabLife.Editor
             Button_FileName.Click += Button_FileName_Click;
             Button_FileName.Content = "名前変更";
 
+            GroupBox groupbox = new GroupBox();
+            groupbox.Header = "画像サイズ";
+            groupbox.Content = size;
+
             size.Items.Add("320,240");
             size.Items.Add("512,424");
 
@@ -104,24 +124,26 @@ namespace LabLife.Editor
             SliderTextBox.TextBlock_Title.Text = "Image Index : ";
             SliderTextBox.Slider_Main.ValueChanged += Slider_Main_ValueChanged;
 
-            savestack.Children.Add(textblock_save);
             savestack.Children.Add(Button_Save);
 
             savestack.Children.Add(Button_Stop_save);
             savestack.Children.Add(Button_savefolder);
             savestack.Children.Add(textbox_SavefileName);
             savestack.Children.Add(Button_FileName);
-            savestack.Children.Add(size);
-            grid.Children.Add(savestack);
+            savestack.Children.Add(groupbox);
+
+            grid.Children.Add(group_save);
             grid.Children.Add(b1);
 
             Grid.SetColumn(b1, 0);
 
+
+            GroupBox group_load = new GroupBox();
+            group_load.Header = "再生用";
+
             Border b2 = new Border();
             b2.Style = (Style)App.Current.Resources["Border_Default"];
             StackPanel loadstack = new StackPanel();
-            TextBlock textblock_load = new TextBlock();
-            textblock_load.Text = "再生用";
             Button Button_Loadone = new Button();
             Button_Loadone.Click += Button_Loadone_Click;
             Button_Loadone.Content = "読み込み";
@@ -139,7 +161,6 @@ namespace LabLife.Editor
             Button_LoadFileName.Click += Button_LoadFileName_Click; ;
             Button_LoadFileName.Content = "名前変更";
 
-            loadstack.Children.Add(textblock_load);
             loadstack.Children.Add(Button_Loadone);
             loadstack.Children.Add(Button_Load);
             loadstack.Children.Add(Button_Stop_load);
@@ -147,7 +168,9 @@ namespace LabLife.Editor
             loadstack.Children.Add(textbox_LoadfileName);
             loadstack.Children.Add(Button_LoadFileName);
 
-            grid.Children.Add(loadstack);
+            group_load.Content = loadstack;
+
+            grid.Children.Add(group_load);
             grid.Children.Add(b2);
             Grid.SetColumn(b2, 1);
 
@@ -174,11 +197,86 @@ namespace LabLife.Editor
             this.SetImageToGridChildren(this.Image_Load);
             Image_Load.Source = loadbit;
             this.AddContent(base.Grid_Image, Dock.Bottom);
+            b2.Child = this.ListBox_LoadFileList;
 
             this.UpdateLists();
 
             var timer = new Timer(new TimerCallback(loadtimercallback), null, 0, 30);
 
+
+            this.m_DispatcherTimer = new DispatcherTimer();
+            this.m_DispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            this.m_DispatcherTimer.Tick += M_DispatcherTimer_Tick;
+            this.m_DispatcherTimer.Start();
+        }
+
+        /// <summary>
+        /// 1ms dispacther tick event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void M_DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            this.CheckDirectory();
+            this.UpdateFileList();
+        }
+
+        private void UpdateFileList()
+        {
+            if (this.LoadFileList == null) return;
+            if (this.isEqualPrevious) return;
+            this.ListBox_LoadFileList.Items.Clear();
+            foreach (var p in this.LoadFileList)
+            {
+                this.ListBox_LoadFileList.Items.Add(p.Name);
+            }
+        }
+
+        private void CheckDirectory()
+        {
+            if (this.loadfolder == "" || this.loadfolder == null)
+            {
+                this.ListBox_LoadFileList.Items.Clear();
+                this.ListBox_LoadFileList.Items.Add("フォルダを選択してください");
+                return;
+            }
+            DirectoryInfo dir = new DirectoryInfo(this.loadfolder);
+            if (!dir.Exists)
+            {
+                this.ListBox_LoadFileList.Items.Clear();
+                this.ListBox_LoadFileList.Items.Add("フォルダが存在しません");
+                return;
+            }
+            var files = dir.GetFiles();
+
+            if (this.LoadFileList != null)
+            {
+                if (this.LoadFileList.Count() != files.Count())
+                {
+                    this.isEqualPrevious = false;
+                }
+                else
+                {
+                    for(int i =0; i < this.LoadFileList.Count(); i++)
+                    {
+                        if(this.LoadFileList[i].FullName != files[i].FullName)
+                        {
+                            this.isEqualPrevious = false;
+                            break;
+                        }
+                        else
+                        {
+                            this.isEqualPrevious = true;
+                        }
+                    }
+                }
+                
+                General.Log(this, this.isEqualPrevious.ToString());
+            }
+            if (!this.isEqualPrevious)
+            {
+                this.LoadFileList = files;
+            }
         }
 
         private void Button_Loadone_Click(object sender, RoutedEventArgs e)
@@ -197,6 +295,7 @@ namespace LabLife.Editor
             if (folderBrowserDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 this.loadfolder = folderBrowserDialog2.SelectedPath;
+
             }
             folderBrowserDialog2.Dispose();
         }
