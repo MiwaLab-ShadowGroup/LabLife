@@ -1349,7 +1349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &493547225
 Transform:
   m_ObjectHideFlags: 0
@@ -1381,7 +1381,7 @@ MonoBehaviour:
   rangex: {x: -1.5, y: 1.39999998}
   rangez: {x: 1, y: 4}
   roophight: 1.70000005
-  range: 10
+  range: 20
   IsReset: 0
   particulsnum: 0
   centerPos: {x: 0, y: 0, z: 0}
@@ -2667,8 +2667,7 @@ MonoBehaviour:
   renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
   list_IP:
   - 127.0.0.1
-  - 192.168.11.5
-  list_PortNum: 993a0000993a0000
+  list_PortNum: 983a0000
   IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
@@ -2995,7 +2994,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1111110751
 Transform:
   m_ObjectHideFlags: 0
@@ -3466,7 +3465,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1419482177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .150000006, y: .949999988, z: -4.0999999}
+  m_LocalPosition: {x: .150000006, y: .899999976, z: -4.0999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1111110751}
@@ -4214,16 +4213,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1814653697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
   list_IP:
-  - 192.168.11.7
-  - 192.168.11.2
-  list_PortNum: 993a0000993a0000
+  - 127.0.0.1
+  list_PortNum: 983a0000
   IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0

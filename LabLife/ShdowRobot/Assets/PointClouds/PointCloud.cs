@@ -62,6 +62,7 @@ public class PointCloud : MonoBehaviour
         if (this.IsArchive)
         {
             this.saveData = this.ReadDepth.GetComponent<ReadDepth>();
+            this.sensor.Open();
 
         }
 
@@ -87,7 +88,7 @@ public class PointCloud : MonoBehaviour
         if (this.IsArchive)
         {
             this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveData.readData, this.cameraSpacePoints);
-            //Debug.Log("pc");
+            //Debug.Log(saveData.readData.Length);
         }
 
         int cubeCount = 0;

@@ -76,11 +76,11 @@ public class ReadDepth : MonoBehaviour {
                 {
                     //Debug.Log("ok2");
                     this.datalength = this.reader.ReadInt32();
-
+                    
                     for (int i = 0; i < datalength; i++)
                     {
                         this.readData[i] = this.reader.ReadUInt16();
-                        //Debug.Log("aaaaaa");
+                        
                     }
 
                     if (reader.PeekChar() == -1)
@@ -95,11 +95,11 @@ public class ReadDepth : MonoBehaviour {
                         Isreader = false;
                         ReadStop = false;
                     }
+                    //Debug.Log("OK");
 
                 }
                 else
                 {
-                    Debug.Log("OK");
 
                     reader.Close();
 
@@ -123,7 +123,7 @@ public class ReadDepth : MonoBehaviour {
         {
             FilePath = null;
         }
-        if(reader!= null)
+        if (reader != null)
         {
             reader.Close();
         }
