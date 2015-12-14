@@ -27,7 +27,7 @@ public class MoveByCenterPos : MonoBehaviour
     CIPCReceiverLaserScaner cipcLS;
     PointCloud pointCloud;
     //モード
-    public enum _DataMode { KinectStation, LaserScaner, Depth, };
+    public enum _DataMode { KinectStation, LaserScaner, Depth, DepthLRF};
     public _DataMode DataMode;
     public enum _Mode { field, hight, randomhight, sinhight,}
     public _Mode Mode;
@@ -75,6 +75,7 @@ public class MoveByCenterPos : MonoBehaviour
         {
             case _DataMode.KinectStation: this.Bone(); break;
             case _DataMode.LaserScaner: this.LaserRangeFinder(); break;
+            case _DataMode.DepthLRF: this.DepthLRF(); break;
             case _DataMode.Depth: this.Depth(); break;
         }
 
@@ -107,6 +108,19 @@ public class MoveByCenterPos : MonoBehaviour
     void LaserRangeFinder()
     {
         this.centerPos = this.cp.CenterPosition(this.cipcLS.list_humanpos);
+        this.centerPos.x *= -1;
+    }
+    void DepthLRF()
+    {
+        try
+        {
+            this.centerPos = this.cp.CenterPosition(this.cipcLS.list_humanpos);
+            this.centerPos += this.pointCloud.centerPos;
+            this.centerPos /= 2;
+            //this.centerPos.x = -this.centerPos.x;
+
+        }
+        catch { }
     }
     void Depth()
     {

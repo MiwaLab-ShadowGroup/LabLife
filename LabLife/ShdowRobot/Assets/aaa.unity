@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: .114, g: .125, b: .133000001, a: 1}
   m_AmbientGroundColor: {r: .0469999984, g: .0430000015, b: .0350000001, a: 1}
-  m_AmbientIntensity: 0
+  m_AmbientIntensity: .100000001
   m_AmbientMode: 3
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: .5
@@ -164,9 +164,9 @@ MonoBehaviour:
   CIPCforLaserScaner: {fileID: 1527814823}
   CIPCforKinect: {fileID: 638825755}
   depth: {fileID: 493547224}
-  DataMode: 2
+  DataMode: 1
   Mode: 0
-  IsLight: 1
+  IsLight: 0
   velparameter: 50
   angularVelocity: 1
 --- !u!4 &25280757
@@ -181,7 +181,7 @@ Transform:
   m_Children:
   - {fileID: 1507099862}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!114 &25280758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f4a80679b03d6948b0b823b7948a3f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  robot: {fileID: 0}
   list_robotaction:
   - {fileID: 0}
   robotActionID: 0
@@ -1198,7 +1199,7 @@ Light:
   serializedVersion: 6
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.73000002
+  m_Intensity: 1.23000002
   m_Range: 50
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -1231,7 +1232,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &399526833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,7 +1319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &402745176
 Transform:
   m_ObjectHideFlags: 0
@@ -1467,12 +1468,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 131304, guid: fa990871743347f4d89828a607d6e3de, type: 2}
   kinect: {fileID: 749055555}
-  mode: 0
+  mode: 5
   maxCubeNum: 20000
-  rangex: {x: -3, y: 3}
-  rangez: {x: 1, y: 5.80000019}
+  rangex: {x: -1, y: 1}
+  rangez: {x: 0, y: 4}
   roophight: 1.39999998
-  range: 10
+  range: 5
   IsReset: 0
   particulsnum: 0
   centerPos: {x: 0, y: 0, z: 0}
@@ -1510,7 +1511,7 @@ Transform:
   - {fileID: 1777867785}
   - {fileID: 1514106572}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &575778737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,7 +1972,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 749055555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .879999995, z: -4.0999999}
+  m_LocalPosition: {x: 0, y: .800000012, z: -4.0999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 493547225}
@@ -1990,7 +1991,6 @@ GameObject:
   - 81: {fileID: 782920424}
   - 114: {fileID: 782920430}
   - 114: {fileID: 782920428}
-  - 114: {fileID: 782920429}
   m_Layer: 1
   m_Name: Projector0-Back
   m_TagString: Untagged
@@ -2045,7 +2045,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
+    width: .5
     height: 1
   near clip plane: .300000012
   far clip plane: 1000
@@ -2057,7 +2057,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 769
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 006167a0eb8115540b4174ff75bdb5a9, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -2071,37 +2071,25 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 782920422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  IPAdress: 
-  portNumber: 15000
---- !u!114 &782920429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 782920422}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
+  m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  difColor: {r: 1, g: 1, b: .792156935, a: 0}
+  renderTexture: {fileID: 0}
+  destinations: []
+  IsChangeColor: 0
+  List_Colors: []
+  IsdifColor: 0
+  difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
-  IPAdress: 
-  portNumber: 0
 --- !u!114 &782920430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 782920422}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
   m_Name: 
@@ -2135,7 +2123,7 @@ Transform:
   - {fileID: 1250662611}
   - {fileID: 21058029}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!1 &857099528
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,7 +2197,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!1 &878777619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2358,9 +2346,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: c5ab652b5eeabd14c9667c0d17e96ae3, type: 2}
-  IPAdress: 
-  portNumber: 15003
 --- !u!81 &910303366
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2427,7 +2412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba23ada02651c94ebace39c46e7c178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
+  renderTexture: {fileID: 0}
   renderTexture1: {fileID: 8400000, guid: c5ab652b5eeabd14c9667c0d17e96ae3, type: 2}
   backColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
@@ -2477,7 +2462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba23ada02651c94ebace39c46e7c178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
+  renderTexture: {fileID: 0}
   renderTexture1: {fileID: 8400000, guid: fe81005297885eb459b8e6a64626a7e5, type: 2}
   backColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
@@ -2494,9 +2479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: fe81005297885eb459b8e6a64626a7e5, type: 2}
-  IPAdress: 
-  portNumber: 15002
 --- !u!81 &924258733
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2687,8 +2669,6 @@ GameObject:
   - 81: {fileID: 1037782631}
   - 114: {fileID: 1037782630}
   - 114: {fileID: 1037782635}
-  - 114: {fileID: 1037782629}
-  - 114: {fileID: 1037782628}
   m_Layer: 0
   m_Name: Projector1-Floor
   m_TagString: Untagged
@@ -2708,43 +2688,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1137285049}
   m_RootOrder: 1
---- !u!114 &1037782628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1037782626}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  difColor: {r: 1, g: 1, b: .713235259, a: 0}
-  IsInvert: 1
-  IPAdress: 
-  portNumber: 15001
---- !u!114 &1037782629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1037782626}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  IPAdress: 
-  portNumber: 15001
 --- !u!114 &1037782630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1037782626}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
   m_Name: 
@@ -2817,11 +2767,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
-  list_IP:
-  - 192.168.11.6
-  - 192.168.11.5
-  list_PortNum: 983a0000983a0000
-  IsdiColor: 0
+  destinations: []
+  IsChangeColor: 0
+  List_Colors: []
+  IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
 --- !u!1001 &1062935740
@@ -2921,7 +2870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1098169790
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2934,7 +2883,7 @@ RectTransform:
   m_Children:
   - {fileID: 1527715719}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -3244,7 +3193,7 @@ Transform:
   - {fileID: 1231506368}
   - {fileID: 1850638099}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
 --- !u!1 &1183382417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,7 +3266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  serverPort: 12000
+  serverPort: 50000
   remoteIP: 192.168.11.8
   myPort: 55002
   clinteName: SRforRobotSync
@@ -3472,11 +3421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  difColor: {r: 1, g: 1, b: .792156935, a: 0}
-  IsInvert: 0
-  IPAdress: 
-  portNumber: 0
 --- !u!114 &1496657187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3488,9 +3432,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  IPAdress: 
-  portNumber: 15000
 --- !u!114 &1496657188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3502,12 +3443,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
-  list_IP:
-  - 192.168.11.2
-  - 192.168.11.7
-  list_PortNum: 983a0000983a0000
-  IsdiColor: 0
+  renderTexture: {fileID: 0}
+  destinations: []
+  IsChangeColor: 0
+  List_Colors: []
+  IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
 --- !u!114 &1496657189
@@ -3638,7 +3578,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 10896066, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_Intensity
-      value: 1.05999994
+      value: 1.03999996
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
@@ -3808,6 +3748,66 @@ MonoBehaviour:
   clinteName: SRforLRF
   fps: 30
   list_humanpos: []
+--- !u!1 &1620934037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1620934039}
+  - 108: {fileID: 1620934038}
+  m_Layer: 0
+  m_Name: FixedPointLight (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!108 &1620934038
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1620934037}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1.15999997
+  m_Range: 50
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: 3
+    m_Strength: 1
+    m_Bias: .519999981
+    m_NormalBias: .779999971
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967241
+  m_Lightmapping: 4
+  m_BounceIntensity: 1.70000005
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_AreaSize: {x: 1, y: 1}
+--- !u!4 &1620934039
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1620934037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: -3.99000001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
 --- !u!1 &1702246437
 GameObject:
   m_ObjectHideFlags: 0
@@ -3837,7 +3837,7 @@ Transform:
   - {fileID: 493547225}
   - {fileID: 1111110751}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &1734621642
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,11 +3902,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  difColor: {r: 1, g: 1, b: .713235259, a: 0}
-  IsInvert: 1
-  IPAdress: 
-  portNumber: 15001
 --- !u!114 &1734621646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3918,9 +3913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  IPAdress: 
-  portNumber: 15001
 --- !u!114 &1734621647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3932,12 +3924,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
-  list_IP:
-  - 192.168.11.6
-  - 192.168.11.5
-  list_PortNum: 983a0000983a0000
-  IsdiColor: 0
+  renderTexture: {fileID: 0}
+  destinations: []
+  IsChangeColor: 0
+  List_Colors: []
+  IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
 --- !u!114 &1734621648
@@ -4066,7 +4057,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!1 &1777867784
 GameObject:
   m_ObjectHideFlags: 0
@@ -4081,7 +4072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1777867785
 Transform:
   m_ObjectHideFlags: 0
@@ -4114,7 +4105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1787675842
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4171,7 +4162,7 @@ Transform:
   m_LocalScale: {x: .300000012, y: 1.60000002, z: .300000012}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1 &1814653697
 GameObject:
   m_ObjectHideFlags: 0
@@ -4186,8 +4177,6 @@ GameObject:
   - 81: {fileID: 1814653703}
   - 114: {fileID: 1814653702}
   - 114: {fileID: 1814653699}
-  - 114: {fileID: 1814653701}
-  - 114: {fileID: 1814653700}
   m_Layer: 1
   m_Name: Projector0-Back
   m_TagString: Untagged
@@ -4219,50 +4208,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
-  list_IP:
-  - 192.168.11.2
-  - 192.168.11.7
-  list_PortNum: 983a0000983a0000
-  IsdiColor: 0
+  destinations: []
+  IsChangeColor: 0
+  List_Colors: []
+  IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
---- !u!114 &1814653700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1814653697}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  difColor: {r: 1, g: 1, b: .792156935, a: 0}
-  IsInvert: 0
-  IPAdress: 
-  portNumber: 0
---- !u!114 &1814653701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1814653697}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  IPAdress: 
-  portNumber: 15000
 --- !u!114 &1814653702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1814653697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
   m_Name: 
@@ -4362,8 +4320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2444b9b9cd7ee4d4eb5591d6777f16b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverPort: 12000
-  remoteIP: 192.168.11.3
+  serverPort: 50000
+  remoteIP: 127.0.0.1
   myPort: 56000
   clientName: UnitySave_SYNCREC
   fps: 30
@@ -4476,7 +4434,6 @@ GameObject:
   - 81: {fileID: 1949880837}
   - 114: {fileID: 1949880844}
   - 114: {fileID: 1949880842}
-  - 114: {fileID: 1949880843}
   m_Layer: 0
   m_Name: Projector1-Floor
   m_TagString: Untagged
@@ -4517,9 +4474,9 @@ Camera:
   m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: .5
     y: 0
-    width: 1
+    width: .5
     height: 1
   near clip plane: .300000012
   far clip plane: 1000
@@ -4531,7 +4488,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967241
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 006167a0eb8115540b4174ff75bdb5a9, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -4559,35 +4516,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1949880836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
+  m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  IPAdress: 
-  portNumber: 15001
---- !u!114 &1949880843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1949880836}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  difColor: {r: 1, g: 1, b: .713235259, a: 0}
-  IsInvert: 1
-  IPAdress: 
-  portNumber: 15001
+  renderTexture: {fileID: 8400000, guid: 006167a0eb8115540b4174ff75bdb5a9, type: 2}
+  destinations:
+  - IPadress: 
+    Port: 0
+  IsChangeColor: 0
+  List_Colors: []
+  IsdifColor: 0
+  difColor: {r: 0, g: 0, b: 0, a: 0}
+  IsInvert: 0
 --- !u!114 &1949880844
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1949880836}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
   m_Name: 

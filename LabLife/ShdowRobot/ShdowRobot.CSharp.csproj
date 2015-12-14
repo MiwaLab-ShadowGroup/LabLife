@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.2.3f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -88,6 +90,7 @@
   <ItemGroup>
     <Compile Include="Assets\3DModels\ModelScript.cs" />
     <Compile Include="Assets\3DModels\ModelsView.cs" />
+    <Compile Include="Assets\MyEffect\ImageEffect.cs" />
     <Compile Include="Assets\MyEffect\Invert.cs" />
     <Compile Include="Assets\PointClouds\PointCloud.cs" />
     <Compile Include="Assets\PointClouds\Shape.cs" />
@@ -100,13 +103,10 @@
     <Compile Include="Assets\Script\CIPCRobotSync.cs" />
     <Compile Include="Assets\Script\Class\Human.cs" />
     <Compile Include="Assets\Script\FPSAdjuster.cs" />
-    <Compile Include="Assets\Script\ImageEffect.cs" />
-    <Compile Include="Assets\Script\Lablife.cs" />
     <Compile Include="Assets\Script\ReadDepth.cs" />
     <Compile Include="Assets\Script\SaveDepth.cs" />
-    <Compile Include="Assets\Script\SendRenderTexture.cs" />
+    <Compile Include="Assets\Script\SendImage.cs" />
     <Compile Include="Assets\Script\UIScript.cs" />
-    <Compile Include="Assets\ShadowRobot\RobotAction\ActionTest.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\CalculatePosition.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\CircleLine.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\LightAction.cs" />

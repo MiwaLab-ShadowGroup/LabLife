@@ -10,12 +10,12 @@ namespace Robot
     public class RobotActionControll : MonoBehaviour
     {
 
-
+        public GameObject robot;
         public MonoBehaviour[] list_robotaction;
         
         public int robotActionID;
-
-
+        private Vector3 preRobotPos;
+        private Vector3 preLightPos;
         // Use this for initialization
         void Start()
         {
@@ -25,7 +25,8 @@ namespace Robot
             {
                 this.list_robotaction[i] = array[i + 1];
             }
-
+            this.preRobotPos = this.robot.transform.position;
+            this.preLightPos = this.robot.transform.FindChild("RobotLight").transform.position;
             
         }
 
@@ -41,11 +42,18 @@ namespace Robot
                         if (this.list_robotaction[i].enabled) this.list_robotaction[i].enabled = false;
                     }
                         this.list_robotaction[this.robotActionID].enabled = true;
+                    this.Init();
                 }
             }
             
         }
 
+        void Init()
+        {
+            this.robot.transform.position = this.preRobotPos;
+            this.robot.transform.FindChild("RobotLight").transform.position = this.preLightPos;
+
+        }
        
     }
 
