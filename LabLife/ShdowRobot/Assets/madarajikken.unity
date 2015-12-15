@@ -1349,7 +1349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &493547225
 Transform:
   m_ObjectHideFlags: 0
@@ -2666,7 +2666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
   list_IP:
-  - 127.0.0.1
+  - 192.168.11.9
   list_PortNum: 983a0000
   IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
@@ -3076,7 +3076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1176549882
 Transform:
   m_ObjectHideFlags: 0
@@ -3209,9 +3209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53133e3b73ea52a49b213eac6de2401e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 1
+  mode: 0
   serverPort: 50000
-  remoteIP: 192.168.11.8
+  remoteIP: 192.168.11.9
   myPort: 55002
   clinteName: SRforRobotSync
   fps: 30
