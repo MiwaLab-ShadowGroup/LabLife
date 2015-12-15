@@ -17,34 +17,44 @@ namespace LabLife.Processer.ImageProcesser
 
         }
 
-        int sharpness = 20;
+        int sharpness = 50;
         private Mat grayimage = new Mat();
+        // Mat dstMat = new Mat()
+        Random rand = new Random();
 
         private void Update(ref Mat src, ref Mat dst)
         {
             Cv2.CvtColor(src, grayimage, OpenCvSharp.ColorConversion.BgrToGray);
+            dst = new Mat(dst.Height, dst.Width, MatType.CV_8UC3,Scalar.Black);
+                          
             Point[][] contour;//= grayimage.FindContoursAsArray(OpenCvSharp.ContourRetrieval.External, OpenCvSharp.ContourChain.ApproxSimple);
             HierarchyIndex[] hierarchy;
 
-            Cv2.FindContours(grayimage, out contour, out hierarchy, OpenCvSharp.ContourRetrieval.CComp, OpenCvSharp.ContourChain.ApproxSimple);
+            Cv2.FindContours(grayimage, out contour, out hierarchy, OpenCvSharp.ContourRetrieval.External, OpenCvSharp.ContourChain.ApproxNone);
+           
 
             List<OpenCvSharp.CPlusPlus.Point> CvPoints = new List<Point>();
-
-
+            
+            
             for (int i = 0; i < contour.Length; i++)
             {
-                CvPoints.Clear();
-
-                for (int j = 0; j < contour[i].Length; j += this.sharpness)
+                if(Cv2.ContourArea(contour[i]) > 100)
                 {
+                    CvPoints.Clear();
+
+                    for (int j = 0; j < contour[i].Length; j += this.sharpness)
+                    {
+
+                        CvPoints.Add(contour[i][j]);
+                    }
                     
-                    CvPoints.Add(contour[i][j]);
+                    Cv2.FillConvexPoly(dst, CvPoints, Scalar.Yellow,  OpenCvSharp.LineType.Link4, 0);
                 }
-
-                Cv2.FillConvexPoly(dst, CvPoints, Scalar.Yellow, OpenCvSharp.LineType.Link8, 0);
+                
             }
-
+            //Console.WriteLine(contour.Length);
         }
+
         public override string ToString()
         {
             return "Polygon";

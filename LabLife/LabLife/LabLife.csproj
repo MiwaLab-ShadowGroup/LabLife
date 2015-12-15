@@ -119,6 +119,7 @@
     <Compile Include="LabLife.cs" />
     <Compile Include="Processer\ImageProcesser\AImageProcesser.cs" />
     <Compile Include="Processer\ImageProcesser\CellAutomaton.cs" />
+    <Compile Include="Processer\ImageProcesser\polygon.cs" />
     <Compile Include="Processer\ImageProcesser\Reverse.cs" />
     <Compile Include="Processer\Recoder.cs" />
     <Compile Include="Processer\Transporter.cs" />

@@ -1468,7 +1468,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 131304, guid: fa990871743347f4d89828a607d6e3de, type: 2}
   kinect: {fileID: 749055555}
-  mode: 5
+  mode: 0
+  IsContour: 0
   maxCubeNum: 20000
   rangex: {x: -1, y: 1}
   rangez: {x: 0, y: 4}
@@ -3123,6 +3124,7 @@ MonoBehaviour:
   cube: {fileID: 152866, guid: 2124d7b8cae19c749b0a5ae1efd47af1, type: 2}
   kinect: {fileID: 1419482177}
   mode: 0
+  IsContour: 0
   maxCubeNum: 20000
   rangex: {x: -1.79999995, y: 1.79999995}
   rangez: {x: 1, y: 4}

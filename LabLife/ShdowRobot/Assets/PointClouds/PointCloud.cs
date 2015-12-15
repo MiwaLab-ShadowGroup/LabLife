@@ -16,9 +16,9 @@ public class PointCloud : MonoBehaviour
 
     public GameObject kinect;
 
-    public enum _Mode {Random, Boder, Contour, ContourBoder, Check, Constant,}
+    public enum _Mode {Random, Boder, Check, Constant,}
     public _Mode mode;
-    bool IsContour;
+    public bool IsContour;
 
     //パラメータ
     public int maxCubeNum = 5000;
@@ -98,8 +98,6 @@ public class PointCloud : MonoBehaviour
         {
             case _Mode.Random: this.Contemporary(ref cubeCount); break;
             case _Mode.Boder:  this.Border(ref cubeCount); break;
-            case _Mode.Contour: this.Contour(ref cubeCount); break;
-            case _Mode.ContourBoder: this.ContourBoder(ref cubeCount); break;
             case _Mode.Check: this.Check(ref cubeCount); break;
             case _Mode.Constant: this.Constant(ref cubeCount); break;
         }
@@ -126,7 +124,6 @@ public class PointCloud : MonoBehaviour
         //Reset
         if (this.IsReset) this.Reset();
     }        
-
    
     void CubeControll(int cubeCount,Vector3 point)
     {
@@ -141,10 +138,11 @@ public class PointCloud : MonoBehaviour
             this.ListCube[this.ListCube.Count - 1].transform.localPosition = point;
         }
     }
+
     void Contemporary(ref int cubeCount)
     {
         int pointCount = 0;
-        for (int i = 0; i < cameraSpacePoints.Length; i++)
+        for (int i = this.imageWidth; i < cameraSpacePoints.Length - this.imageWidth; i++)
         {
             //奥の壁排除
             if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && this.ListCube.Count < this.maxCubeNum)
@@ -152,73 +150,24 @@ public class PointCloud : MonoBehaviour
                 //三次元位置に変更
                 Vector3 point = new Vector3(-this.cameraSpacePoints[i].X, this.cameraSpacePoints[i].Y, this.cameraSpacePoints[i].Z);
 
-                //床排除と左右の壁排除                       
-                if (point.y < this.roophight && point.y > -this.kinect.transform.position.y && point.x > this.rangex.x && point.x < this.rangex.y && pointCount % this.range == 0)
-                {
-                    //条件クリアした粒子
-                    this.CubeControll(cubeCount, point);
-
-                    cubeCount++;
-                }
-                pointCount++;
-            }
-
-        }
-    }
-    void Border(ref int cubeCount)
-    {
-
-        for (int i = 0; i < this.cameraSpacePoints.Length; i+=this.range * this.imageWidth)
-        {
-            for(int j =0; j < this.imageWidth; j++)
-            {
-                //奥の壁排除
-                if (this.cameraSpacePoints[i + j].Z > this.rangez.x && this.cameraSpacePoints[i + j].Z < this.rangez.y && this.ListCube.Count < this.maxCubeNum)
-                {
-                    //三次元位置に変更
-                    Vector3 point = new Vector3(-this.cameraSpacePoints[i + j].X, this.cameraSpacePoints[i + j].Y, this.cameraSpacePoints[i + j].Z);
-
-                    //床排除と左右の壁排除                       
-                    if (point.y < this.roophight && point.y > -this.kinect.transform.position.y && point.x > this.rangex.x && point.x < this.rangex.y)
-                    {
-                        //条件クリアした粒子
-                        this.CubeControll(cubeCount, point);
-                        cubeCount++;
-
-
-                    }
-
-                }
-            }
-        }
-    }
-    void Contour(ref int cubeCount)
-    {
-        int pointCount = 0;
-        for (int i = this.imageWidth; i < cameraSpacePoints.Length- this.imageWidth; i++)
-        {
-            //奥の壁排除
-            if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && this.ListCube.Count < this.maxCubeNum)
-            {
-                //三次元位置に変更
-                Vector3 point = new Vector3(-this.cameraSpacePoints[i].X, this.cameraSpacePoints[i].Y, this.cameraSpacePoints[i].Z);
                 //床排除と左右の壁排除                       
                 if (point.y < this.roophight && point.y > -this.kinect.transform.position.y && point.x > this.rangex.x && point.x < this.rangex.y)
                 {
                     //条件クリアした粒子
                     //輪郭
-                    if (Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i + this.imageWidth].Z) > 0.5 ||
+                    if (this.IsContour &&
+                       (Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i + this.imageWidth].Z) > 0.5 ||
                         Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i - this.imageWidth].Z) > 0.5 ||
                         Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i + 1].Z) > 0.5 ||
-                        Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i - 1].Z) > 0.5)
+                        Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i - 1].Z) > 0.5))
                     {
                         this.CubeControll(cubeCount, point);
                         cubeCount++;
-
                     }
-                    else if(pointCount % this.range == 0)
+                    else if (pointCount % this.range == 0)
                     {
                         this.CubeControll(cubeCount, point);
+
                         cubeCount++;
                     }
                     pointCount++;
@@ -228,9 +177,8 @@ public class PointCloud : MonoBehaviour
 
         }
     }
-    void ContourBoder(ref int cubeCount)
+    void Border(ref int cubeCount)
     {
-        int pointCount = 0;
         for (int i = this.imageWidth; i < cameraSpacePoints.Length - this.imageWidth; i++)
         {
             //奥の壁排除
@@ -243,10 +191,11 @@ public class PointCloud : MonoBehaviour
                 {
                     //条件クリアした粒子
                     //輪郭
-                    if (Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i + this.imageWidth].Z) > 0.5 ||
+                    if (this.IsContour &&
+                       (Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i + this.imageWidth].Z) > 0.5 ||
                         Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i - this.imageWidth].Z) > 0.5 ||
                         Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i + 1].Z) > 0.5 ||
-                        Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i - 1].Z) > 0.5)
+                        Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i - 1].Z) > 0.5))
                     {
                         this.CubeControll(cubeCount, point);
                         cubeCount++;
@@ -259,8 +208,6 @@ public class PointCloud : MonoBehaviour
                         this.CubeControll(cubeCount, point);
                         cubeCount++;
                     }
-                    pointCount++;
-
                 }
             }
 
@@ -268,8 +215,7 @@ public class PointCloud : MonoBehaviour
     }
     void Check(ref int cubeCount)
     {
-        //int pointCount = 0;
-        for (int i = 0; i < cameraSpacePoints.Length; i++)
+        for (int i = this.imageWidth; i < cameraSpacePoints.Length - this.imageWidth; i++)
         {
             //奥の壁排除
             if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && this.ListCube.Count < this.maxCubeNum)
@@ -280,20 +226,36 @@ public class PointCloud : MonoBehaviour
                 //床排除と左右の壁排除                       
                 if (point.y < this.roophight && point.y > -this.kinect.transform.position.y && point.x > this.rangex.x && point.x < this.rangex.y)
                 {
-                    int x = i % this.imageWidth;
-                    int y = i / this.imageHeight;
-                    if (x % this.range == 0 && y % this.range == 0)
+
+                    //輪郭
+                    if (this.IsContour &&
+                       (Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i + this.imageWidth].Z) > 0.5 ||
+                        Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i - this.imageWidth].Z) > 0.5 ||
+                        Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i + 1].Z) > 0.5 ||
+                        Mathf.Abs(this.cameraSpacePoints[i].Z - this.cameraSpacePoints[i - 1].Z) > 0.5))
                     {
-                        //条件クリアした粒子
-
                         this.CubeControll(cubeCount, point);
-
                         cubeCount++;
                     }
+                    //輪郭の内側
+                    //チェック状にする
+                    else
+                    {
 
+                        int x = i % this.imageWidth;
+                        int y = i / this.imageHeight;
+
+                        if (x % this.range == 0 && y % this.range == 0)
+                        {
+                            //条件クリアした粒子
+
+                            this.CubeControll(cubeCount, point);
+                            cubeCount++;
+                        }
+
+                    }
                     
                 }
-                //pointCount++;
             }
 
 
@@ -311,7 +273,7 @@ public class PointCloud : MonoBehaviour
                 int constRange = (int)(this.range * Mathf.Pow((int)(Mathf.Abs( this.kinect.transform.position.z ) - this.rangez.x) / i, 2));
                 //Debug.Log(i.ToString() + ":" + constRange);
 
-                for (int j = 0; j < this.cameraSpacePoints.Length; j++)
+                for (int j = this.imageWidth; j < cameraSpacePoints.Length - this.imageWidth; j++)
                 {
 
                     //奥の壁排除
@@ -324,28 +286,27 @@ public class PointCloud : MonoBehaviour
                         if (point.y < this.roophight && point.y > -this.kinect.transform.position.y && point.x > this.rangex.x && point.x < this.rangex.y )
                         {
                             //条件クリアした粒子
-                            if(pointCount % constRange == 0)
+                            //輪郭
+                            if (this.IsContour &&
+                                ( Mathf.Abs(this.cameraSpacePoints[j].Z - this.cameraSpacePoints[j + this.imageWidth].Z) > 0.5 ||
+                                  Mathf.Abs(this.cameraSpacePoints[j].Z - this.cameraSpacePoints[j - this.imageWidth].Z) > 0.5 ||
+                                  Mathf.Abs(this.cameraSpacePoints[j].Z - this.cameraSpacePoints[j + 1].Z) > 0.5 ||
+                                  Mathf.Abs(this.cameraSpacePoints[j].Z - this.cameraSpacePoints[j - 1].Z) > 0.5))
                             {
                                 this.CubeControll(cubeCount, point);
+                                cubeCount++;
+
 
                             }
-                            else if (this.IsContour)
+                            else if(pointCount % constRange == 0)
                             {
-                                //輪郭
-                                if (Mathf.Abs(this.cameraSpacePoints[j].Z - this.cameraSpacePoints[j + this.imageWidth].Z) > 0.5 ||
-                                    Mathf.Abs(this.cameraSpacePoints[j].Z - this.cameraSpacePoints[j - this.imageWidth].Z) > 0.5 ||
-                                    Mathf.Abs(this.cameraSpacePoints[j].Z - this.cameraSpacePoints[j + 1].Z) > 0.5 ||
-                                    Mathf.Abs(this.cameraSpacePoints[j].Z - this.cameraSpacePoints[j - 1].Z) > 0.5)
-                                {
-                                    this.CubeControll(cubeCount, point);
-                                    cubeCount++;
-                                }
+                                this.CubeControll(cubeCount, point);
+                                cubeCount++;
                             }
 
+                            pointCount++;
 
-                            cubeCount++;
                         }
-                        pointCount++;
                     }
 
                 }
