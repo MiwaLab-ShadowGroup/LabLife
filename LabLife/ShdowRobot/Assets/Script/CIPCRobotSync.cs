@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 public class CIPCRobotSync : MonoBehaviour {
 
@@ -20,6 +21,9 @@ public class CIPCRobotSync : MonoBehaviour {
     [HideInInspector]
     public Vector3 robotLightPos;
     bool IsCIPC;
+    public bool IsStop;
+
+    Thread thread;
 
     void Awake()
     {
@@ -32,23 +36,34 @@ public class CIPCRobotSync : MonoBehaviour {
 
         this.robotLight = this.robot.transform.FindChild("RobotLight").gameObject;
         this.IsCIPC = false;
+
+        this.thread = new Thread(new ThreadStart(this.Data));
+        thread.Start();
         
     }
 
     // Update is called once per frame
-    void Update()
+    void Data()
     {
-        if (this.IsCIPC)
+        try
         {
-            switch (this.mode)
+            while (true)
             {
-                case _Mode.Reciever: this.GetData();  break;
-                case _Mode.Sender:   this.SendData(); break;
+                if (this.IsCIPC)
+                {
+                    switch (this.mode)
+                    {
+                        case _Mode.Reciever: this.GetData(); break;
+                        case _Mode.Sender: this.SendData(); break;
+                    }
+
+                }
+                if (this.IsStop) break;
             }
-
             
-
         }
+        catch { }
+        
 
     }
 

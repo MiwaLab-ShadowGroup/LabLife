@@ -155,7 +155,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5c47310de0b185458a148737f0ce6ae, type: 3}
   m_Name: 
@@ -1319,7 +1319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &402745176
 Transform:
   m_ObjectHideFlags: 0
@@ -2768,7 +2768,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
-  destinations: []
+  destinations:
+  - IPadress: 
+    Port: 15001
   IsChangeColor: 0
   List_Colors: []
   IsdifColor: 0
@@ -3269,13 +3271,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 1
   serverPort: 50000
-  remoteIP: 192.168.11.8
+  remoteIP: 127.0.0.1
   myPort: 55002
   clinteName: SRforRobotSync
   fps: 30
   robot: {fileID: 1507099863}
   robotPos: {x: 0, y: 0, z: 0}
   robotLightPos: {x: 0, y: 0, z: 0}
+  IsStop: 0
 --- !u!4 &1231506368
 Transform:
   m_ObjectHideFlags: 0
@@ -4074,7 +4077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1777867785
 Transform:
   m_ObjectHideFlags: 0
@@ -4185,7 +4188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1814653698
 Transform:
   m_ObjectHideFlags: 0
