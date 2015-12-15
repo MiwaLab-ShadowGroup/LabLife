@@ -7,10 +7,24 @@ using System.Net;
 public class SendImage : MonoBehaviour {
 
 
-    public RenderTexture renderTexture;
-    public string[] list_IP;
-    public int[] list_PortNum;
+    [System.Serializable]
+    public struct _destination
+    {
+        public string IPadress;
+        public int Port;
+    }
+    [System.Serializable]
+    public struct _changeColors
+    {
+        public Color srcColor;
+        public Color dstColor;
+    }
 
+
+    public RenderTexture renderTexture;
+    public _destination[] destinations;
+    public bool IsChangeColor;
+    public _changeColors[] List_Colors;
     public bool IsdifColor;
     public Color difColor;
     public bool IsInvert;
@@ -26,19 +40,19 @@ public class SendImage : MonoBehaviour {
             return;
         }
 
-        for (int i = 0; i< this.list_IP.Length; i++)
+        for (int i = 0; i < this.destinations.Length; i++)
         {
             this.list_client.Add(new UdpClient());
 
 
-            if (this.list_PortNum[i] == 0)
+            if (this.destinations[i].Port == 0)
             {
-                this.list_PortNum[i] = 15000 + i;
+                this.destinations[i].Port = 15000 + i;
             }
-           
-            if (this.list_IP[i] == "")
+
+            if (this.destinations[i].IPadress == "")
             {
-                this.list_IP[i] = "127.0.0.1";
+                this.destinations[i].IPadress = "127.0.0.1";
             }
         }
         this.sendtexture = new Texture2D(this.renderTexture.width, this.renderTexture.height);
@@ -47,7 +61,7 @@ public class SendImage : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        
+
         if (this.renderTexture == null)
         {
             return;
@@ -57,26 +71,56 @@ public class SendImage : MonoBehaviour {
         RenderTexture.active = this.renderTexture;
         this.sendtexture.ReadPixels(new Rect(0, 0, this.renderTexture.width, this.renderTexture.height), 0, 0);
 
-        if (this.IsdifColor)
+        if (this.IsdifColor || IsInvert || IsChangeColor)
         {
-            //バック処理
 
+            //バック処理
             Color[] colors = this.sendtexture.GetPixels();
             for (int i = 0; i < colors.Length; i++)
             {
-                //colors[i] -= this.difColor;
-                Color color;
+
+                if (this.IsdifColor)
+                {
+                    //colors[i] -= this.difColor;
+                    float r = Mathf.Abs(colors[i].r - this.difColor.r);
+                    float g = Mathf.Abs(colors[i].g - this.difColor.g);
+                    float b = Mathf.Abs(colors[i].b - this.difColor.b);
+
+                    //Color color = color = this.difColor - colors[i]; 
+
+                    if (b < 0.1f && g < 0.1f && r < 0.1f)
+                    {
+                        colors[i] = Color.white;
+                    }
+
+                }
+                if (this.IsChangeColor)
+                {
+                    for (int j = 0; j < this.List_Colors.Length; j++)
+                    {
+                        float r = Mathf.Abs(colors[i].r - this.List_Colors[j].srcColor.r);
+                        float g = Mathf.Abs(colors[i].g - this.List_Colors[j].srcColor.g);
+                        float b = Mathf.Abs(colors[i].b - this.List_Colors[j].srcColor.b);
+
+                        //Color color = color = this.difColor - colors[i]; 
+
+                        if (b < 0.1f && g < 0.1f && r < 0.1f)
+                        {
+                            colors[i] = this.List_Colors[j].dstColor;
+                        }
+                    }
+                }
+
+
                 if (this.IsInvert)
                 {
-                    color = colors[i] - (Color.white - this.difColor);
-                }
-                else { color = this.difColor - colors[i]; }
+                    colors[i] = Color.white - colors[i];
 
-                if (color.b < 0.000001f && color.g < 0.000001f && color.r < 0.000001f)
-                {
-                    colors[i] = Color.white;
                 }
+
             }
+            this.sendtexture.SetPixels(colors);
+
         }
 
 
@@ -86,18 +130,16 @@ public class SendImage : MonoBehaviour {
 
 
         var bytes = this.sendtexture.EncodeToJPG();
-        //this.CIPCclient.Update(ref bytes);
 
         try
         {
             for (int i = 0; i < this.list_client.Count; i++)
             {
-                this.list_client[i].Send(bytes, bytes.Length, this.list_IP[i], this.list_PortNum[i]);
+                this.list_client[i].Send(bytes, bytes.Length, this.destinations[i].IPadress, this.destinations[i].Port);
             }
         }
         catch { }
 
-        //Debug.Log(this.client.Send(bytes, bytes.Length, this.IPAdress, this.portNumber));
     }
 
 }

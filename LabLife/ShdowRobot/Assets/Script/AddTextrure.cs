@@ -3,7 +3,8 @@ using System.Net.Sockets;
 using System.Collections;
 using System.Net;
 using System.Threading;
-public class AddTextrure : MonoBehaviour {
+public class AddTextrure : MonoBehaviour
+{
 
     public RenderTexture renderTexture;
     public RenderTexture renderTexture1;
@@ -17,7 +18,7 @@ public class AddTextrure : MonoBehaviour {
     private Texture2D sendtexture1;
 
     private UdpClient client;
-    
+
 
     void Start()
     {
@@ -42,7 +43,7 @@ public class AddTextrure : MonoBehaviour {
 
     }
 
-   
+
 
     // Update is called once per frame
     void Update()
@@ -54,15 +55,15 @@ public class AddTextrure : MonoBehaviour {
         }
 
         RenderTexture.active = this.renderTexture;
-        
+
 
         this.sendtexture.ReadPixels(new Rect(0, 0, this.renderTexture.width, this.renderTexture.height), 0, 0);
-        Color[] colors =  this.sendtexture.GetPixels();
+        Color[] colors = this.sendtexture.GetPixels();
 
         RenderTexture.active = this.renderTexture1;
         this.sendtexture1.ReadPixels(new Rect(0, 0, this.renderTexture.width, this.renderTexture.height), 0, 0);
         Color[] colors1 = this.sendtexture1.GetPixels();
-        
+
         for (int i = 0; i < colors.Length; i++)
         {
             if (this.IsInvert)
@@ -98,8 +99,8 @@ public class AddTextrure : MonoBehaviour {
                     colors[i] = Color.white;
                 }
             }
-           
-            
+
+
         }
 
         this.sendtexture.SetPixels(colors);
