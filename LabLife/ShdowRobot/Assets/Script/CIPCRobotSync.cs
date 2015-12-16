@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using System.Threading;
+
 
 public class CIPCRobotSync : MonoBehaviour {
 
@@ -23,7 +23,7 @@ public class CIPCRobotSync : MonoBehaviour {
     bool IsCIPC;
     public bool IsStop;
 
-    //Thread thread;
+
 
     void Awake()
     {
@@ -37,9 +37,8 @@ public class CIPCRobotSync : MonoBehaviour {
         this.robotLight = this.robot.transform.FindChild("RobotLight").gameObject;
         this.IsCIPC = false;
 
-        
+       
     }
-
 
     // Update is called once per frame
     void Updata()
@@ -55,7 +54,7 @@ public class CIPCRobotSync : MonoBehaviour {
         }
     }
 
-    
+  
 
     void GetData()
     {
@@ -75,13 +74,16 @@ public class CIPCRobotSync : MonoBehaviour {
 
             }
 
+
+
         }
         catch
         {
             Debug.Log("Error:ReceiveData");
         }
-    }
 
+
+    }
     void SendData()
     {
         try
@@ -101,11 +103,10 @@ public class CIPCRobotSync : MonoBehaviour {
         }
         catch
         {
-            Debug.Log("Error:ReceiveData");
+            Debug.Log("Error:SendData");
 
         }
     }
-
     void OnAppLicatinQuit()
     {
         this.client.Close();

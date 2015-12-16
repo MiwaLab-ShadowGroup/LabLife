@@ -1,0 +1,62 @@
+﻿<Window x:Class="Kinect2DShadow.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kinect2DShadow" Height="434.37" Width="464.621" BorderThickness="0" ResizeMode="CanMinimize">
+    <Grid Margin="-2,6,-4,1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="178*"/>
+            <RowDefinition Height="21*"/>
+        </Grid.RowDefinitions>
+        <Button Name="KinectButton" Click="KinectButton_Click" Content="Start" HorizontalAlignment="Left" Margin="86,16,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.667,0.947" Height="25"/>
+        <Button Name="CIPCButton" Click="ConnectCIPC" Content="Connect" HorizontalAlignment="Left" Margin="86,54,0,0" VerticalAlignment="Top" Width="75" Height="25"/>
+        <Label Content="Kinect" HorizontalAlignment="Left" Margin="20,16,0,0" VerticalAlignment="Top" Width="52" Height="25"/>
+        <Label Content="CIPC" HorizontalAlignment="Left" Margin="20,52,0,0" VerticalAlignment="Top" Width="46" Height="25"/>
+        <TabControl Name="ImageTable" HorizontalAlignment="Left" Height="201" Margin="180,5,0,0" VerticalAlignment="Top" Width="259" BorderBrush="#FFACACAC">
+            <TabItem Header="Color" IsSelected="True">
+                <Grid Background="#FFE5E5E5">
+                    <Image Name="colorImage" HorizontalAlignment="Left" Margin="10,10,0,10" Width="233" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="BodyIndex" IsSelected="True">
+                <Grid Background="#FFE5E5E5">
+                    <Image Name="bodyIndexImage" HorizontalAlignment="Left" Margin="10,10,0,10" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Depth" IsSelected="True">
+                <Grid Background="#FFE5E5E5">
+                    <Image Name="DepthImage" HorizontalAlignment="Left" Margin="10,10,0,10" />
+                </Grid>
+            </TabItem>
+
+
+        </TabControl>
+        <Label x:Name="message" Content="" HorizontalAlignment="Left" Height="30" Margin="129,7,0,0" VerticalAlignment="Top" Width="301" Grid.Row="1"/>
+        <Label Content="Message::" HorizontalAlignment="Left" Height="30" Margin="58,7,0,0" VerticalAlignment="Top" Width="71" Grid.Row="1"/>
+        <Label Content="UDP" HorizontalAlignment="Left" Margin="21,84,0,0" VerticalAlignment="Top" Width="46" Height="25"/>
+        <Button x:Name="UDPButton" Click="ConnectUDP" Content="Connect" HorizontalAlignment="Left" Margin="86,86,0,0" VerticalAlignment="Top" Width="75" Height="25" RenderTransformOrigin="0.467,1.4"/>
+        <TextBox x:Name="UDPip" HorizontalAlignment="Left" Height="23" Margin="86,121,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="label" Content="IP" HorizontalAlignment="Left" Margin="42,121,0,0" VerticalAlignment="Top" Height="23" Width="22"/>
+        <TextBox x:Name="UDPport" HorizontalAlignment="Left" Height="23" Margin="86,150,0,0" TextWrapping="Wrap" Text="15000" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="label_Copy" Content="Port" HorizontalAlignment="Left" Margin="42,150,0,0" VerticalAlignment="Top" Height="23" Width="34"/>
+        <Canvas HorizontalAlignment="Left" Height="100" Margin="184,248,0,0" VerticalAlignment="Top" Width="245">
+            <Label Content="Back" Canvas.Left="10" Canvas.Top="10"/>
+            <Label Content="Front" Canvas.Left="130" Canvas.Top="10"/>
+            <Label Content="Floor" Canvas.Left="10" Canvas.Top="40"/>
+            <Label Content="Roof" Canvas.Left="130" Canvas.Top="40" />
+            <Label Content="Left" Canvas.Left="10" Canvas.Top="70" Width="38"/>
+            <Label Content="Right" Canvas.Left="130" Canvas.Top="70"/>
+            <TextBox x:Name="Back" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="60" Canvas.Left="53" Canvas.Top="12" TextChanged="TextChanged" />
+            <TextBox x:Name="Front" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60" Canvas.Left="176" Canvas.Top="12" TextChanged="TextChanged"/>
+            <TextBox x:Name="Floor" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="-0.7" VerticalAlignment="Top" Width="60" Canvas.Left="53" Canvas.Top="42" TextChanged="TextChanged"/>
+            <TextBox x:Name="Roof" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="60" Canvas.Left="176" Canvas.Top="42" TextChanged="TextChanged"/>
+            <TextBox x:Name="Left" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="-1" VerticalAlignment="Top" Width="60" Canvas.Left="53" Canvas.Top="72" TextChanged="TextChanged"/>
+            <TextBox x:Name="Right" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="60" Canvas.Left="176" Canvas.Top="72" TextChanged="TextChanged"/>
+
+        </Canvas>
+        <RadioButton x:Name="radioButton_BI" Content="BodyIndex" HorizontalAlignment="Left" Margin="59,226,0,0" VerticalAlignment="Top" Height="14" Width="81" />
+        <RadioButton x:Name="radioButton_depth" Content="Depth" HorizontalAlignment="Left" Margin="59,245,0,0" VerticalAlignment="Top" Height="14" Width="54" IsChecked="True"/>
+        <Label Content="Send Shadow" HorizontalAlignment="Left" Margin="21,195,0,0" VerticalAlignment="Top" Width="97" Height="25"/>
+        <Label Content="Room Size[m]" HorizontalAlignment="Left" Margin="180,223,0,0" VerticalAlignment="Top" Width="97" Height="25"/>
+
+    </Grid>
+</Window>
