@@ -40,6 +40,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CIPC_CS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CIPC_CS.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Kinect.2.0.1410.19000\lib\net45\Microsoft.Kinect.dll</HintPath>
       <Private>True</Private>
@@ -79,6 +83,14 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml.Serialization" />
+    <Reference Include="UDP_PACKETS_CLIANT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\UDP_PACKETS_CLIANT.dll</HintPath>
+    </Reference>
+    <Reference Include="UDP_PACKETS_CODER, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\UDP_PACKETS_CODER.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -223,21 +235,9 @@
       <Project>{2acb6a94-3875-487a-8df1-0084a628d556}</Project>
       <Name>TerminalConnectionSettings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\CIPC_CS.csproj">
-      <Project>{b98d919a-06a5-4db5-b79b-92c30497e83e}</Project>
-      <Name>CIPC_CS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\CIPCSystem\FPSAdjuster\FPSAdjuster\FPSAdjuster.csproj">
       <Project>{3026a57b-2010-4756-935d-6883926e46ed}</Project>
       <Name>FPSAdjuster</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CIPCSystem\UdpDllsCS\UDP_PACKETS_CLIANT\UDP_PACKETS_CLIANT\UDP_PACKETS_CLIANT.csproj">
-      <Project>{4797c667-4908-430a-9796-9d5b095810b6}</Project>
-      <Name>UDP_PACKETS_CLIANT</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CIPCSystem\UdpDllsCS\UDP_PACKETS_CODER\UDP_PACKETS_CODER\UDP_PACKETS_MAKER.csproj">
-      <Project>{308fb561-55f7-41a1-bfe0-f47652b0fe22}</Project>
-      <Name>UDP_PACKETS_MAKER</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
