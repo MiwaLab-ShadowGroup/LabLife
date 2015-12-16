@@ -239,7 +239,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf301f7ad51a7b24baf972c5b97fc099, type: 3}
   m_Name: 
@@ -1925,9 +1925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  IPAdress: 
-  portNumber: 15000
 --- !u!114 &782920429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1939,11 +1936,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  difColor: {r: 1, g: 1, b: .792156935, a: 0}
-  IsInvert: 0
-  IPAdress: 
-  portNumber: 0
 --- !u!114 &782920430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2208,9 +2200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: c5ab652b5eeabd14c9667c0d17e96ae3, type: 2}
-  IPAdress: 
-  portNumber: 15003
 --- !u!81 &910303366
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2344,9 +2333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: fe81005297885eb459b8e6a64626a7e5, type: 2}
-  IPAdress: 
-  portNumber: 15002
 --- !u!81 &924258733
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2562,7 +2548,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1037782626}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
   m_Name: 
@@ -2636,7 +2622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
   destinations:
-  - IPadress: 192.168.11.9
+  - IPadress: 127.0.0.1
     Port: 15000
   IsChangeColor: 0
   List_Colors: []
@@ -2966,7 +2952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1111110751
 Transform:
   m_ObjectHideFlags: 0
@@ -3295,11 +3281,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  difColor: {r: 1, g: 1, b: .792156935, a: 0}
-  IsInvert: 0
-  IPAdress: 
-  portNumber: 0
 --- !u!114 &1307797332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3311,9 +3292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  IPAdress: 
-  portNumber: 15000
 --- !u!114 &1307797333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4190,7 +4168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
-  destinations: []
+  destinations:
+  - IPadress: 127.0.0.1
+    Port: 15001
   IsChangeColor: 0
   List_Colors: []
   IsdifColor: 0
@@ -4449,11 +4429,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  difColor: {r: 1, g: 1, b: .713235259, a: 0}
-  IsInvert: 1
-  IPAdress: 
-  portNumber: 15001
 --- !u!114 &1857653256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4465,9 +4440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  IPAdress: 
-  portNumber: 15001
 --- !u!114 &1857653257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4670,9 +4642,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  IPAdress: 
-  portNumber: 15001
 --- !u!114 &1949880843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4684,11 +4653,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  difColor: {r: 1, g: 1, b: .713235259, a: 0}
-  IsInvert: 1
-  IPAdress: 
-  portNumber: 15001
 --- !u!114 &1949880844
 MonoBehaviour:
   m_ObjectHideFlags: 0

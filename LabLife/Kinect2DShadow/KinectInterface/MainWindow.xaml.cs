@@ -160,7 +160,7 @@ namespace Kinect2DShadow
             this.timer = new DispatcherTimer();
             this.timer.Interval = TimeSpan.FromMilliseconds(40);
             this.timer.Tick += new EventHandler(this.SendImage);
-            //this.timer.Start();
+            this.timer.Start();
 
 
             this.readData = new ushort[512 * 424];
