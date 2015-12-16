@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CIPC_CS">
-      <HintPath>..\..\..\..\..\CIPC_CS\cipc_cs\bin\Release\CIPC_CS.dll</HintPath>
+      <HintPath>..\..\..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Release\CIPC_CS.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="OpenCvSharp">
@@ -84,13 +84,13 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="UDP_LIVESTREAMING">
-      <HintPath>..\..\..\..\..\CIPC_CS\cipc_cs\bin\Release\UDP_LIVESTREAMING.dll</HintPath>
+      <HintPath>..\..\..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Release\UDP_LIVESTREAMING.dll</HintPath>
     </Reference>
     <Reference Include="UDP_PACKETS_CLIANT">
-      <HintPath>..\..\..\..\..\CIPC_CS\cipc_cs\bin\Release\UDP_PACKETS_CLIANT.dll</HintPath>
+      <HintPath>..\..\..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Release\UDP_PACKETS_CLIANT.dll</HintPath>
     </Reference>
     <Reference Include="UDP_PACKETS_CODER">
-      <HintPath>..\..\..\..\..\CIPC_CS\cipc_cs\bin\Release\UDP_PACKETS_CODER.dll</HintPath>
+      <HintPath>..\..\..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Release\UDP_PACKETS_CODER.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />

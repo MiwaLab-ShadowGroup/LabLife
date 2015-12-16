@@ -435,6 +435,14 @@ namespace Kinect2DShadow
 
         }
 
-       
+        private void SaveDepth_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ReadDepth_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
