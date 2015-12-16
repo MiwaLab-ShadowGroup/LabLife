@@ -17,6 +17,10 @@ using OpenCvSharp.CPlusPlus;
 using OpenCvSharp.Extensions;
 using System.Net.Sockets;
 using System.Windows.Threading;
+using System.IO;
+using OpenCvSharp;
+
+//using System.Windows.Forms;
 
 namespace Kinect2DShadow
 {
@@ -77,6 +81,21 @@ namespace Kinect2DShadow
         UdpClient udpClient;
         DispatcherTimer timer;
         #endregion
+
+        //archive
+        string FilePath;
+        BinaryReader reader;
+        int datalength;
+        ushort[] readData;
+        bool Isreader = true;
+        bool ReadStop = false;
+        Thread DepthThread;
+        Thread ReadThread;
+        FPSAdjuster.FPSAdjuster FpsAd;
+        CameraSpacePoint[] cameraSpacePointsArchive;
+        Mat Archivemat;
+        bool IsArchive = false;
+        Mat Compositionmat;
 
         public MainWindow()
         {
@@ -139,9 +158,17 @@ namespace Kinect2DShadow
             this.Closed += MainWindow_Closed;
 
             this.timer = new DispatcherTimer();
+            this.timer.Interval = TimeSpan.FromMilliseconds(40);
             this.timer.Tick += new EventHandler(this.SendImage);
-            this.timer.Start();
-            
+            //this.timer.Start();
+
+
+            this.readData = new ushort[512 * 424];
+            this.cameraSpacePointsArchive = new CameraSpacePoint[this.depthFrameReader.DepthFrameSource.FrameDescription.LengthInPixels];
+            this.Archivemat = new Mat(this.depthImageHeight, this.depthImageWidth, MatType.CV_8UC3);
+            this.Compositionmat = Archivemat.Clone();
+            //CvWindow window = new CvWindow("Archive", WindowMode.AutoSize);
+
         }
 
         void MainWindow_Closed(object sender, EventArgs e)
@@ -288,6 +315,35 @@ namespace Kinect2DShadow
                 this.kinect.CoordinateMapper.MapDepthFrameToCameraSpace(this.depthBuffer, this.cameraSpacePoints);
                 
                 this.DepthToMat();
+
+                if (this.udpClient != null)
+                {
+                    byte[] data;
+
+                    if ((bool)this.radioButton_BI.IsChecked)
+                    {
+                        data = this.bodyIndexMat.ToBytes(".jpg");
+                        this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
+                    }
+                    else if ((bool)this.radioButton_depth.IsChecked)
+                    {
+                        if (!IsArchive)
+                        {
+                            data = this.depthMat.ToBytes(".jpg");
+                            this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
+
+                        }
+                        if (IsArchive)
+                        {
+                            Compositionmat = depthMat + Archivemat;
+                            data = this.Compositionmat.ToBytes(".jpg");
+                            this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
+
+                        }
+                    }
+                    //Console.WriteLine("send");
+                }
+
                 //破棄
                 depthFrame.Dispose();
             }
@@ -330,8 +386,9 @@ namespace Kinect2DShadow
                     }
                 }
             }
-
-            this.DepthImage.Source = WriteableBitmapConverter.ToWriteableBitmap(this.depthMat);
+            
+                this.DepthImage.Source = WriteableBitmapConverter.ToWriteableBitmap(this.depthMat);
+            
         }
 
         //カラーイメージ取得
@@ -346,6 +403,9 @@ namespace Kinect2DShadow
                 //表示
                 this.colorImg.WritePixels(this.bitmapRect, this.colors, this.bitmapStride, 0);
                
+
+
+
                 //破棄
                 colorFrame.Dispose();
             }
@@ -372,8 +432,19 @@ namespace Kinect2DShadow
                     }
                     else if ((bool)this.radioButton_depth.IsChecked)
                     {
-                        data = this.depthMat.ToBytes(".jpg");
-                        this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
+                        if (!IsArchive)
+                        {
+                            data = this.depthMat.ToBytes(".jpg");
+                            this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
+
+                        }
+                        if (IsArchive)
+                        {
+                            Compositionmat = depthMat + Archivemat;
+                            data = this.Compositionmat.ToBytes(".jpg");
+                            this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
+
+                        }
                     }
                     //Console.WriteLine("send");
                 }
@@ -410,6 +481,21 @@ namespace Kinect2DShadow
             }
             //Thread
             this.timer.Stop();
+            //Archive
+            if(this.ReadThread != null)
+            {
+                this.ReadThread.Abort();
+
+            }
+            if(this.DepthThread != null)
+            {
+                this.DepthThread.Abort();
+            }
+            if(reader != null)
+            {
+                reader.Close();
+            }
+
         }
 
         private void TextChanged(object sender, TextChangedEventArgs e)
@@ -435,14 +521,160 @@ namespace Kinect2DShadow
 
         }
 
-        private void SaveDepth_Click(object sender, RoutedEventArgs e)
+        
+        private void ReadDepth_Click(object sender, RoutedEventArgs e)
         {
+            
+
+            if(FilePath != null)
+            {
+                this.kinect.Open();
+                this.FpsAd = new FPSAdjuster.FPSAdjuster();
+                this.FpsAd.Fps = 30;
+                this.FpsAd.Start();
+
+                Isreader = true;
+                this.reader = new BinaryReader(File.OpenRead(FilePath));
+                this.DepthThread = new Thread(new ThreadStart(this.ReadData));
+                this.DepthThread.Start();
+               
+                this.ReadThread = new Thread(new ThreadStart(this.Archive));
+                this.ReadThread.Start();
+                IsArchive = true;
+            }
+            
 
         }
 
-        private void ReadDepth_Click(object sender, RoutedEventArgs e)
+        private void ChooseFile_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.FileName = "";
+            ofd.InitialDirectory = @"C:\";
+            ofd.FilterIndex = 2;
+            ofd.Title = "開くファイルを選択してください";
+            ofd.RestoreDirectory = true;
 
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.FilePath = ofd.FileName;
+
+            }
+        }
+        void ReadData()
+        {
+            //Console.WriteLine("ok");
+            while (true)
+            {
+                FpsAd.Adjust();
+                
+                    if (Isreader)
+                    {
+                        //Debug.Log("ok2");
+                        this.datalength = this.reader.ReadInt32();
+
+                        for (int i = 0; i < datalength; i++)
+                        {
+                            this.readData[i] = this.reader.ReadUInt16();
+
+                        }
+
+                        if (reader.PeekChar() == -1)
+                        {
+                            //Debug.Log("ok3");
+                            reader.Close();
+                            Isreader = false;
+                        }
+
+                        if (ReadStop)
+                        {
+                            Isreader = false;
+                            ReadStop = false;
+                        }
+                        //Console.WriteLine("OK");
+
+                    }
+                    else
+                    {
+                        if (reader != null)
+                        {
+                            reader.Close();
+
+                        }
+
+                        break;
+                    }
+
+                }
+
+            
+            if (reader != null)
+            {
+                reader.Close();
+            }
+            if (FilePath != null)
+            {
+                FilePath = null;
+            }
+
+            if (DepthThread != null)
+            {
+                DepthThread.Abort();
+            }
+
+        }
+
+        private void ReadStopButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReadStop = true;
+        }
+
+        void Archive()
+        {
+            //Console.WriteLine("a");
+            while (true)
+            {
+                this.kinect.CoordinateMapper.MapDepthFrameToCameraSpace(this.readData, this.cameraSpacePointsArchive);
+
+                this.ArchiveDepthToMat();
+            }
+
+        }
+        void ArchiveDepthToMat()
+        {
+            int Archivechannel = this.Archivemat.Channels();
+            unsafe
+            {
+                byte* ArchivematPtr = this.Archivemat.DataPointer;
+                //Console.WriteLine(cameraSpacePointsArchive.Length);
+                for (int i = 0; i < this.cameraSpacePointsArchive.Length; i++)
+                {
+                    //条件で絞る
+                    if (this.cameraSpacePointsArchive[i].Z < this.space.Back &&
+                        this.cameraSpacePointsArchive[i].Z > this.space.Front &&
+                        this.cameraSpacePointsArchive[i].Y > this.space.Floor &&
+                        this.cameraSpacePointsArchive[i].Y < this.space.Roof &&
+                        this.cameraSpacePointsArchive[i].X > this.space.Left &&
+                        this.cameraSpacePointsArchive[i].X < this.space.Right)
+                    {
+                        //条件クリア（人）
+                        for (int j = 0; j < Archivechannel; j++)
+                        {
+                            *(ArchivematPtr + i * Archivechannel + j) = 255;
+                        }
+
+                    }
+                    else
+                    {
+                        //人以外
+                        for (int j = 0; j < Archivechannel; j++)
+                        {
+                            *(ArchivematPtr + i * Archivechannel + j) = 0;
+                        }
+                    }
+                }
+            }
+            
         }
     }
 }

@@ -101,6 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FPSAdjuster.cs" />
     <Compile Include="UDP_CLIENT\UDP.cs" />
     <Compile Include="UDP_CLIENT\UDP_CLIENT_AUT_Window.cs">
       <SubType>Form</SubType>
