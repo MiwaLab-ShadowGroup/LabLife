@@ -40,9 +40,11 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CIPC_CS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\CIPC_CS.dll</HintPath>
+    <Reference Include="CIPC_CS">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\CIPC_CS.dll</HintPath>
+    </Reference>
+    <Reference Include="FPSAdjuster">
+      <HintPath>bin\Release\FPSAdjuster.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Kinect.2.0.1410.19000\lib\net45\Microsoft.Kinect.dll</HintPath>
@@ -83,13 +85,14 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml.Serialization" />
-    <Reference Include="UDP_PACKETS_CLIANT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\UDP_PACKETS_CLIANT.dll</HintPath>
+    <Reference Include="TerminalConnectionSettings">
+      <HintPath>bin\Release\TerminalConnectionSettings.dll</HintPath>
     </Reference>
-    <Reference Include="UDP_PACKETS_CODER, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\UDP_PACKETS_CODER.dll</HintPath>
+    <Reference Include="UDP_PACKETS_CLIANT">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\UDP_PACKETS_CLIANT.dll</HintPath>
+    </Reference>
+    <Reference Include="UDP_PACKETS_CODER">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\UDP_PACKETS_CODER.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -230,14 +233,6 @@
     <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\StreamController\StreamController.csproj">
       <Project>{383997ce-ab1a-4128-a63b-3be75965531c}</Project>
       <Name>StreamController</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\TerminalConnectionSettings\TerminalConnectionSettings.csproj">
-      <Project>{2acb6a94-3875-487a-8df1-0084a628d556}</Project>
-      <Name>TerminalConnectionSettings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CIPCSystem\FPSAdjuster\FPSAdjuster\FPSAdjuster.csproj">
-      <Project>{3026a57b-2010-4756-935d-6883926e46ed}</Project>
-      <Name>FPSAdjuster</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
