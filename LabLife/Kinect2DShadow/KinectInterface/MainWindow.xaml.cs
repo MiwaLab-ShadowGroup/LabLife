@@ -27,6 +27,7 @@ namespace Kinect2DShadow
     {
         //宣言
         #region
+            //a
         KinectSensor kinect;
         //カラーイメージ
         ColorImageFormat colorImageFormat;

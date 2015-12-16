@@ -23,8 +23,6 @@ public class CIPCRobotSync : MonoBehaviour {
     bool IsCIPC;
     public bool IsStop;
 
-
-
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -33,11 +31,8 @@ public class CIPCRobotSync : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
         this.robotLight = this.robot.transform.FindChild("RobotLight").gameObject;
         this.IsCIPC = false;
-
-       
     }
 
     // Update is called once per frame
@@ -54,8 +49,6 @@ public class CIPCRobotSync : MonoBehaviour {
         }
     }
 
-  
-
     void GetData()
     {
         try
@@ -71,11 +64,7 @@ public class CIPCRobotSync : MonoBehaviour {
                 this.robotLightPos.x = dec.get_float();
                 this.robotLightPos.y = dec.get_float();
                 this.robotLightPos.z = dec.get_float();
-
             }
-
-
-
         }
         catch
         {
