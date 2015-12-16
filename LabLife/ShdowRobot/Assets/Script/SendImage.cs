@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
+using System.Threading;
+using FPSAdjuster;
 
 public class SendImage : MonoBehaviour {
 
@@ -20,7 +22,6 @@ public class SendImage : MonoBehaviour {
         public Color dstColor;
     }
 
-
     public RenderTexture renderTexture;
     public _destination[] destinations;
     public bool IsChangeColor;
@@ -30,6 +31,9 @@ public class SendImage : MonoBehaviour {
     public bool IsInvert;
     private List<UdpClient> list_client;
     private Texture2D sendtexture;
+    private byte[] data;
+    Thread thread;
+    FPSAdjuster.FPSAdjuster fpsAdjuster;
 
     // Use this for initialization
     void Start ()
@@ -56,12 +60,17 @@ public class SendImage : MonoBehaviour {
             }
         }
         this.sendtexture = new Texture2D(this.renderTexture.width, this.renderTexture.height);
+        this.thread = new Thread(new ThreadStart(this.SendJPG));
+        this.thread.Start(); 
+        this.fpsAdjuster = new FPSAdjuster.FPSAdjuster();
+        this.fpsAdjuster.Fps = 30;
+        this.fpsAdjuster.Start();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-
+        
         if (this.renderTexture == null)
         {
             return;
@@ -120,27 +129,41 @@ public class SendImage : MonoBehaviour {
 
             }
             this.sendtexture.SetPixels(colors);
-
+            this.data = this.sendtexture.EncodeToJPG();
         }
-
 
 
         this.sendtexture.Apply();
+        
+    }
 
-
-
-        var bytes = this.sendtexture.EncodeToJPG();
-
-        try
+    void SendJPG()
+    {
+        while (true)
         {
-            for (int i = 0; i < this.list_client.Count; i++)
+
+            this.fpsAdjuster.Adjust();
+
+
+
+            try
             {
-                this.list_client[i].Send(bytes, bytes.Length, this.destinations[i].IPadress, this.destinations[i].Port);
+                for (int i = 0; i < this.list_client.Count; i++)
+                {
+                    this.list_client[i].Send(this.data, this.data.Length, this.destinations[i].IPadress, this.destinations[i].Port);
+                }
             }
+            catch { }
         }
-        catch { }
+        
 
     }
+
+    void OnDestroy()
+    {
+        this.thread.Abort();
+    }
+
 
 }
 

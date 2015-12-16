@@ -126,7 +126,7 @@ public class CIPCReceiverforSave : MonoBehaviour {
        
     }
 
-    void OnApplicationQuit()
+    void OnDestroy()
     {
         if (this.client != null)
         {
