@@ -80,7 +80,6 @@ public class PointCloud : MonoBehaviour
             
         }
     }
-
     
 
     // Update is called once per frame
@@ -88,6 +87,7 @@ public class PointCloud : MonoBehaviour
     {
         if (this.IsArchive)
         {
+            
             this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveData.readData, this.cameraSpacePoints);
             //Debug.Log(saveData.readData.Length);
         }

@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f4a80679b03d6948b0b823b7948a3f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  robot: {fileID: 0}
   list_robotaction:
   - {fileID: 0}
   robotActionID: 0
@@ -221,7 +222,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 505d20d2ae3955e4da06cf4e4d28679c, type: 3}
   m_Name: 
@@ -238,7 +239,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf301f7ad51a7b24baf972c5b97fc099, type: 3}
   m_Name: 
@@ -1377,6 +1378,7 @@ MonoBehaviour:
   cube: {fileID: 131304, guid: fa990871743347f4d89828a607d6e3de, type: 2}
   kinect: {fileID: 749055555}
   mode: 0
+  IsContour: 0
   maxCubeNum: 20000
   rangex: {x: -1.5, y: 1.39999998}
   rangez: {x: 1, y: 4}
@@ -2535,8 +2537,6 @@ GameObject:
   - 81: {fileID: 1037782631}
   - 114: {fileID: 1037782630}
   - 114: {fileID: 1037782635}
-  - 114: {fileID: 1037782629}
-  - 114: {fileID: 1037782628}
   m_Layer: 0
   m_Name: Projector1-Floor
   m_TagString: Untagged
@@ -2556,36 +2556,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1137285049}
   m_RootOrder: 0
---- !u!114 &1037782628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1037782626}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  difColor: {r: 1, g: 1, b: .713235259, a: 0}
-  IsInvert: 1
-  IPAdress: 
-  portNumber: 15001
---- !u!114 &1037782629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1037782626}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  IPAdress: 
-  portNumber: 15001
 --- !u!114 &1037782630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2645,7 +2615,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967241
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -2664,10 +2634,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  list_IP:
-  - 192.168.11.9
-  list_PortNum: 983a0000
+  renderTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
+  destinations:
+  - IPadress: 192.168.11.9
+    Port: 15000
+  IsChangeColor: 0
+  List_Colors: []
   IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
@@ -3022,6 +2994,7 @@ MonoBehaviour:
   cube: {fileID: 131304, guid: fa990871743347f4d89828a607d6e3de, type: 2}
   kinect: {fileID: 1419482177}
   mode: 0
+  IsContour: 0
   maxCubeNum: 20000
   rangex: {x: -1.79999995, y: 1.79999995}
   rangez: {x: 1, y: 5.80000019}
@@ -3218,6 +3191,7 @@ MonoBehaviour:
   robot: {fileID: 1507099863}
   robotPos: {x: 0, y: 0, z: 0}
   robotLightPos: {x: 0, y: 0, z: 0}
+  IsStop: 0
 --- !u!4 &1231506368
 Transform:
   m_ObjectHideFlags: 0
@@ -3352,10 +3326,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  list_IP:
-  - 192.168.11.7
-  - 192.168.11.2
-  list_PortNum: 993a0000993a0000
+  destinations: []
+  IsChangeColor: 0
+  List_Colors: []
   IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
@@ -4186,8 +4159,6 @@ GameObject:
   - 81: {fileID: 1814653703}
   - 114: {fileID: 1814653702}
   - 114: {fileID: 1814653699}
-  - 114: {fileID: 1814653701}
-  - 114: {fileID: 1814653700}
   m_Layer: 1
   m_Name: Projector0-Back
   m_TagString: Untagged
@@ -4218,43 +4189,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  list_IP:
-  - 127.0.0.1
-  list_PortNum: 983a0000
+  renderTexture: {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
+  destinations: []
+  IsChangeColor: 0
+  List_Colors: []
   IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
---- !u!114 &1814653700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1814653697}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c018e3ea6d618a44a440631c971a9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  difColor: {r: 1, g: 1, b: .792156935, a: 0}
-  IsInvert: 0
-  IPAdress: 
-  portNumber: 0
---- !u!114 &1814653701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1814653697}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91bd6468a344e4e40a21efca6ceb92e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
-  IPAdress: 
-  portNumber: 15000
 --- !u!114 &1814653702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4314,7 +4255,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 769
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -4539,10 +4480,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
-  list_IP:
-  - 127.0.0.1
-  - 192.168.11.5
-  list_PortNum: 993a0000993a0000
+  destinations: []
+  IsChangeColor: 0
+  List_Colors: []
   IsdifColor: 0
   difColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0

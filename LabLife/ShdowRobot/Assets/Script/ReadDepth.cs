@@ -6,7 +6,6 @@ using UnityEditor;
 
 public class ReadDepth : MonoBehaviour {
 
-    
     BinaryReader reader;
     public ushort[] readData;
     int datalength;
@@ -31,15 +30,11 @@ public class ReadDepth : MonoBehaviour {
     void Start () {
 
         readData = new ushort[512 * 424];
-        this.FpsAd = new FPSAdjuster.FPSAdjuster();
-        this.FpsAd.Fps = 30;
-        this.FpsAd.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (OpenFileChoose)
         {
             FilePath = EditorUtility.OpenFilePanel("ファイル選択", "　", "　");
@@ -48,17 +43,20 @@ public class ReadDepth : MonoBehaviour {
             {
                 IsStart = true;
                 OpenFileChoose = false;
-
             }
-
         }
 
         if (IsStart)
         {
+            this.FpsAd = new FPSAdjuster.FPSAdjuster();
+            this.FpsAd.Fps = 30;
+            this.FpsAd.Start();
+
             this.reader = new BinaryReader(File.OpenRead(FilePath));
             this.thread = new Thread(new ThreadStart(this.ReadData));
             this.thread.Start();
             IsStart = false;
+            Isreader = true;
             //Debug.Log("isstart");
         }
     }
@@ -66,7 +64,6 @@ public class ReadDepth : MonoBehaviour {
     void ReadData()
     {
         //Debug.Log("ok");
-
         while (true)
         {
             FpsAd.Adjust();
@@ -100,14 +97,35 @@ public class ReadDepth : MonoBehaviour {
                 }
                 else
                 {
+                    if(reader != null)
+                    {
+                        reader.Close();
 
-                    reader.Close();
+                    }
 
                     break;
                 }
 
             }
 
+        }
+        //Debug.Log("thread");
+
+        if (reader != null)
+        {
+            reader.Close();
+        }
+        if (FilePath != null)
+        {
+            FilePath = null;
+        }
+
+        //readData = new ushort[512 * 424];
+
+        ReadStart = false;
+        if (thread != null)
+        {
+            thread.Abort();
         }
 
     }
