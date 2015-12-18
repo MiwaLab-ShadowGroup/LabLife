@@ -140,6 +140,7 @@ namespace Kinect2DShadow
             this.Closed += MainWindow_Closed;
 
             this.timer = new DispatcherTimer();
+            this.timer.Interval = TimeSpan.FromMilliseconds(30);
             this.timer.Tick += new EventHandler(this.SendImage);
             this.timer.Start();
             

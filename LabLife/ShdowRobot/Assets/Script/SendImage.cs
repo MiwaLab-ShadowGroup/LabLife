@@ -129,12 +129,14 @@ public class SendImage : MonoBehaviour {
 
             }
             this.sendtexture.SetPixels(colors);
-            this.data = this.sendtexture.EncodeToJPG();
+           
+
         }
 
 
         this.sendtexture.Apply();
-        
+        this.data = this.sendtexture.EncodeToJPG();
+
     }
 
     void SendJPG()
@@ -145,9 +147,9 @@ public class SendImage : MonoBehaviour {
             this.fpsAdjuster.Adjust();
 
 
-
             try
             {
+                Debug.Log("send");
                 for (int i = 0; i < this.list_client.Count; i++)
                 {
                     this.list_client[i].Send(this.data, this.data.Length, this.destinations[i].IPadress, this.destinations[i].Port);
@@ -161,7 +163,11 @@ public class SendImage : MonoBehaviour {
 
     void OnDestroy()
     {
-        this.thread.Abort();
+        if(this.thread != null)
+        {
+            this.thread.Abort();
+
+        }
     }
 
 

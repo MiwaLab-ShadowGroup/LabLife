@@ -161,7 +161,6 @@ public class CircleLine : MonoBehaviour
     {
         if (this.list_pos.Count != 0)
         {
-
             this.radius = this.CP.MaxLength(this.list_pos, ref this.targetHuman0, ref targetHuman1) / 2;
             this.center = (this.list_pos[this.targetHuman0] + this.list_pos[this.targetHuman1]) / 2;
             this.robotPos = this.robot.transform.position;

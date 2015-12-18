@@ -1319,7 +1319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &402745176
 Transform:
   m_ObjectHideFlags: 0
@@ -2046,7 +2046,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: .5
+    width: 1
     height: 1
   near clip plane: .300000012
   far clip plane: 1000
@@ -2058,7 +2058,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 769
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 006167a0eb8115540b4174ff75bdb5a9, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -2072,13 +2072,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 782920422}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 0}
-  destinations: []
+  renderTexture: {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
+  destinations:
+  - IPadress: 
+    Port: 0
   IsChangeColor: 0
   List_Colors: []
   IsdifColor: 0
@@ -4077,7 +4079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1777867785
 Transform:
   m_ObjectHideFlags: 0
@@ -4188,7 +4190,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1814653698
 Transform:
   m_ObjectHideFlags: 0
@@ -4213,7 +4215,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
-  destinations: []
+  destinations:
+  - IPadress: 
+    Port: 0
   IsChangeColor: 0
   List_Colors: []
   IsdifColor: 0
@@ -4479,9 +4483,9 @@ Camera:
   m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: .5
+    x: 0
     y: 0
-    width: .5
+    width: 1
     height: 1
   near clip plane: .300000012
   far clip plane: 1000
@@ -4493,7 +4497,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967241
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 006167a0eb8115540b4174ff75bdb5a9, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -4519,15 +4523,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1949880836}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 006167a0eb8115540b4174ff75bdb5a9, type: 2}
-  destinations:
-  - IPadress: 
-    Port: 0
+  renderTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
+  destinations: []
   IsChangeColor: 0
   List_Colors: []
   IsdifColor: 0
