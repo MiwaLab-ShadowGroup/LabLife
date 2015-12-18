@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Threading;
+using FPSAdjuster;
 
 public class CIPCRobotSync : MonoBehaviour {
 
@@ -16,14 +17,15 @@ public class CIPCRobotSync : MonoBehaviour {
     public GameObject robot;
 
     GameObject robotLight;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3 robotPos;
     [HideInInspector]
     public Vector3 robotLightPos;
     bool IsCIPC;
     public bool IsStop;
 
-
+    Thread thread;
+    FPSAdjuster.FPSAdjuster fpsA;
 
     void Awake()
     {
@@ -37,24 +39,48 @@ public class CIPCRobotSync : MonoBehaviour {
         this.robotLight = this.robot.transform.FindChild("RobotLight").gameObject;
         this.IsCIPC = false;
 
-       
+        this.thread = new Thread(new ThreadStart(this.cipc));
+        this.thread.Start();
+        this.fpsA = new FPSAdjuster.FPSAdjuster();
+        this.fpsA.Fps = 30;
+        this.fpsA.Start();
     }
 
     // Update is called once per frame
-    void Updata()
+    void Update()
     {
-        if (this.IsCIPC)
-        {
-            switch (this.mode)
-            {
-                case _Mode.Reciever: this.GetData(); break;
-                case _Mode.Sender: this.SendData(); break;
-            }
+        //Debug.Log(Time.deltaTime);
+        //if (this.IsCIPC)
+        //{
+        //    switch (this.mode)
+        //    {
+        //        case _Mode.Reciever: this.GetData(); break;
+        //        case _Mode.Sender: this.SendData(); break;
+                    
+        //    }
 
-        }
+        //}
     }
 
-  
+    void cipc()
+    {
+        while (true)
+        {
+            Debug.Log("update");
+            this.fpsA.Adjust();
+            if (this.IsCIPC)
+            {
+                switch (this.mode)
+                {
+                    case _Mode.Reciever: this.GetData(); break;
+                    case _Mode.Sender: this.SendData(); break;
+                }
+
+            }
+            if (this.IsStop) break;
+        }
+
+    }
 
     void GetData()
     {
@@ -110,6 +136,7 @@ public class CIPCRobotSync : MonoBehaviour {
     void OnAppLicatinQuit()
     {
         this.client.Close();
+        this.thread.Abort();
     }
 
     public void ConnectCIPC()

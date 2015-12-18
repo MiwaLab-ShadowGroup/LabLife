@@ -130,7 +130,7 @@ public class ReadDepth : MonoBehaviour {
 
     }
 
-    void OnApplicationQuit()
+    void OnDestroy()
     {
         if (thread != null)
         {

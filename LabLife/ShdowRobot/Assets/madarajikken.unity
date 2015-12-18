@@ -239,7 +239,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25280755}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf301f7ad51a7b24baf972c5b97fc099, type: 3}
   m_Name: 
@@ -2622,7 +2622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
   destinations:
-  - IPadress: 127.0.0.1
+  - IPadress: 192.168.11.9
     Port: 15000
   IsChangeColor: 0
   List_Colors: []

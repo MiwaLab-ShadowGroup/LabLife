@@ -96,6 +96,7 @@ namespace Kinect2DShadow
         Mat Archivemat;
         bool IsArchive = false;
         Mat Compositionmat;
+        bool endthread = false;
 
         public MainWindow()
         {
@@ -316,33 +317,6 @@ namespace Kinect2DShadow
                 
                 this.DepthToMat();
 
-                if (this.udpClient != null)
-                {
-                    byte[] data;
-
-                    if ((bool)this.radioButton_BI.IsChecked)
-                    {
-                        data = this.bodyIndexMat.ToBytes(".jpg");
-                        this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
-                    }
-                    else if ((bool)this.radioButton_depth.IsChecked)
-                    {
-                        if (!IsArchive)
-                        {
-                            data = this.depthMat.ToBytes(".jpg");
-                            this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
-
-                        }
-                        if (IsArchive)
-                        {
-                            Compositionmat = depthMat + Archivemat;
-                            data = this.Compositionmat.ToBytes(".jpg");
-                            this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
-
-                        }
-                    }
-                    //Console.WriteLine("send");
-                }
 
                 //破棄
                 depthFrame.Dispose();
@@ -440,10 +414,19 @@ namespace Kinect2DShadow
                         }
                         if (IsArchive)
                         {
-                            Compositionmat = depthMat + Archivemat;
+                            if ((bool)this.checkBox_Archive.IsChecked)
+                            {
+                                Compositionmat = Archivemat;
+
+                            }
+                            else
+                            {
+                                Compositionmat = depthMat + Archivemat;
+
+                            }
+
                             data = this.Compositionmat.ToBytes(".jpg");
                             this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
-
                         }
                     }
                     //Console.WriteLine("send");
@@ -495,7 +478,7 @@ namespace Kinect2DShadow
             {
                 reader.Close();
             }
-
+            endthread = true;
         }
 
         private void TextChanged(object sender, TextChangedEventArgs e)
@@ -542,7 +525,6 @@ namespace Kinect2DShadow
                 this.ReadThread.Start();
                 IsArchive = true;
             }
-            
 
         }
 
@@ -637,6 +619,11 @@ namespace Kinect2DShadow
                 this.kinect.CoordinateMapper.MapDepthFrameToCameraSpace(this.readData, this.cameraSpacePointsArchive);
 
                 this.ArchiveDepthToMat();
+
+                if (endthread)
+                {
+                    break;
+                }
             }
 
         }

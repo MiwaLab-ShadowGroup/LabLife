@@ -8,7 +8,7 @@ using OpenCvSharp;
 
 namespace LabLife.Processer.ImageProcesser
 {
-    public class CellAutomaton : AImageProcesser
+    public class Zanzou : AImageProcesser
     {
         private List<List<bool>> m_Field = new List<List<bool>>();
         private bool IsInit = false;
@@ -41,205 +41,7 @@ namespace LabLife.Processer.ImageProcesser
         #region CAmethods
 
 
-        //private void LifeGame_setup(int w, int h)
-        //{
-        //    m_Field.Clear();
-        //    __w = w;
-        //    __h = h;
-
-        //    for (int i = 0; i < h; i++)
-        //    {
-        //        List<bool> vTmp = new List<bool>();
-        //        for (int j = 0; j < w; j++)
-        //        {
-        //            vTmp.Add(false);
-        //        }
-        //        m_Field.Add(vTmp);
-        //    }
-
-
-        //    //field[10][10] = ALIVE;
-        //    //field[10][11] = ALIVE;
-        //    //field[10][12] = ALIVE;
-
-        //    //field[11][10] = ALIVE;
-
-        //    //field[12][11] = ALIVE;
-
-        //    //bufimage_pre.allocate(w, h);
-        //}
-
-        //private void LifeGame_setCellFromImage(ref Mat image)
-        //{
-        //    Mat bufimage = image.Clone();
-
-        //    Cv2.Resize(bufimage, bufimage, new Size(__w, __h));
-        //    //bufimage_pre.resize(_w,_h);
-
-        //    //bufimage += bufimage_pre;
-
-        //    unsafe
-        //    {
-        //        byte* pPixel = bufimage.DataPointer;
-        //        Random r = new Random();
-        //        for (int y = 0; y < __h; y++)
-        //        {
-        //            for (int x = 0; x < __w; x++)
-        //            {
-        //                //黒くない点は生きてる
-        //                if (*pPixel != 0)
-        //                {
-        //                    if (r.Next(0, 100) < 80)
-        //                    {           //ofRandom(0,100) < 80だった
-        //                        m_Field[y][x] = true;
-        //                    }
-        //                }
-        //                /*else{
-        //                    if( ofRandom(0,100) < 0 ){			//ofRandom(0,100) < 2だった
-        //                        field[y][x] = ALIVE;
-        //                    }
-        //                    else if( ofRandom(0,100) > 0){	//ofRandom(0,100) < 2だった
-        //                        field[y][x] = DEAD;
-        //                    }
-        //                }*/
-        //                pPixel++;
-        //            }
-        //        }
-        //    }
-        //    //bufimage_pre = bufimage;
-        //    //bufimage_pre -= 20.0;
-        //}
-
-        //private bool LifeGame_getNextCell(int x, int y)
-        //{
-        //    bool bRet = false;
-        //    int aliveNum = 0;
-        //    int curX = 0;
-        //    int curY = 0;
-
-        //    //自分のまわりの生きてるセルを数えます
-        //    for (int px = -1; px <= 1; px++)
-        //    {               //int px = -1; px <= 1; px++
-        //        for (int py = -1; py <= 1; py++)
-        //        {           //int py = -1; py <= 1; py++
-        //            if (px != 0 || py != 0)
-        //            {
-        //                curX = x + px;
-        //                curY = y + py;
-
-        //                if (curX < 0) curX = __w - 1;
-        //                if (curX > __w - 1) curX = 0;
-        //                if (curY < 0) curY = __h - 1;
-        //                if (curY > __h - 1) curY = 0;
-
-        //                if (m_Field[curY][curX] == true)
-        //                {
-        //                    aliveNum++;
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    if (m_Field[y][x] == true)
-        //    {
-        //        if (aliveNum <= 2 || aliveNum >= 4)
-        //        {       //aliveNum <= 1 || aliveNum >= 4だった
-        //            bRet = false;
-        //        }
-        //        else
-        //        {
-        //            bRet = true;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (aliveNum == 3)
-        //        {       // aliveNum == 3だった
-        //            bRet = true;
-        //        }
-        //        else
-        //        {
-        //            bRet = false;
-        //        }
-        //    }
-
-        //    return bRet;
-        //}
-
-        //private void LifeGame_next()
-        //{
-        //    List<List<bool>> tempField = new List<List<bool>>(m_Field);
-
-        //    for (int x = 0; x < __w; x++)
-        //    {
-        //        for (int y = 0; y < __h; y++)
-        //        {
-        //            tempField[y][x] = LifeGame_getNextCell(x, y);
-        //        }
-        //    }
-
-        //    m_Field = tempField;
-        //}
-
-        //private void LifeGame_draw(float x, float y, float w, float h)
-        //{
-        //    ofPushMatrix();
-        //    ofPushStyle();
-
-        //    ofTranslate(x, y);
-        //    ofScale(w / (float)_w, h / (float)_h);
-
-        //    for (int y = 0; y < _h; y++)
-        //    {
-        //        for (int x = 0; x < _w; x++)
-        //        {
-        //            if (field[y][x] == ALIVE)
-        //            {
-        //                ofSetColor(0xffffff);
-        //            }
-        //            else
-        //            {
-        //                ofSetColor(0x000000);
-        //            }
-
-        //            ofRect(x, y, 1, 1);
-        //        }
-        //    }
-
-        //    ofPopMatrix();
-        //    ofPopStyle();
-        //}
-
-        //private void LifeGame_drawGrayscaleImage(ref Mat dst)
-        //{
-        //    Mat img1;
-        //    //img = cvCreateImage (cvGetSize (dst.getCvImage()), IPL_DEPTH_16S, 1);
-        //    img1 = new Mat(new Size(__w, __h), MatType.CV_8UC1, new Scalar(0));
-
-
-        //    unsafe
-        //    {
-        //        byte* dataptr = img1.DataPointer;
-        //        for (int y = 0; y < __h; y++)
-        //        {
-        //            for (int x = 0; x < __w; x++)
-        //            {
-        //                if (m_Field[y][x] == true)
-        //                {
-        //                    dataptr[img1.Width * y + x] = 0xff;
-        //                }
-        //                else
-        //                {
-        //                    dataptr[img1.Width * y + x] = 0x00;
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    Cv2.Resize(img1, dst, dst.Size());
-        //    //cvResize (img1, img2, CV_INTER_LINEAR);
-
-        //}
+        
 
 
         #endregion
@@ -250,20 +52,7 @@ namespace LabLife.Processer.ImageProcesser
             {
                 Cv2.CvtColor(src, bufimage, OpenCvSharp.ColorConversion.BgrToGray);
 
-                //if (IsFirstFrame)
-                //{
-                //    //this.LifeGame_setCellFromImage(ref bufimage);
-                //    this.IsFirstFrame = false;
-                //}
-                //else
-                //{
-
-                //    //this.LifeGame_setCellFromImage(ref bufimage);
-                //}
-                ////this.LifeGame_next();
-                ////this.LifeGame_drawGrayscaleImage(ref bufimage);
-                /////
-
+                
                 unsafe
                 {
                     byte* pPixel = bufimage.DataPointer;
@@ -315,7 +104,7 @@ namespace LabLife.Processer.ImageProcesser
                 //TODO:移動可
                 tmp_bufImage_next = new Mat(new Size(_w, _h), MatType.CV_8UC1, new Scalar(0));
                 tmp_bufImage_next3 = new Mat(new Size(_w, _h), MatType.CV_8UC1, new Scalar(0));
-                
+
                 bufimage.CopyTo(tmp_bufImage_next);
 
                 Point[][] contours;
@@ -420,7 +209,9 @@ namespace LabLife.Processer.ImageProcesser
 
         public override string ToString()
         {
-            return "CellAutoMaton";
+            return "Zanzou";
         }
+        
+
     }
 }
