@@ -75,11 +75,15 @@ namespace Kinect2DShadow
         string preIP;
         int preServerPort;
         int preCLientPort;
-        
+
 
         //UDP
-        UdpClient udpClient;
+        List<UdpClient> List_UDP;
         DispatcherTimer timer;
+        List<string> List_IP;
+        List<int> List_Port;
+        
+
         #endregion
 
         //archive
@@ -97,6 +101,9 @@ namespace Kinect2DShadow
         bool IsArchive = false;
         Mat Compositionmat;
         bool endthread = false;
+
+
+
 
         public MainWindow()
         {
@@ -163,13 +170,15 @@ namespace Kinect2DShadow
             this.timer.Tick += new EventHandler(this.SendImage);
             this.timer.Start();
 
-
             this.readData = new ushort[512 * 424];
             this.cameraSpacePointsArchive = new CameraSpacePoint[this.depthFrameReader.DepthFrameSource.FrameDescription.LengthInPixels];
             this.Archivemat = new Mat(this.depthImageHeight, this.depthImageWidth, MatType.CV_8UC3);
             this.Compositionmat = Archivemat.Clone();
             //CvWindow window = new CvWindow("Archive", WindowMode.AutoSize);
 
+            List_UDP = new List<UdpClient>();
+            List_IP = new List<string>();
+            List_Port = new List<int>();
         }
 
         void MainWindow_Closed(object sender, EventArgs e)
@@ -221,11 +230,13 @@ namespace Kinect2DShadow
         }
         void ConnectUDP(object sender, RoutedEventArgs e)
         {
+            List_UDP.Add(new UdpClient());
+            List_IP.Add(this.UDPip.Text);
+            List_Port.Add(int.Parse(this.UDPport.Text));
 
-            this.udpClient = new UdpClient();
-
-            this.message.Content = "ConnectUDP";
+            this.message.Content = "ConnectUDP, " + this.UDPip.Text+ ", " + this.UDPport.Text;
         }
+        
         void KinectButton_Click(object sender, RoutedEventArgs e)
         {
             if (this.KinectButton.Content.ToString() == "Start")
@@ -317,7 +328,6 @@ namespace Kinect2DShadow
                 
                 this.DepthToMat();
 
-
                 //破棄
                 depthFrame.Dispose();
             }
@@ -395,41 +405,48 @@ namespace Kinect2DShadow
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (this.udpClient != null)
+                if (List_UDP.Count != 0)
                 {
-                    byte[] data;
-
-                    if ((bool)this.radioButton_BI.IsChecked)
+                    for (int i = 0; i < List_UDP.Count; i++)
                     {
-                        data = this.bodyIndexMat.ToBytes(".jpg");
-                        this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
-                    }
-                    else if ((bool)this.radioButton_depth.IsChecked)
-                    {
-                        if (!IsArchive)
+                        if (this.List_UDP[i] != null)
                         {
-                            data = this.depthMat.ToBytes(".jpg");
-                            this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
+                            byte[] data;
 
-                        }
-                        if (IsArchive)
-                        {
-                            if ((bool)this.checkBox_Archive.IsChecked)
+                            if ((bool)this.radioButton_BI.IsChecked)
                             {
-                                Compositionmat = Archivemat;
-
+                                data = this.bodyIndexMat.ToBytes(".jpg");
+                                this.List_UDP[i].Send(data, data.Length, List_IP[i], List_Port[i]);
                             }
-                            else
+                            else if ((bool)this.radioButton_depth.IsChecked)
                             {
-                                Compositionmat = depthMat + Archivemat;
+                                if (!IsArchive)
+                                {
+                                    data = this.depthMat.ToBytes(".jpg");
+                                    this.List_UDP[i].Send(data, data.Length, List_IP[i], List_Port[i]);
 
+                                }
+                                if (IsArchive)
+                                {
+                                    if ((bool)this.checkBox_Archive.IsChecked)
+                                    {
+                                        Compositionmat = Archivemat;
+
+                                    }
+                                    else
+                                    {
+                                        Compositionmat = depthMat + Archivemat;
+
+                                    }
+
+                                    data = this.Compositionmat.ToBytes(".jpg");
+                                    this.List_UDP[i].Send(data, data.Length, List_IP[i], List_Port[i]);
+                                   
+                                }
                             }
-
-                            data = this.Compositionmat.ToBytes(".jpg");
-                            this.udpClient.Send(data, data.Length, this.UDPip.Text, int.Parse(this.UDPport.Text));
+                            //Console.WriteLine("send");
                         }
                     }
-                    //Console.WriteLine("send");
                 }
             }));
 
@@ -663,5 +680,7 @@ namespace Kinect2DShadow
             }
             
         }
+
+       
     }
 }

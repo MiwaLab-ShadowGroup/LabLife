@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Kinect2DShadow.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Kinect2DShadow" Height="434.37" Width="464.621" BorderThickness="0" ResizeMode="CanMinimize">
+        Title="Kinect2DShadow" Height="500" Width="600" BorderThickness="0" ResizeMode="CanMinimize">
     <Grid Margin="-2,6,-6,-1">
         <Grid.RowDefinitions>
             <RowDefinition Height="178*"/>
@@ -11,7 +11,7 @@
         <Button Name="CIPCButton" Click="ConnectCIPC" Content="Connect" HorizontalAlignment="Left" Margin="86,54,0,0" VerticalAlignment="Top" Width="75" Height="25"/>
         <Label Content="Kinect" HorizontalAlignment="Left" Margin="20,16,0,0" VerticalAlignment="Top" Width="52" Height="25"/>
         <Label Content="CIPC" HorizontalAlignment="Left" Margin="20,52,0,0" VerticalAlignment="Top" Width="46" Height="25"/>
-        <TabControl Name="ImageTable" HorizontalAlignment="Left" Height="201" Margin="180,5,0,0" VerticalAlignment="Top" Width="259" BorderBrush="#FFACACAC">
+        <TabControl Name="ImageTable" HorizontalAlignment="Left" Height="201" Margin="225,25,0,0" VerticalAlignment="Top" Width="259" BorderBrush="#FFACACAC">
             <TabItem Header="Color" IsSelected="True">
                 <Grid Background="#FFE5E5E5">
                     <Image Name="colorImage" HorizontalAlignment="Left" Margin="10,10,0,10" Width="233" />
@@ -38,7 +38,7 @@
         <Label x:Name="label" Content="IP" HorizontalAlignment="Left" Margin="42,121,0,0" VerticalAlignment="Top" Height="23" Width="22"/>
         <TextBox x:Name="UDPport" HorizontalAlignment="Left" Height="23" Margin="86,150,0,0" TextWrapping="Wrap" Text="15000" VerticalAlignment="Top" Width="81"/>
         <Label x:Name="label_Copy" Content="Port" HorizontalAlignment="Left" Margin="42,150,0,0" VerticalAlignment="Top" Height="23" Width="34"/>
-        <Canvas HorizontalAlignment="Left" Height="100" Margin="184,248,0,0" VerticalAlignment="Top" Width="245">
+        <Canvas HorizontalAlignment="Left" Height="100" Margin="225,303,0,0" VerticalAlignment="Top" Width="245">
             <Label Content="Back" Canvas.Left="10" Canvas.Top="10"/>
             <Label Content="Front" Canvas.Left="130" Canvas.Top="10"/>
             <Label Content="Floor" Canvas.Left="10" Canvas.Top="40"/>
@@ -53,14 +53,14 @@
             <TextBox x:Name="Right" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="60" Canvas.Left="176" Canvas.Top="72" TextChanged="TextChanged"/>
 
         </Canvas>
-        <RadioButton x:Name="radioButton_BI" Content="BodyIndex" HorizontalAlignment="Left" Margin="59,226,0,0" VerticalAlignment="Top" Height="14" Width="81" />
-        <RadioButton x:Name="radioButton_depth" Content="Depth" HorizontalAlignment="Left" Margin="59,245,0,0" VerticalAlignment="Top" Height="14" Width="54" IsChecked="True"/>
-        <Label Content="Send Shadow" HorizontalAlignment="Left" Margin="21,195,0,0" VerticalAlignment="Top" Width="97" Height="25"/>
-        <Label Content="Room Size[m]" HorizontalAlignment="Left" Margin="180,223,0,0" VerticalAlignment="Top" Width="97" Height="25"/>
-        <Button x:Name="ReadDepth" Content="ReadStart" HorizontalAlignment="Left" Margin="21,305,0,0" VerticalAlignment="Top" Width="75" Click="ReadDepth_Click"/>
-        <Button x:Name="ChooseFile" Content="ファイル選択" HorizontalAlignment="Left" Margin="21,281,0,0" VerticalAlignment="Top" Width="75" Click="ChooseFile_Click"/>
-        <Button x:Name="ReadStopButton" Content="ReadStop" HorizontalAlignment="Left" Margin="104,305,0,0" VerticalAlignment="Top" Width="75" Click="ReadStopButton_Click"/>
-        <CheckBox x:Name="checkBox_Archive" Content="ArchiveOnly" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,336,0,0"/>
+        <RadioButton x:Name="radioButton_BI" Content="BodyIndex" HorizontalAlignment="Left" Margin="58,231,0,0" VerticalAlignment="Top" Height="14" Width="81" />
+        <RadioButton x:Name="radioButton_depth" Content="Depth" HorizontalAlignment="Left" Margin="59,250,0,0" VerticalAlignment="Top" Height="14" Width="54" IsChecked="True"/>
+        <Label Content="Send Shadow" HorizontalAlignment="Left" Margin="20,201,0,0" VerticalAlignment="Top" Width="97" Height="25"/>
+        <Label Content="Room Size[m]" HorizontalAlignment="Left" Margin="225,273,0,0" VerticalAlignment="Top" Width="97" Height="25"/>
+        <Button x:Name="ReadDepth" Content="ReadStart" HorizontalAlignment="Left" Margin="23,338,0,0" VerticalAlignment="Top" Width="75" Click="ReadDepth_Click"/>
+        <Button x:Name="ChooseFile" Content="ファイル選択" HorizontalAlignment="Left" Margin="23,303,0,0" VerticalAlignment="Top" Width="75" Click="ChooseFile_Click"/>
+        <Button x:Name="ReadStopButton" Content="ReadStop" HorizontalAlignment="Left" Margin="116,338,0,0" VerticalAlignment="Top" Width="75" Click="ReadStopButton_Click"/>
+        <CheckBox x:Name="checkBox_Archive" Content="ArchiveOnly" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,374,0,0"/>
 
     </Grid>
 </Window>
