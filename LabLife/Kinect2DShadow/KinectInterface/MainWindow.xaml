@@ -61,6 +61,8 @@
         <Button x:Name="ChooseFile" Content="ファイル選択" HorizontalAlignment="Left" Margin="23,303,0,0" VerticalAlignment="Top" Width="75" Click="ChooseFile_Click"/>
         <Button x:Name="ReadStopButton" Content="ReadStop" HorizontalAlignment="Left" Margin="116,338,0,0" VerticalAlignment="Top" Width="75" Click="ReadStopButton_Click"/>
         <CheckBox x:Name="checkBox_Archive" Content="ArchiveOnly" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,374,0,0"/>
+        <CheckBox x:Name="checkBox_Polygon" Content="Polygon" HorizontalAlignment="Left" Margin="129,374,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkBox_Zanzou" Content="Zanzou" HorizontalAlignment="Left" Margin="129,394,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
