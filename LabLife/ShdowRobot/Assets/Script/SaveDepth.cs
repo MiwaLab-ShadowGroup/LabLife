@@ -82,7 +82,6 @@ public class SaveDepth : MonoBehaviour {
     {
         try
         {
-
             while (true)
             {
                 this.FpsAd.Adjust();

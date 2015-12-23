@@ -103,10 +103,12 @@
     <Compile Include="Assets\Script\CIPCforDCP.cs" />
     <Compile Include="Assets\Script\Class\Human.cs" />
     <Compile Include="Assets\Script\FPSAdjuster.cs" />
+    <Compile Include="Assets\Script\ISave.cs" />
     <Compile Include="Assets\Script\ReadDepth.cs" />
     <Compile Include="Assets\Script\SaveDepth.cs" />
     <Compile Include="Assets\Script\SendImage.cs" />
     <Compile Include="Assets\Script\UIScript.cs" />
+    <Compile Include="Assets\ShadowRobot\IRobotAction.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\CalculatePosition.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\CircleLine.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\LightAction.cs" />
@@ -114,7 +116,9 @@
     <Compile Include="Assets\ShadowRobot\RobotAction\RandomMove.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\RobotPosition.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\RobotSync.cs" />
+    <Compile Include="Assets\ShadowRobot\RobotAction\Spiral.cs" />
     <Compile Include="Assets\ShadowRobot\RobotActionControll.cs" />
+    <Compile Include="Assets\ShadowRobot\SaveRobotMove.cs" />
     <Compile Include="Assets\ShadowRobot\ShadowRobotStage.cs" />
   </ItemGroup>
   <ItemGroup>

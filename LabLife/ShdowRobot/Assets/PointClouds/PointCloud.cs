@@ -150,6 +150,7 @@ public class PointCloud : MonoBehaviour
             {
                 //三次元位置に変更
                 Vector3 point = new Vector3(-this.cameraSpacePoints[i].X, this.cameraSpacePoints[i].Y, this.cameraSpacePoints[i].Z);
+                
 
                 //床排除と左右の壁排除                       
                 if (point.y < this.roophight && point.y > -this.kinect.transform.position.y && point.x > this.rangex.x && point.x < this.rangex.y)

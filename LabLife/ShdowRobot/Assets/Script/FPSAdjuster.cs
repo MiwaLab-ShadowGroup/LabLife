@@ -14,7 +14,7 @@ namespace FPSAdjuster
         // 直前の時間
         private double _lastTick;
         private Stopwatch _watch;
-
+        
         public void Start()
         {
             _watch = new Stopwatch();
