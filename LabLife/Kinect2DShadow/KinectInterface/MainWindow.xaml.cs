@@ -101,7 +101,7 @@ namespace Kinect2DShadow
         Mat Compositionmat;
         bool endthread = false;
 
-
+        //メディア
         int sharpness = 50;
         private Mat grayimage = new Mat();
         private Mat Archivegrayimage = new Mat();
@@ -143,6 +143,15 @@ namespace Kinect2DShadow
         private int __h;
         int w = 512;
         int h = 424;
+
+        //Color
+        int red;
+        int blue;
+        int green;
+
+        int outred;
+        int outblue;
+        int outgreen;
 
         public MainWindow()
         {
@@ -498,7 +507,8 @@ namespace Kinect2DShadow
                     }
 
                 }
-                Cv2.DrawContours(Polygon, this.List_Contours, 0, Scalar.Aqua, -1, OpenCvSharp.LineType.Link8);
+
+                Cv2.DrawContours(Polygon, this.List_Contours, 0, Scalar.FromRgb((int)RedSlider.Value,(int)GreenSlider.Value,(int)BlueSlider.Value), -1, OpenCvSharp.LineType.Link8);
                 
             }
 
@@ -592,10 +602,10 @@ namespace Kinect2DShadow
 
 
                     Mat tmpColorBuffer1 = new Mat(new OpenCvSharp.CPlusPlus.Size(bufimage2.Width, bufimage2.Height), MatType.CV_8UC3, new Scalar(255, 255, 255));
-                    outerColorBuffer1.SetTo(new Scalar(255, 255, 255));
+                    outerColorBuffer1.SetTo(new Scalar((int)RedSlider_Copy.Value, (int)GreenSlider_Copy.Value, (int)BlueSlider_Copy.Value));
                     Cv2.CvtColor(outerGrayBuffer1, tmpColorBuffer1, OpenCvSharp.ColorConversion.GrayToBgr);
                     Cv2.Multiply(outerColorBuffer1, tmpColorBuffer1, outerColorBuffer1, 1.0 / 255.0);
-                    innerColorBuffer1.SetTo(new Scalar(255, 255, 255));
+                    innerColorBuffer1.SetTo(new Scalar((int)RedSlider.Value, (int)GreenSlider.Value, (int)BlueSlider.Value));
                     Cv2.CvtColor(innerGrayBuffer1, tmpColorBuffer1, OpenCvSharp.ColorConversion.GrayToBgr);
                     Cv2.Multiply(innerColorBuffer1, tmpColorBuffer1, innerColorBuffer1, 1.0 / 255.0);
 
@@ -1038,7 +1048,28 @@ namespace Kinect2DShadow
                         }
 
                     }
-                    Cv2.DrawContours(ArchivePolygon, this.List_ArchiveContours, 0, Scalar.Aqua, -1, OpenCvSharp.LineType.Link8);
+                    RedSlider.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+
+                        red = (int)RedSlider.Value;
+
+                    }));
+
+                    GreenSlider.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+
+                        green = (int)GreenSlider.Value;
+
+                    }));
+
+                    BlueSlider.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+
+                        blue = (int)BlueSlider.Value;
+
+                    }));
+
+                    Cv2.DrawContours(ArchivePolygon, this.List_ArchiveContours, 0, Scalar.FromRgb(red,green,blue), -1, OpenCvSharp.LineType.Link8);
                     GC.Collect();
                 }
                 catch(Exception ex)
@@ -1135,12 +1166,54 @@ namespace Kinect2DShadow
                         Cv2.Erode(outerGrayBuffer2, outerGrayBuffer2, m_element);
                     }
 
+                    RedSlider.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+
+                        red = (int)RedSlider.Value;
+
+                    }));
+
+                    GreenSlider.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+
+                        green = (int)GreenSlider.Value;
+
+                    }));
+
+                    BlueSlider.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+
+                        blue = (int)BlueSlider.Value;
+
+                    }));
+
+
+                    RedSlider_Copy.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+
+                        outred = (int)RedSlider_Copy.Value;
+
+                    }));
+
+                    GreenSlider_Copy.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+
+                        outgreen = (int)GreenSlider_Copy.Value;
+
+                    }));
+
+                    BlueSlider_Copy.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+
+                        outblue = (int)BlueSlider_Copy.Value;
+
+                    }));
 
                     Mat tmpColorBuffer2 = new Mat(new OpenCvSharp.CPlusPlus.Size(bufimage.Width, bufimage.Height), MatType.CV_8UC3, new Scalar(255, 255, 255));
-                    outerColorBuffer2.SetTo(new Scalar(255, 255, 255));
+                    outerColorBuffer2.SetTo(new Scalar(outred, outgreen, outblue));
                     Cv2.CvtColor(outerGrayBuffer2, tmpColorBuffer2, OpenCvSharp.ColorConversion.GrayToBgr);
                     Cv2.Multiply(outerColorBuffer2, tmpColorBuffer2, outerColorBuffer2, 1.0 / 255.0);
-                    innerColorBuffer2.SetTo(new Scalar(255, 255, 255));
+                    innerColorBuffer2.SetTo(new Scalar(red, green, blue));
                     Cv2.CvtColor(innerGrayBuffer2, tmpColorBuffer2, OpenCvSharp.ColorConversion.GrayToBgr);
                     Cv2.Multiply(innerColorBuffer2, tmpColorBuffer2, innerColorBuffer2, 1.0 / 255.0);
 
