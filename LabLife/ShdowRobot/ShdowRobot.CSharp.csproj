@@ -97,6 +97,7 @@
     <Compile Include="Assets\Script\AddTextrure.cs" />
     <Compile Include="Assets\Script\CIPCReceiver.cs" />
     <Compile Include="Assets\Script\CIPCReceiverLaserScaner.cs" />
+    <Compile Include="Assets\Script\CIPCReceiverforRead.cs" />
     <Compile Include="Assets\Script\CIPCReceiverforSave.cs" />
     <Compile Include="Assets\Script\CIPCRobotSync.cs" />
     <Compile Include="Assets\Script\CIPCforDCP.cs" />
