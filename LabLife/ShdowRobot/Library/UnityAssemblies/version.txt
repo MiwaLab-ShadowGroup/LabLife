@@ -1,8 +1,10 @@
 5.2.3f1:2.1.0.0
 StandaloneWindows
 E:/program/Editor/Data/Managed/UnityEngine.dll
+E:/program/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll
 E:/program/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
 E:/program/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
+E:/program/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll
 E:/program/Editor/Data/Managed/UnityEditor.dll
 E:/program/Editor/Data\Managed/Mono.Cecil.dll
 E:/program/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll
