@@ -54,7 +54,7 @@ namespace LabLife.Processer.ImageProcesser
                 }
                 
             }
-            Cv2.DrawContours(dst, this.List_Contours, 0, Scalar.Yellow, -1, OpenCvSharp.LineType.Link8);
+            Cv2.DrawContours(dst, this.List_Contours, 0, Scalar.Aqua, -1, OpenCvSharp.LineType.Link8);
         }
 
         public override string ToString()
