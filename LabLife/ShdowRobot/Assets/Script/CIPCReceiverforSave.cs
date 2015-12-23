@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading;
 using System.IO;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class CIPCReceiverforSave : MonoBehaviour {
 
@@ -12,19 +13,15 @@ public class CIPCReceiverforSave : MonoBehaviour {
     public string clientName;
     public int fps;
 
+    ISave[] List_Sctipt;
+
     CIPC_CS_Unity.CLIENT.CLIENT client;
-
     bool IsCIPC = false;
-
     byte[] data;
-
     bool RecState = false;
-
     string CIPCKey;
-
     public GameObject pointCloudShadow;
     PointCloud pointcloud;
-
     FPSAdjuster.FPSAdjuster FpsAd;
 
     Thread CIPCthread;
@@ -51,10 +48,11 @@ public class CIPCReceiverforSave : MonoBehaviour {
     {
         this.pointcloud = pointCloudShadow.GetComponent<PointCloud>();
 
-
         this.FpsAd = new FPSAdjuster.FPSAdjuster();
         this.FpsAd.Fps = 30;
         this.FpsAd.Start();
+
+        this.Set_ListScript();
     }
 
     // Update is called once per frame
@@ -76,11 +74,13 @@ public class CIPCReceiverforSave : MonoBehaviour {
                 {
                     //Debug.Log("start");
                     this.RecState = true;
+                    this.Set_StartSave(true);
                     CIPCKey = null;
                 }
                 if (CIPCKey == "STOP")
                 {
                     this.SaveStop = true;
+                    this.Set_StartSave(false);
                     //Debug.Log("stop");
                     CIPCKey = null;
                 }
@@ -101,7 +101,6 @@ public class CIPCReceiverforSave : MonoBehaviour {
 
     void GetData()
     {
-        
         try
         {
 
@@ -126,7 +125,7 @@ public class CIPCReceiverforSave : MonoBehaviour {
        
     }
 
-    void OnApplicationQuit()
+    void OnDestroy()
     {
         if (this.client != null)
         {
@@ -221,4 +220,22 @@ public class CIPCReceiverforSave : MonoBehaviour {
         }
     }
 
+    void Set_ListScript()
+    {
+        Component[] components = this.GetComponents(typeof(ISave));
+        this.List_Sctipt = new ISave[components.Length];
+        for(int i = 0; i < this.List_Sctipt.Length; i++)
+        {
+            this.List_Sctipt[i] = components[i] as ISave;
+        }
+        
+        
+    }
+    void Set_StartSave(bool isStart)
+    {
+        foreach(var script in this.List_Sctipt)
+        {
+            script.SetIsStart = isStart;
+        }
+    }
 }

@@ -40,6 +40,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CIPC_CS">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\CIPC_CS.dll</HintPath>
+    </Reference>
+    <Reference Include="FPSAdjuster">
+      <HintPath>bin\Release\FPSAdjuster.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Kinect.2.0.1410.19000\lib\net45\Microsoft.Kinect.dll</HintPath>
       <Private>True</Private>
@@ -79,6 +85,15 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml.Serialization" />
+    <Reference Include="TerminalConnectionSettings">
+      <HintPath>bin\Release\TerminalConnectionSettings.dll</HintPath>
+    </Reference>
+    <Reference Include="UDP_PACKETS_CLIANT">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\UDP_PACKETS_CLIANT.dll</HintPath>
+    </Reference>
+    <Reference Include="UDP_PACKETS_CODER">
+      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\UDP_PACKETS_CODER.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -91,9 +106,15 @@
     <Compile Include="Contorols\KinectPanelControl.xaml.cs">
       <DependentUpon>KinectPanelControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Contorols\LauncherControl.xaml.cs">
+      <DependentUpon>LauncherControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contorols\LLCheckBox.cs" />
     <Compile Include="Contorols\SliderAndTextControl.xaml.cs">
       <DependentUpon>SliderAndTextControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Contorols\TextAndTextBoxControl.xaml.cs">
+      <DependentUpon>TextAndTextBoxControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\AData.cs" />
     <Compile Include="Data\CallibrationData.cs" />
@@ -104,14 +125,18 @@
     <Compile Include="Editor\ImageReceiverHostPanel.cs" />
     <Compile Include="Editor\ImageReceiverPanel.cs" />
     <Compile Include="Editor\KinectPanel.cs" />
+    <Compile Include="Editor\LauncherPanel.cs" />
     <Compile Include="Editor\LogPanel.cs" />
     <Compile Include="Editor\ProjectionPanel.cs" />
     <Compile Include="Editor\RecoderPanel.cs" />
+    <Compile Include="Editor\SyncRecordManagerCIPCPanel.cs" />
     <Compile Include="Editor\TransporterHostPanel.cs" />
     <Compile Include="LabLife.cs" />
     <Compile Include="Processer\ImageProcesser\AImageProcesser.cs" />
     <Compile Include="Processer\ImageProcesser\CellAutomaton.cs" />
+    <Compile Include="Processer\ImageProcesser\polygon.cs" />
     <Compile Include="Processer\ImageProcesser\Reverse.cs" />
+    <Compile Include="Processer\ImageProcesser\Zanzou.cs" />
     <Compile Include="Processer\Recoder.cs" />
     <Compile Include="Processer\Transporter.cs" />
     <Compile Include="Project\AProject.cs" />
@@ -126,7 +151,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Contorols\LauncherControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Contorols\SliderAndTextControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Contorols\TextAndTextBoxControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -181,7 +214,28 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\ArduinoCommunication\ArduinoCommunication.csproj">
+      <Project>{2d0897e7-010b-448a-b2ff-c4024537804f}</Project>
+      <Name>ArduinoCommunication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\CentralInterProcessComunicationServer\CentralInterProcessCommunicationServer.csproj">
+      <Project>{8cb97b5b-242e-46af-9278-8d3b97607560}</Project>
+      <Name>CentralInterProcessCommunicationServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\CIPCTerminal\CIPCTerminal.csproj">
+      <Project>{95104dce-0668-43f1-a76b-c4c3e6a7399b}</Project>
+      <Name>CIPCTerminal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\StreamAnalyzer\StreamAnalyzer.csproj">
+      <Project>{a9f224f7-f36a-46c6-8903-f4a7cc194d39}</Project>
+      <Name>StreamAnalyzer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CIPCSystem\CentralInterProcessComunicationServer\StreamController\StreamController.csproj">
+      <Project>{383997ce-ab1a-4128-a63b-3be75965531c}</Project>
+      <Name>StreamController</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

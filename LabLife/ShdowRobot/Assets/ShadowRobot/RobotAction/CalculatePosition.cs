@@ -127,10 +127,15 @@ public class CalculatePosition
 
     public float MaxLength(List<Vector3> list, ref int humannum0, ref int humannum1)
     {
-        float length = 0;       
+        float length = 0;
+        if(list.Count == 1)
+        {
+            humannum0 = 0;
+            humannum1 = 1;
+        }       
         for(int i= 0; i< list.Count; i++)
         {
-            for(int j = i; j < list.Count; j++)
+            for(int j = 0; j < list.Count; j++)
             {
                 if ((list[j] - list[i]).magnitude > length)
                 {

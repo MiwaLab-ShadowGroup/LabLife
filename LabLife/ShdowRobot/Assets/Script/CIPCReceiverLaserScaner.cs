@@ -74,9 +74,14 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
 
     }
 
-    void OnAppLicatinQuit()
+    void OnDestroy()
     {
-        this.client.Close();
+        if (this.client != null)
+        {
+            this.client.Close();
+
+        }
+
     }
 
     public void ConnectCIPC()

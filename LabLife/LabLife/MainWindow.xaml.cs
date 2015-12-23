@@ -50,6 +50,9 @@ namespace LabLife
                 this.PanelList.Add(new ImageReceiverHostPanel());
                 this.PanelList.Add(new TransporterHostPanel());
                 this.PanelList.Add(new RecoderPanel());
+                this.PanelList.Add(new SyncRecordManagerCIPCPanel());
+                this.PanelList.Add(new LauncherPanel());
+
 
                 if (System.Environment.Is64BitOperatingSystem)
                 {
@@ -57,6 +60,7 @@ namespace LabLife
                 }
                 this.PanelList.Add(new ProjectionPanel(1));
                 this.PanelList.Add(new ProjectionPanel(2));
+                this.PanelList.Add(new ProjectionPanel(3));
             }
             catch (Exception ex)
             {

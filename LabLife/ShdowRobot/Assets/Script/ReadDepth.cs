@@ -6,11 +6,10 @@ using UnityEditor;
 
 public class ReadDepth : MonoBehaviour {
 
-    
     BinaryReader reader;
     public ushort[] readData;
     int datalength;
-    public string ReadFileName;
+    //public string ReadFileName;
     
     bool Isreader = true;
     Thread thread;
@@ -21,74 +20,130 @@ public class ReadDepth : MonoBehaviour {
 
     string FilePath;
 
-    public bool Readstart; 
+    public bool ReadStart = false;
+
+    public bool ReadStop = false;
+
+    bool IsStart = false;
 
     // Use this for initialization
     void Start () {
 
-
         readData = new ushort[512 * 424];
-
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (OpenFileChoose)
         {
             FilePath = EditorUtility.OpenFilePanel("ファイル選択", "　", "　");
 
             if(FilePath != null)
             {
-                this.reader = new BinaryReader(File.OpenRead("C:\\Users\\yamakawa\\Documents\\UnitySave" + @"\" + ReadFileName));
-                this.thread = new Thread(new ThreadStart(this.ReadData));
-                this.thread.Start();
-
-                this.FpsAd = new FPSAdjuster.FPSAdjuster();
-                this.FpsAd.Fps = 30;
-                this.FpsAd.Start();
+                IsStart = true;
+                OpenFileChoose = false;
             }
-
-            OpenFileChoose = false;
         }
 
+        if (IsStart)
+        {
+            this.FpsAd = new FPSAdjuster.FPSAdjuster();
+            this.FpsAd.Fps = 30;
+            this.FpsAd.Start();
 
+            this.reader = new BinaryReader(File.OpenRead(FilePath));
+            this.thread = new Thread(new ThreadStart(this.ReadData));
+            this.thread.Start();
+            IsStart = false;
+            Isreader = true;
+            //Debug.Log("isstart");
+        }
     }
-
-
-
 
     void ReadData()
     {
+        //Debug.Log("ok");
         while (true)
         {
             FpsAd.Adjust();
-
-            if (Isreader == true)
+            if (ReadStart)
             {
-
-                this.datalength = this.reader.ReadInt32();
-
-                for (int i = 0; i < datalength; i++)
+                if (Isreader)
                 {
-                    this.readData[i] = this.reader.ReadUInt16();
+                    //Debug.Log("ok2");
+                    this.datalength = this.reader.ReadInt32();
+                    
+                    for (int i = 0; i < datalength; i++)
+                    {
+                        this.readData[i] = this.reader.ReadUInt16();
+                        
+                    }
+
+                    if (reader.PeekChar() == -1)
+                    {
+                        //Debug.Log("ok3");
+                        reader.Close();
+                        Isreader = false;
+                    }
+
+                    if (ReadStop)
+                    {
+                        Isreader = false;
+                        ReadStop = false;
+                    }
+                    //Debug.Log("OK");
 
                 }
-
-                if (reader.PeekChar() == -1)
+                else
                 {
-                    reader.Close();
-                    Isreader = false;
+                    if(reader != null)
+                    {
+                        reader.Close();
+
+                    }
+
+                    break;
                 }
 
-                //Debug.Log("OK");
             }
-            else { break; }
+
+        }
+        //Debug.Log("thread");
+
+        if (reader != null)
+        {
+            reader.Close();
+        }
+        if (FilePath != null)
+        {
+            FilePath = null;
         }
 
+        //readData = new ushort[512 * 424];
+
+        ReadStart = false;
+        if (thread != null)
+        {
+            thread.Abort();
+        }
 
     }
 
+    void OnDestroy()
+    {
+        if (thread != null)
+        {
+            thread.Abort();
+
+        }
+        if (FilePath != null)
+        {
+            FilePath = null;
+        }
+        if (reader != null)
+        {
+            reader.Close();
+        }
+    }
 }

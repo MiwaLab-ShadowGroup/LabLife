@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
+using FPSAdjuster;
 
 public class CIPCRobotSync : MonoBehaviour {
 
@@ -20,6 +22,10 @@ public class CIPCRobotSync : MonoBehaviour {
     [HideInInspector]
     public Vector3 robotLightPos;
     bool IsCIPC;
+    public bool IsStop;
+
+    Thread thread;
+    FPSAdjuster.FPSAdjuster fpsAdjuster;
 
     void Awake()
     {
@@ -29,27 +35,43 @@ public class CIPCRobotSync : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
         this.robotLight = this.robot.transform.FindChild("RobotLight").gameObject;
         this.IsCIPC = false;
-        
+        //Debug.Log("OK");
+
+        this.thread = new Thread(new ThreadStart(this.Data));
+        this.fpsAdjuster = new FPSAdjuster.FPSAdjuster();
+        this.fpsAdjuster.Fps = this.fps;
+        this.fpsAdjuster.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this.IsCIPC)
+        if(this.mode == _Mode.Sender)
         {
-            switch (this.mode)
-            {
-                case _Mode.Reciever: this.GetData();  break;
-                case _Mode.Sender:   this.SendData(); break;
-            }
-
-            
-
+            this.robotPos = this.robot.transform.position;
         }
 
+    }
+
+    void Data()
+    {
+        while (true)
+        {
+            this.fpsAdjuster.Adjust();
+            if (this.IsCIPC)
+            {
+                switch (this.mode)
+                {
+                    case _Mode.Reciever: this.GetData(); break;
+                    case _Mode.Sender: this.SendData(); break;
+                }
+
+            }
+            if (this.IsStop) break;
+        }
+        
     }
 
     void GetData()
@@ -67,11 +89,7 @@ public class CIPCRobotSync : MonoBehaviour {
                 this.robotLightPos.x = dec.get_float();
                 this.robotLightPos.y = dec.get_float();
                 this.robotLightPos.z = dec.get_float();
-
             }
-
-
-
         }
         catch
         {
@@ -84,7 +102,6 @@ public class CIPCRobotSync : MonoBehaviour {
     {
         try
         {
-            this.robotPos = this.robot.transform.position;
             UDP_PACKETS_CODER.UDP_PACKETS_ENCODER enc = new UDP_PACKETS_CODER.UDP_PACKETS_ENCODER();
             enc += this.robotPos.x;
             enc += this.robotPos.y;
@@ -94,18 +111,24 @@ public class CIPCRobotSync : MonoBehaviour {
             enc += this.robotLightPos.z;
             this.data = enc.data;
             this.client.Update(ref this.data);
-            Debug.Log("Send");
 
         }
         catch
         {
-            Debug.Log("Error:ReceiveData");
+            Debug.Log("Error:SendData");
 
         }
     }
-    void OnAppLicatinQuit()
+
+    void OnDestroy()
     {
-        this.client.Close();
+        if (this.client != null)
+        {
+            this.client.Close();
+            this.thread.Abort();
+        }
+        
+
     }
 
     public void ConnectCIPC()
@@ -123,6 +146,8 @@ public class CIPCRobotSync : MonoBehaviour {
             }
 
             this.IsCIPC = true;
+            this.thread.Start();
+
             Debug.Log("CIPCforRobotSync");
         }
         catch
