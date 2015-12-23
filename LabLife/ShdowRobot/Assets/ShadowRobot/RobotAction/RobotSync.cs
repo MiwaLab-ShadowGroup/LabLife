@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RobotSync : MonoBehaviour {
+public class RobotSync : MonoBehaviour
+ {
 
     public GameObject robot;
     GameObject robotLight;

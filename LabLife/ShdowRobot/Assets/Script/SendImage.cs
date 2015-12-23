@@ -22,15 +22,19 @@ public class SendImage : MonoBehaviour {
         public Color dstColor;
     }
 
-    public RenderTexture renderTexture;
+    //public RenderTexture renderTexture;
+    public List<RenderTexture> List_RenderTexture;
     public _destination[] destinations;
     public bool IsChangeColor;
     public _changeColors[] List_Colors;
+    public List<Color[]> List_PixelColors;
     public bool IsdifColor;
-    public Color difColor;
+    public Color backColor;
     public bool IsInvert;
+
     private List<UdpClient> list_client;
     private Texture2D sendtexture;
+    private List<Texture2D> List_SendTexture;
     private byte[] data;
     Thread thread;
     FPSAdjuster.FPSAdjuster fpsAdjuster;
@@ -39,7 +43,7 @@ public class SendImage : MonoBehaviour {
     void Start ()
     {
         this.list_client = new List<UdpClient>();
-        if (this.renderTexture == null)
+        if (this.List_RenderTexture.Count < 0)
         {
             return;
         }
@@ -59,7 +63,15 @@ public class SendImage : MonoBehaviour {
                 this.destinations[i].IPadress = "127.0.0.1";
             }
         }
-        this.sendtexture = new Texture2D(this.renderTexture.width, this.renderTexture.height);
+        this.sendtexture = new Texture2D(this.List_RenderTexture[0].width, this.List_RenderTexture[0].height);
+        this.List_SendTexture = new List<Texture2D>();
+        this.List_PixelColors = new List<Color[]>();
+        foreach (var Rtexture in this.List_RenderTexture)
+        {
+            this.List_SendTexture.Add(new Texture2D(Rtexture.width, Rtexture.height));
+            this.List_PixelColors.Add(new Color[Rtexture.width * Rtexture.height]);
+        }
+        
         this.thread = new Thread(new ThreadStart(this.SendJPG));
         this.thread.Start(); 
         this.fpsAdjuster = new FPSAdjuster.FPSAdjuster();
@@ -70,30 +82,51 @@ public class SendImage : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        
-        if (this.renderTexture == null)
+        //画像がなければ戻る
+        if (this.List_RenderTexture.Count  < 0)
         {
             return;
-
         }
 
-        RenderTexture.active = this.renderTexture;
-        this.sendtexture.ReadPixels(new Rect(0, 0, this.renderTexture.width, this.renderTexture.height), 0, 0);
+        for (int i = 0; i < this.List_RenderTexture.Count; i++)
+        {
+            RenderTexture.active = this.List_RenderTexture[i];
+            this.List_SendTexture[i].ReadPixels(new Rect(0, 0, this.List_RenderTexture[i].width, this.List_RenderTexture[i].height), 0, 0);
+            this.List_PixelColors[i] = this.List_SendTexture[i].GetPixels();
+        }
 
-        if (this.IsdifColor || IsInvert || IsChangeColor)
+        this.sendtexture = this.List_SendTexture[0];
+
+        if (this.IsdifColor || IsInvert || IsChangeColor || this.List_RenderTexture.Count >1 )
         {
 
-            //バック処理
+            //Debug.Log("OK");
             Color[] colors = this.sendtexture.GetPixels();
-            for (int i = 0; i < colors.Length; i++)
-            {
 
+            for (int i = 0; i < colors.Length; i++)
+            { 
+                //合成
+                foreach(var piccolors in this.List_PixelColors)
+                {
+                    //colors[i] -= this.difColor;
+                    float r = Mathf.Abs(piccolors[i].r - this.backColor.r);
+                    float g = Mathf.Abs(piccolors[i].g - this.backColor.g);
+                    float b = Mathf.Abs(piccolors[i].b - this.backColor.b);
+                    if (b > 0.1f || g > 0.1f || r > 0.1f)
+                    {          
+                        colors[i] = piccolors[i];
+
+                        break;
+                    }
+                }
+
+                //背景を引く
                 if (this.IsdifColor)
                 {
                     //colors[i] -= this.difColor;
-                    float r = Mathf.Abs(colors[i].r - this.difColor.r);
-                    float g = Mathf.Abs(colors[i].g - this.difColor.g);
-                    float b = Mathf.Abs(colors[i].b - this.difColor.b);
+                    float r = Mathf.Abs(colors[i].r - this.backColor.r);
+                    float g = Mathf.Abs(colors[i].g - this.backColor.g);
+                    float b = Mathf.Abs(colors[i].b - this.backColor.b);
 
                     //Color color = color = this.difColor - colors[i]; 
 
@@ -103,6 +136,7 @@ public class SendImage : MonoBehaviour {
                     }
 
                 }
+                //色の変更
                 if (this.IsChangeColor)
                 {
                     for (int j = 0; j < this.List_Colors.Length; j++)
@@ -119,8 +153,7 @@ public class SendImage : MonoBehaviour {
                         }
                     }
                 }
-
-
+                //反転処理
                 if (this.IsInvert)
                 {
                     colors[i] = Color.white - colors[i];
@@ -149,7 +182,7 @@ public class SendImage : MonoBehaviour {
 
             try
             {
-                Debug.Log("send");
+                //Debug.Log("send");
                 for (int i = 0; i < this.list_client.Count; i++)
                 {
                     this.list_client[i].Send(this.data, this.data.Length, this.destinations[i].IPadress, this.destinations[i].Port);

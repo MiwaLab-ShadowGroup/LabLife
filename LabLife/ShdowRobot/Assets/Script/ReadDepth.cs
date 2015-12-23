@@ -7,6 +7,7 @@ using UnityEditor;
 public class ReadDepth : MonoBehaviour {
 
     
+
     BinaryReader reader;
     public ushort[] readData;
     int datalength;
@@ -39,8 +40,9 @@ public class ReadDepth : MonoBehaviour {
         if (OpenFileChoose)
         {
             FilePath = EditorUtility.OpenFilePanel("ファイル選択", "　", "　");
+            OpenFileChoose = false;
 
-            if(FilePath != null)
+            if (FilePath != null)
             {
                 this.reader = new BinaryReader(File.OpenRead("C:\\Users\\yamakawa\\Documents\\UnitySave" + @"\" + ReadFileName));
                 this.thread = new Thread(new ThreadStart(this.ReadData));
@@ -49,9 +51,11 @@ public class ReadDepth : MonoBehaviour {
                 this.FpsAd = new FPSAdjuster.FPSAdjuster();
                 this.FpsAd.Fps = 30;
                 this.FpsAd.Start();
+
+                
             }
 
-            OpenFileChoose = false;
+            
         }
 
 

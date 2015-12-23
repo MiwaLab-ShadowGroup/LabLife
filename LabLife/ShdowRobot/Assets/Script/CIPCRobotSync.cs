@@ -48,8 +48,11 @@ public class CIPCRobotSync : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        this.robotPos = this.robot.transform.position;
-       
+        if(this.mode == _Mode.Sender)
+        {
+            this.robotPos = this.robot.transform.position;
+        }
+
     }
 
     void Data()
