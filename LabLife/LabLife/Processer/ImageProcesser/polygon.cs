@@ -36,7 +36,6 @@ namespace LabLife.Processer.ImageProcesser
             
             List<OpenCvSharp.CPlusPlus.Point> CvPoints = new List<Point>();
             
-            
             for (int i = 0; i < contour.Length; i++)
             {
                 if(Cv2.ContourArea(contour[i]) > 1000)
