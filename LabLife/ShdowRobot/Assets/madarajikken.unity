@@ -1390,7 +1390,9 @@ MonoBehaviour:
   centerPos: {x: 0, y: 0, z: 0}
   SaveRawData: 
   IsArchive: 0
+  IsCIPCArchive: 0
   ReadDepth: {fileID: 493547224}
+  CIPCReceiverforRead: {fileID: 0}
 --- !u!1 &553897115
 GameObject:
   m_ObjectHideFlags: 0
@@ -2551,13 +2553,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverPort: 50000
   remoteIP: 127.0.0.1
-  myPort: 50000
+  myPort: 56002
   clientName: CIPCRead
   fps: 30
-  readData: 
+  readArchiveData: 
   OpenFileChoose: 0
-  ReadStart: 0
-  ReadStop: 0
   CIPCSetup: 0
 --- !u!1 &1037782626
 GameObject:
@@ -2665,7 +2665,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1037782626}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
@@ -3047,8 +3047,10 @@ MonoBehaviour:
   particulsnum: 0
   centerPos: {x: 0, y: 0, z: 0}
   SaveRawData: 
-  IsArchive: 1
-  ReadDepth: {fileID: 1028956280}
+  IsArchive: 0
+  IsCIPCArchive: 1
+  ReadDepth: {fileID: 21058028}
+  CIPCReceiverforRead: {fileID: 1028956280}
 --- !u!1 &1137285048
 GameObject:
   m_ObjectHideFlags: 0
@@ -4220,7 +4222,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1814653697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
