@@ -108,7 +108,7 @@ public class MoveByCenterPos : MonoBehaviour
     void LaserRangeFinder()
     {
         this.centerPos = this.cp.CenterPosition(this.cipcLS.list_humanpos);
-        this.centerPos.x *= -1;
+        //this.centerPos.x *= -1;
     }
     void DepthLRF()
     {

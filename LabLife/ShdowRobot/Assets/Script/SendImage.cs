@@ -43,7 +43,7 @@ public class SendImage : MonoBehaviour {
     void Start ()
     {
         this.list_client = new List<UdpClient>();
-        if (this.List_RenderTexture.Count < 0)
+        if (this.List_RenderTexture.Count == 0)
         {
             return;
         }

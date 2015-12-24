@@ -165,6 +165,81 @@ public class CalculatePosition
         }
         return length;
     }
+
+    //最小包含円
+    public void MinCircle(List<Vector3> list,ref Vector3 center, ref float length)
+    {
+        float localLength = 100;
+        Vector3 localCenter = Vector3.zero;
+        float rudius = 0;
+        Vector3 centerPos = Vector3.zero ;
+        switch (list.Count)
+        {
+            case 0:
+                localLength = 0;
+                break;
+            case 1:
+                localLength = 0;
+                localCenter = list[0];
+                break;
+            case 2:
+                localLength = (list[0] - list[1]).magnitude;
+                centerPos = (list[0] + list[1]) / 2;
+                break;
+            default:
+                #region
+                for (int i = 0; i < list.Count - 2; i++)
+                {
+                    for (int j = 1; j < list.Count - 1; j++)
+                    {
+                        for (int k = 2; k < list.Count; k++)
+                        {
+                            //三点の外接円
+                            centerPos = this.OutCiercle(list[i], list[j], list[k], ref rudius);
+
+                            if (rudius < localLength)
+                            {
+                                localLength = rudius;
+                                bool flag = true;
+                                //三点の外接円にすべての点が含まれるかどうか
+                                foreach (var p in list)
+                                {
+                                    if ((p - centerPos).magnitude > 2 * rudius)
+                                    { flag = false; }
+
+                                }
+                                if (flag) localCenter = centerPos;
+                            }
+
+                        }
+                    }
+                }
+                #endregion
+                break;
+        }
+        center = localCenter;
+        length = localLength;
+
+    }
+    Vector3 OutCiercle(Vector3 A ,Vector3 B, Vector3 C, ref float rudius)
+    {
+        //半径を求める
+        float a = (B - C).magnitude;
+        float b = (C - A).magnitude;
+        float c = (B - A).magnitude;
+        float CosA = (b * b + c * c - a * a) / 2 * b * c;
+        float R = (float)( a / (2 * Math.Sqrt(1 - CosA * CosA)));
+        rudius = R;
+        //外心を求める
+        Vector3 O = A + (B - A) / 2 + Quaternion.AngleAxis(90, Vector3.up)*(B-A) * R / (B- A).magnitude;
+        if((C-O).magnitude != R)
+        {
+            O = A + (B - A) / 2 + Quaternion.AngleAxis(-90, Vector3.up)*(B-A) * R / (B- A).magnitude;
+            
+        }
+        return O;
+    }
+
 }
 
 public class TimeDelay

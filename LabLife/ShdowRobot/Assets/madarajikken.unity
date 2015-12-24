@@ -208,14 +208,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a024f71f0ad3b0345bf4f929560aa6b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
+  dataMode: 0
+  actionMode: 0
   robot: {fileID: 1507099863}
   CIPCforKinect: {fileID: 638825755}
   CIPCforLS: {fileID: 1527814823}
   Vel: 100
   IsUseKinet: 0
-  range: 1
-  radian: 10
+  rangeR: 0
+  rangeVel: 0
 --- !u!114 &25280760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,10 +273,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 77439547}
   m_LocalRotation: {x: .70710659, y: 0, z: 0, w: -.707106948}
-  m_LocalPosition: {x: -0, y: 1.20000005, z: 1.79999995}
-  m_LocalScale: {x: .600000024, y: 1, z: .239999995}
+  m_LocalPosition: {x: 0, y: 1.20000005, z: 1.79999995}
+  m_LocalScale: {x: .600000024, y: 1, z: .24000001}
   m_Children: []
-  m_Father: {fileID: 1777867785}
+  m_Father: {fileID: 1137285049}
   m_RootOrder: 2
 --- !u!54 &77439549
 Rigidbody:
@@ -1350,7 +1351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &493547225
 Transform:
   m_ObjectHideFlags: 0
@@ -2575,7 +2576,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1037782626}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
   m_Name: 
@@ -2647,17 +2648,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
+  List_RenderTexture:
+  - {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
   destinations:
   - IPadress: 192.168.11.2
-    Port: 15001
+    Port: 15000
   - IPadress: 192.168.11.4
-    Port: 15001
+    Port: 15000
   IsChangeColor: 0
   List_Colors: []
   IsdifColor: 0
-  difColor: {r: 0, g: 0, b: 0, a: 0}
-  IsInvert: 0
+  backColor: {r: 0, g: 0, b: 0, a: 0}
+  IsInvert: 1
 --- !u!1001 &1062935740
 Prefab:
   m_ObjectHideFlags: 0
@@ -2981,7 +2983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1111110751
 Transform:
   m_ObjectHideFlags: 0
@@ -3048,6 +3050,7 @@ Transform:
   m_Children:
   - {fileID: 1037782627}
   - {fileID: 1814653698}
+  - {fileID: 77439548}
   m_Father: {fileID: 1777867785}
   m_RootOrder: 0
 --- !u!1 &1176549881
@@ -3333,12 +3336,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 7445602716a21934ba78cdc96fcaf927, type: 2}
+  List_RenderTexture: []
   destinations: []
   IsChangeColor: 0
   List_Colors: []
   IsdifColor: 0
-  difColor: {r: 0, g: 0, b: 0, a: 0}
+  backColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
 --- !u!114 &1307797334
 MonoBehaviour:
@@ -4003,7 +4006,6 @@ Transform:
   m_Children:
   - {fileID: 1137285049}
   - {fileID: 191267001}
-  - {fileID: 77439548}
   m_Father: {fileID: 553897116}
   m_RootOrder: 3
 --- !u!1 &1787675841
@@ -4197,24 +4199,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
+  List_RenderTexture:
+  - {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
   destinations:
   - IPadress: 192.168.11.10
-    Port: 15001
+    Port: 15000
   - IPadress: 192.168.11.5
-    Port: 15001
+    Port: 15000
   IsChangeColor: 0
   List_Colors: []
   IsdifColor: 0
-  difColor: {r: 0, g: 0, b: 0, a: 0}
-  IsInvert: 0
+  backColor: {r: 0, g: 0, b: 0, a: 0}
+  IsInvert: 1
 --- !u!114 &1814653702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1814653697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa32658ad41f78d488ee9c1f90db48e3, type: 3}
   m_Name: 
@@ -4483,12 +4486,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 6c41bc37efd6cf74ea729ae4f0ee3077, type: 2}
+  List_RenderTexture: []
   destinations: []
   IsChangeColor: 0
   List_Colors: []
   IsdifColor: 0
-  difColor: {r: 0, g: 0, b: 0, a: 0}
+  backColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
 --- !u!114 &1857653258
 MonoBehaviour:
