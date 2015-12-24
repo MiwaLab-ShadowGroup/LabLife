@@ -4,11 +4,18 @@ using System.IO;
 using System.Threading;
 using UnityEditor;
 
-public class NewBehaviourScript : MonoBehaviour {
+public class CIPCReceiverforRead : MonoBehaviour {
+
+
+    public int serverPort;
+    public string remoteIP;
+    public int myPort;
+    public string clientName;
+    public int fps;
 
 
     BinaryReader reader;
-    public ushort[] readData;
+    public ushort[] readArchiveData;
     int datalength;
     //public string ReadFileName;
 
@@ -23,9 +30,8 @@ public class NewBehaviourScript : MonoBehaviour {
 
     string FilePath;
 
-    public bool ReadStart = false;
-
-    public bool ReadStop = false;
+    
+    bool ReadStop = false;
 
     bool IsStart = false;
 
@@ -36,11 +42,7 @@ public class NewBehaviourScript : MonoBehaviour {
     string CIPCKey;
     bool IsCIPC = false;
 
-    public int serverPort;
-    public string remoteIP;
-    public int myPort;
-    public string clientName;
-    public int fps;
+   
 
     byte[] data;
 
@@ -50,7 +52,7 @@ public class NewBehaviourScript : MonoBehaviour {
     void Start () {
 
 
-        readData = new ushort[512 * 424];
+        readArchiveData = new ushort[512 * 424];
 
     }
 
@@ -116,8 +118,7 @@ public class NewBehaviourScript : MonoBehaviour {
         while (true)
         {
             FpsAd.Adjust();
-            if (ReadStart)
-            {
+            
                 if (Isreader)
                 {
                     //Debug.Log("ok2");
@@ -125,7 +126,7 @@ public class NewBehaviourScript : MonoBehaviour {
 
                     for (int i = 0; i < datalength; i++)
                     {
-                        this.readData[i] = this.reader.ReadUInt16();
+                        this.readArchiveData[i] = this.reader.ReadUInt16();
 
                     }
 
@@ -155,7 +156,7 @@ public class NewBehaviourScript : MonoBehaviour {
                     break;
                 }
 
-            }
+            
 
         }
         //Debug.Log("thread");
@@ -171,7 +172,7 @@ public class NewBehaviourScript : MonoBehaviour {
 
         //readData = new ushort[512 * 424];
 
-        ReadStart = false;
+        
         if (thread != null)
         {
             thread.Abort();
@@ -193,6 +194,12 @@ public class NewBehaviourScript : MonoBehaviour {
         if (reader != null)
         {
             reader.Close();
+        }
+
+        if(client != null)
+        {
+            client.Close();
+
         }
     }
 
@@ -231,6 +238,7 @@ public class NewBehaviourScript : MonoBehaviour {
 
                     //データ取得
                     CIPCKey = dec.get_string();
+                    
                 }
             }
 
