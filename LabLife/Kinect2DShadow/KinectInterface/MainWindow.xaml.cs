@@ -457,11 +457,13 @@ namespace Kinect2DShadow
                         this.cameraSpacePoints[i].X < this.space.Right)
                     {
                         //条件クリア（人）
-                        for(int j= 0; j < channel ; j ++)
-                        {
-                            *(matPtr + i * channel + j) = 255;
-                        }
-                       
+                        //for(int j= 0; j < channel ; j ++)
+                        //{
+                            *(matPtr + i * channel + 0) = (byte)RedSlider.Value;
+                            *(matPtr + i * channel + 1) = (byte)GreenSlider.Value;
+                            *(matPtr + i * channel + 2) = (byte)BlueSlider.Value;
+
+                        //}
                     }
                     else
                     {
