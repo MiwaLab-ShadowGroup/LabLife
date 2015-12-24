@@ -1138,7 +1138,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 388885668}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.870000005, y: 1.24000001, z: -4.6500001}
+  m_LocalPosition: {x: 0, y: 1.24000001, z: -4.6500001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2518,7 +2518,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1028956281}
-  - 114: {fileID: 1028956282}
   m_Layer: 0
   m_Name: CIPCforRead
   m_TagString: Untagged
@@ -2538,27 +2537,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1176549882}
   m_RootOrder: 5
---- !u!114 &1028956282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1028956280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25ea5bca2c4b31c4aa40dcc0fda0ea5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serverPort: 50000
-  remoteIP: 127.0.0.1
-  myPort: 50000
-  clientName: CIPCRead
-  fps: 30
-  readData: 
-  OpenFileChoose: 0
-  ReadStart: 0
-  ReadStop: 0
-  CIPCSetup: 0
 --- !u!1 &1037782626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2665,7 +2643,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1037782626}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
@@ -2677,12 +2655,12 @@ MonoBehaviour:
     Port: 15000
   - IPadress: 192.168.11.4
     Port: 15001
-  IsChangeColor: 1
+  IsChangeColor: 0
   List_Colors:
   - srcColor: {r: .639215708, g: 1, b: 1, a: 0}
     dstColor: {r: 0, g: 1, b: 0, a: 0}
   - srcColor: {r: 1, g: .686274529, b: .686274529, a: 0}
-    dstColor: {r: 1, g: .931034446, b: 0, a: 0}
+    dstColor: {r: 1, g: 1, b: 0, a: 0}
   IsdifColor: 0
   backColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
@@ -3048,7 +3026,7 @@ MonoBehaviour:
   centerPos: {x: 0, y: 0, z: 0}
   SaveRawData: 
   IsArchive: 1
-  ReadDepth: {fileID: 1028956280}
+  ReadDepth: {fileID: 21058028}
 --- !u!1 &1137285048
 GameObject:
   m_ObjectHideFlags: 0
@@ -3619,7 +3597,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2341330, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 10896066, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_Color.b
@@ -3652,6 +3630,10 @@ Prefab:
     - target: {fileID: 2341330, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_UseLightProbes
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2389030, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
@@ -4051,7 +4033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &1787675842
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4220,19 +4202,24 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1814653697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  List_RenderTexture: []
+  List_RenderTexture:
+  - {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
   destinations:
   - IPadress: 192.168.11.10
     Port: 15001
   - IPadress: 192.168.11.5
     Port: 15001
   IsChangeColor: 0
-  List_Colors: []
+  List_Colors:
+  - srcColor: {r: .729411781, g: 1, b: .980392218, a: 0}
+    dstColor: {r: 0, g: 1, b: 0, a: 0}
+  - srcColor: {r: 1, g: .686274529, b: .686274529, a: 0}
+    dstColor: {r: 1, g: 1, b: 0, a: 0}
   IsdifColor: 0
   backColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0

@@ -37,9 +37,11 @@ public class PointCloud : MonoBehaviour
     [HideInInspector]
     public ushort[] SaveRawData;
     public bool IsArchive;
+    public bool IsCIPCArchive;
     public GameObject ReadDepth;
+    public GameObject CIPCReceiverforRead;
     ReadDepth saveData;
-
+    CIPCReceiverforRead saveCIPCData;
     #endregion
     // Use this for initialization
     void Start()
@@ -55,7 +57,7 @@ public class PointCloud : MonoBehaviour
 
         this.cameraSpacePoints = new Windows.Kinect.CameraSpacePoint[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
 
-        if (!this.IsArchive)
+        if (!this.IsArchive && !this.IsCIPCArchive)
         {
             this.depthreader.FrameArrived += depthreader_FrameArrived;
             this.sensor.Open();
@@ -66,7 +68,12 @@ public class PointCloud : MonoBehaviour
             this.sensor.Open();
 
         }
+        if (this.IsCIPCArchive)
+        {
+            this.saveCIPCData = this.CIPCReceiverforRead.GetComponent<CIPCReceiverforRead>();
+            this.sensor.Open();
 
+        }
         this.centerPos = new Vector3();        
     }
 
@@ -90,6 +97,11 @@ public class PointCloud : MonoBehaviour
             
             this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveData.readData, this.cameraSpacePoints);
             //Debug.Log(saveData.readData.Length);
+        }
+        if (this.IsCIPCArchive)
+        {
+            this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveCIPCData.readArchiveData, this.cameraSpacePoints);
+
         }
 
         int cubeCount = 0;

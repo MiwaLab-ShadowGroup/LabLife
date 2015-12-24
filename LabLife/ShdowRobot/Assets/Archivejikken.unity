@@ -2549,10 +2549,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ea5bca2c4b31c4aa40dcc0fda0ea5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverPort: 50000
+  serverPort: 12000
   remoteIP: 127.0.0.1
-  myPort: 50000
-  clientName: CIPCRead
+  myPort: 56001
+  clientName: ReadDepth
   fps: 30
   readData: 
   OpenFileChoose: 0
@@ -2586,8 +2586,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1037782626}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 5.5, z: 0}
+  m_LocalRotation: {x: -.215671152, y: .741142333, z: -.28005445, w: -.570756972}
+  m_LocalPosition: {x: 3.5, y: 2.75999999, z: 1.46000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1137285049}
@@ -2677,12 +2677,8 @@ MonoBehaviour:
     Port: 15000
   - IPadress: 192.168.11.4
     Port: 15001
-  IsChangeColor: 1
-  List_Colors:
-  - srcColor: {r: .639215708, g: 1, b: 1, a: 0}
-    dstColor: {r: 0, g: 1, b: 0, a: 0}
-  - srcColor: {r: 1, g: .686274529, b: .686274529, a: 0}
-    dstColor: {r: 1, g: .931034446, b: 0, a: 0}
+  IsChangeColor: 0
+  List_Colors: []
   IsdifColor: 0
   backColor: {r: 0, g: 0, b: 0, a: 0}
   IsInvert: 0
@@ -3048,7 +3044,7 @@ MonoBehaviour:
   centerPos: {x: 0, y: 0, z: 0}
   SaveRawData: 
   IsArchive: 1
-  ReadDepth: {fileID: 1028956280}
+  ReadDepth: {fileID: 21058028}
 --- !u!1 &1137285048
 GameObject:
   m_ObjectHideFlags: 0
@@ -4220,12 +4216,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1814653697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f07460a3f5d0d3f4abf83075d6fd0f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  List_RenderTexture: []
+  List_RenderTexture:
+  - {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
   destinations:
   - IPadress: 192.168.11.10
     Port: 15001
@@ -4342,7 +4339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2444b9b9cd7ee4d4eb5591d6777f16b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverPort: 50000
+  serverPort: 12000
   remoteIP: 127.0.0.1
   myPort: 56000
   clientName: UnitySave_SYNCREC
