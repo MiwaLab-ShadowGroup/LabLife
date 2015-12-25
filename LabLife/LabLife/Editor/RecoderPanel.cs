@@ -40,7 +40,7 @@ namespace LabLife.Editor
         private byte[] data;
 
         VideoWriter vw;
-        OpenCvSharp.CPlusPlus.VideoCapture vc ;
+        OpenCvSharp.CPlusPlus.VideoCapture vc;
 
         List<AImageResourcePanel> resourcePanels;
         private SliderAndTextControl SliderTextBox;
@@ -48,7 +48,7 @@ namespace LabLife.Editor
         private TextBox textbox_SavefileName = new TextBox();
         private TextBox textbox_LoadfileName = new TextBox();
         private ComboBox size = new ComboBox();
-    
+
         private Image Image_Load = new Image();
         private WriteableBitmap WriteableBitmap_Load;
 
@@ -90,12 +90,12 @@ namespace LabLife.Editor
             Button Button_savefolder = new Button();
             Button_savefolder.Click += Button_savefile_Click;
             Button_savefolder.Content = "フォルダ選択";
-            
+
             textbox_SavefileName.Text = "name";
             Button Button_FileName = new Button();
             Button_FileName.Click += Button_FileName_Click;
             Button_FileName.Content = "名前変更";
-            
+
             size.Items.Add("320,240");
             size.Items.Add("512,424");
 
@@ -106,7 +106,7 @@ namespace LabLife.Editor
 
             savestack.Children.Add(textblock_save);
             savestack.Children.Add(Button_Save);
-            
+
             savestack.Children.Add(Button_Stop_save);
             savestack.Children.Add(Button_savefolder);
             savestack.Children.Add(textbox_SavefileName);
@@ -123,7 +123,7 @@ namespace LabLife.Editor
             TextBlock textblock_load = new TextBlock();
             textblock_load.Text = "再生用";
             Button Button_Loadone = new Button();
-            Button_Loadone.Click += Button_Loadone_Click; 
+            Button_Loadone.Click += Button_Loadone_Click;
             Button_Loadone.Content = "読み込み";
             Button Button_Load = new Button();
             Button_Load.Click += Button_Load_Click;
@@ -132,7 +132,7 @@ namespace LabLife.Editor
             Button_Stop_load.Click += Button_Stop_load_Click; ;
             Button_Stop_load.Content = "終了";
             Button Button_loadfolder = new Button();
-            Button_loadfolder.Click += Button_loadfolder_Click; 
+            Button_loadfolder.Click += Button_loadfolder_Click;
             Button_loadfolder.Content = "フォルダ選択";
             textbox_LoadfileName.Text = "name";
             Button Button_LoadFileName = new Button();
@@ -214,7 +214,7 @@ namespace LabLife.Editor
                 OnImageFrameArrived(new ImageFrameArrivedEventArgs(new Mat[] { loadmat }));
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
@@ -227,18 +227,18 @@ namespace LabLife.Editor
 
         private void Button_Stop_load_Click(object sender, RoutedEventArgs e)
         {
-            if(vc != null)
+            if (vc != null)
             {
                 vc.Dispose();
                 vc = new VideoCapture();
             }
-            
+
         }
 
         private void Button_FileName_Click(object sender, RoutedEventArgs e)
         {
             savefilename = textbox_SavefileName.Text;
-       
+
         }
 
         private void Button_Stop_save_Click(object sender, RoutedEventArgs e)
@@ -289,7 +289,7 @@ namespace LabLife.Editor
             playinit();
             Task task = new Task(new Action(this.PlayVideo));
             task.Start();
-            
+
         }
 
         private void playinit()
@@ -325,7 +325,7 @@ namespace LabLife.Editor
                     base.Grid_Image.Dispatcher.BeginInvoke(new Action(() =>
                     {
 
-                        loadbit.WritePixels(new Int32Rect(0,0,loadmat.Width,loadmat.Height),loadmat.CvPtr,loadmat.Width * loadmat.Channels(),0) ;
+                        loadbit.WritePixels(new Int32Rect(0, 0, loadmat.Width, loadmat.Height), loadmat.CvPtr, loadmat.Width * loadmat.Channels(), 0);
 
                     }));
 
@@ -376,11 +376,11 @@ namespace LabLife.Editor
 
                 if (savefilename == "name")
                 {
-                    strRECName = savefolder + @"\"+ "video" + "noname" + ".avi";
+                    strRECName = savefolder + @"\" + "video" + "noname" + ".avi";
                 }
                 else
                 {
-                    strRECName = savefolder+ @"\" + savefilename + ".avi";
+                    strRECName = savefolder + @"\" + savefilename + ".avi";
                 }
                 if (size.SelectedItem.ToString() == "320,240")
                 {
@@ -414,7 +414,7 @@ namespace LabLife.Editor
             vw.Write(e.Image[this.saveImageIndex]);
 
         }
-        
+
 
         private void Button_Update_Click(object sender, RoutedEventArgs e)
         {

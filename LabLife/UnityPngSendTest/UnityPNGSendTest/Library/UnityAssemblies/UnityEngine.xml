@@ -19622,6 +19622,11 @@ GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
         <para>Returns list of objects representing status of all touches during last frame. (Read Only) (Allocates temporary variables).</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Input.touchPressureSupported">
+      <summary>
+        <para>Bool value which let's users check if touch pressure is supported.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Input.touchSupported">
       <summary>
         <para>Returns whether the device on which application is currently running supports touch input.</para>
@@ -37687,6 +37692,11 @@ Note: The single argument version of this API will always issue an error message
         <para>The spring force used to keep the two objects together.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.SpringJoint.tolerance">
+      <summary>
+        <para>The maximum allowed error between the current spring length and the length defined by minDistance and maxDistance.</para>
+      </summary>
+    </member>
     <member name="T:UnityEngine.SpringJoint2D">
       <summary>
         <para>Joint that attempts to keep two Rigidbody2D objects a set distance apart by applying a force between them.</para>
@@ -40159,6 +40169,11 @@ Returns NULL if there is no associated alpha texture for the source sprite. This
         <para>The unique index for the touch.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Touch.maximumPossiblePressure">
+      <summary>
+        <para>The maximum possible pressure value for a platform.  If Input.touchPressureSupported returns false, the value of this property will always be 1.0f.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Touch.phase">
       <summary>
         <para>Describes the phase of the touch.</para>
@@ -40167,6 +40182,11 @@ Returns NULL if there is no associated alpha texture for the source sprite. This
     <member name="P:UnityEngine.Touch.position">
       <summary>
         <para>The position of the touch in pixel coordinates.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Touch.pressure">
+      <summary>
+        <para>The current amount of pressure being applied to a touch.  1.0f is considered to be the pressure of an average touch.  If Input.touchPressureSupported returns false, the value of this property will always be 1.0f.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Touch.tapCount">

@@ -6,3 +6,9 @@ release/
 debug/
 publish/
 
+Library
+Temp
+*.pidb
+*.unityproj
+*.sln
+*.userprefs
