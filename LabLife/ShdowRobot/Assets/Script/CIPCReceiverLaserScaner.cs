@@ -59,12 +59,13 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
             int humanNum = dec.get_int();
             for (int i = 0; i < humanNum; i++)
             {
-                float x = - (float)dec.get_double();
+                float x = (float)dec.get_double();
                 float z = (float)dec.get_double();
                 list_position.Add(new Vector3(x, 0, z));
                 
+                
             }
-            //Debug.Log(list_position[0].ToString());
+            if (list_position.Count > 0) Debug.Log(list_position[0]); 
         }
         catch
         {
