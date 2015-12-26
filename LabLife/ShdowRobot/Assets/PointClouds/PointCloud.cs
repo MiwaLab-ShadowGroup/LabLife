@@ -94,9 +94,9 @@ public class PointCloud : MonoBehaviour
     {
         if (this.IsArchive)
         {
-            
+
             this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveData.readData, this.cameraSpacePoints);
-            //Debug.Log(saveData.readData.Length);
+            //Debug.Log(saveData.readData[100000]);
         }
         if (this.IsCIPCArchive)
         {

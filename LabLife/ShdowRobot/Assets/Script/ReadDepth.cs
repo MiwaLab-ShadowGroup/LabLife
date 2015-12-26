@@ -51,12 +51,14 @@ public class ReadDepth : MonoBehaviour {
             this.FpsAd = new FPSAdjuster.FPSAdjuster();
             this.FpsAd.Fps = 30;
             this.FpsAd.Start();
-
+            
             this.reader = new BinaryReader(File.OpenRead(FilePath));
             this.thread = new Thread(new ThreadStart(this.ReadData));
             this.thread.Start();
             IsStart = false;
             Isreader = true;
+
+            //Debug.Log(FilePath);
             //Debug.Log("isstart");
         }
     }
@@ -71,9 +73,9 @@ public class ReadDepth : MonoBehaviour {
             {
                 if (Isreader)
                 {
-                    //Debug.Log("ok2");
+                   // Debug.Log("ok2");
                     this.datalength = this.reader.ReadInt32();
-                    
+                    //Debug.Log(this.datalength);
                     for (int i = 0; i < datalength; i++)
                     {
                         this.readData[i] = this.reader.ReadUInt16();

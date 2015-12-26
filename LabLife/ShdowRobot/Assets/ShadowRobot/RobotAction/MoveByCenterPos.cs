@@ -50,10 +50,14 @@ public class MoveByCenterPos : MonoBehaviour
     void Start()
     {
         this.robotLight = this.robot.transform.FindChild("RobotLight").gameObject;
-
-        this.cipcKinect = this.CIPCforKinect.GetComponent<CIPCReceiver>();
-        this.cipcLS = this.CIPCforLaserScaner.GetComponent<CIPCReceiverLaserScaner>();
-        this.pointCloud = this.depth.GetComponent<PointCloud>();
+        try
+        {
+            this.cipcKinect = this.CIPCforKinect.GetComponent<CIPCReceiver>();
+            this.cipcLS = this.CIPCforLaserScaner.GetComponent<CIPCReceiverLaserScaner>();
+            this.pointCloud = this.depth.GetComponent<PointCloud>();
+        }
+        catch { }
+        
         
         this.List_Human = new List<Human>();
         this.list_humanpos = new List<Vector3>();
@@ -129,6 +133,7 @@ public class MoveByCenterPos : MonoBehaviour
             this.centerPos = this.pointCloud.centerPos;
             //this.centerPos.x = -this.centerPos.x;
             
+            
         }
         catch { }
     }
@@ -137,10 +142,11 @@ public class MoveByCenterPos : MonoBehaviour
     void Field()
     {
         //位置
-        Vector3 vec = - this.centerPos - this.robot.transform.position;
-        vec.y = 0;
-        vec /= vec.magnitude;
-        this.robot.transform.position += vec / this.velparameter;
+         this.robot.transform.position =  - this.centerPos;
+        //Vector3 vec = -this.centerPos - this.robot.transform.position;
+        //vec.y = 0;
+        //vec /= vec.magnitude;
+        //this.robot.transform.position += vec / this.velparameter;
 
     }
     void CenterHight()

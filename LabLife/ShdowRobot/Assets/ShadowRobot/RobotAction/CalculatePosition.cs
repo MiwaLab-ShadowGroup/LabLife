@@ -131,7 +131,7 @@ public class CalculatePosition
         if(list.Count == 1)
         {
             humannum0 = 0;
-            humannum1 = 1;
+            humannum1 = 0;
         }       
         for(int i= 0; i< list.Count; i++)
         {

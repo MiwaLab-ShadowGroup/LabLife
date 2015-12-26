@@ -41,6 +41,7 @@ public class CircleLine : MonoBehaviour
     //標準偏差
     double preSD;
     private float preTime;
+    public float rangeθ1;
 
     // Use this for initialization
     void Start ()
@@ -69,7 +70,7 @@ public class CircleLine : MonoBehaviour
 
         this.robot.transform.position = new Vector3(0.0f, this.robot.transform.position.y, 0.0f);
 
-        this.Test();
+
 	}
 	
 	// Update is called once per frame
@@ -77,11 +78,11 @@ public class CircleLine : MonoBehaviour
     {
         //データ取得
         #region
-        //switch (this.dataMode)
-        //{
-        //    case _datamode.kinect: this.Kinect(); break;
-        //    case _datamode.LRF: this.LRF(); break;
-        //}
+        switch (this.dataMode)
+        {
+            case _datamode.kinect: this.Kinect(); break;
+            case _datamode.LRF: this.LRF(); break;
+        }
 
         #endregion
         //動き
@@ -218,7 +219,7 @@ public class CircleLine : MonoBehaviour
                 case _dirctionR.None:
                     break;
             }
-            this.radian = dir * centerVel.magnitude * Time.deltaTime * this.rangeθ;
+            this.radian = this.rangeθ *  dir * centerVel.magnitude * Time.deltaTime  +  this.rangeθ1;
 
 
             //円中心からの方向ベクトル
