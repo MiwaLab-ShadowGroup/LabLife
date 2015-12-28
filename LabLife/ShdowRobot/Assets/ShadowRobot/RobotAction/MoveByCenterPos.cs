@@ -142,11 +142,10 @@ public class MoveByCenterPos : MonoBehaviour
     void Field()
     {
         //位置
-         this.robot.transform.position =  - this.centerPos;
-        //Vector3 vec = -this.centerPos - this.robot.transform.position;
-        //vec.y = 0;
-        //vec /= vec.magnitude;
-        //this.robot.transform.position += vec / this.velparameter;
+        Vector3 vec = -this.centerPos - this.robot.transform.position;
+        vec.y = 0;
+        vec /= vec.magnitude;
+        this.robot.transform.position += vec / this.velparameter;
 
     }
     void CenterHight()

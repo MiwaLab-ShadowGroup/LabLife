@@ -21,7 +21,8 @@ public class ShadowRobotStage : MonoBehaviour {
         this.localFixedLight = Instantiate(this.FixedLight);
         //オリジナルを見えなくする
         this.robot.GetComponent<MeshRenderer>().enabled = false;
-        this.robot.GetComponentInChildren<MeshRenderer>().enabled = false;
+        GameObject head = this.robot.transform.FindChild("RobotLight").gameObject;
+        head.GetComponent<MeshRenderer>().enabled = false;
         //クローンを可視化
         this.localRobot.GetComponent<MeshRenderer>().enabled = true;
         this.localRobot.GetComponentInChildren<MeshRenderer>().enabled = true;

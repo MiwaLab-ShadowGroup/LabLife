@@ -9,6 +9,7 @@ public class UIScript : MonoBehaviour
     public GameObject CIPCforKinect;
     public GameObject CIPCforLS;
     public GameObject CIPCforRobotSync;
+    public GameObject CIPCforRobotSync1;
     public GameObject CIPCforRobotDCP;
     public GameObject SaveCIPC;
     public GameObject SaveButton;
@@ -34,6 +35,8 @@ public class UIScript : MonoBehaviour
     {
 
         this.CIPCforRobotSync.GetComponent<CIPCRobotSync>().ConnectCIPC();
+        //this.CIPCforRobotSync1.GetComponent<CIPCRobotSync>().ConnectCIPC();
+
 
     }
     public void ConnectCIPCforDCP()

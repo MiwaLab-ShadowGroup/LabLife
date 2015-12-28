@@ -5,7 +5,7 @@ public class RobotSync : MonoBehaviour
  {
 
     public GameObject robot;
-    GameObject robotLight;
+    public GameObject robotLight;
     public GameObject CIPCforRobotSync;
     CIPCRobotSync cipc;
 
@@ -19,9 +19,13 @@ public class RobotSync : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-
-        this.robot.transform.position = this.cipc.robotPos;
-        this.robotLight.transform.position = this.cipc.robotLightPos;
+        try
+        {
+            this.robot.transform.position = this.cipc.robotPos;
+            this.robotLight.transform.position = this.cipc.robotLightPos;
+            Debug.Log(this.cipc.robotLightPos);
+        }
+        catch { }
 
     }
 }

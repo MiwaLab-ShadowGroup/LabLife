@@ -17,9 +17,9 @@ public class CIPCRobotSync : MonoBehaviour {
     public GameObject robot;
 
     GameObject robotLight;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3 robotPos;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3 robotLightPos;
     bool IsCIPC;
     public bool IsStop;
@@ -51,6 +51,7 @@ public class CIPCRobotSync : MonoBehaviour {
         if(this.mode == _Mode.Sender)
         {
             this.robotPos = this.robot.transform.position;
+            this.robotLightPos = this.robotLight.transform.position;
         }
 
     }
@@ -111,6 +112,9 @@ public class CIPCRobotSync : MonoBehaviour {
             enc += this.robotLightPos.z;
             this.data = enc.data;
             this.client.Update(ref this.data);
+            Debug.Log("send");
+            //Debug.Log(this.robotPos);
+            //Debug.Log(this.robotLightPos);
 
         }
         catch
