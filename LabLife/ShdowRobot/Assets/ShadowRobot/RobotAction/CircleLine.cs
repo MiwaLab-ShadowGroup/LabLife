@@ -5,9 +5,10 @@ using System.Collections.Generic;
 public class CircleLine : MonoBehaviour
 {
     //モード
+    public float Rd;
     public enum _datamode { kinect, LRF, }
     public _datamode dataMode;
-    public enum _actionmode { CenterPos, VelOfCenterPos, Random,noiseSD,}
+    public enum _actionmode { CenterPos, VelOfCenterPos, Hokan, Random,noiseSD,}
     public _actionmode actionMode;
     public enum _dirctionR {diff, Cross, None,}
     public _dirctionR dirctionR;
@@ -90,6 +91,7 @@ public class CircleLine : MonoBehaviour
         {
             case _actionmode.CenterPos:      this.MoveCircleByPos(); break;
             case _actionmode.VelOfCenterPos: this.MoveCircleByVel(); break;
+            case _actionmode.Hokan:          this.MoveCircleByPosHokan(); break;
             case _actionmode.Random:         this.MoveCircleByRandom(); break;
             case _actionmode.noiseSD:        this.NoiseSD(); break;
         }
@@ -177,6 +179,61 @@ public class CircleLine : MonoBehaviour
         }
 
     }
+    //円周を動く
+    void MoveCircleByPosHokan()
+    {
+
+        if (true)
+        {
+            //半径
+            float R =Random.Range(-1,10);  //(this.CP.MaxLength(this.list_pos, ref this.targetHuman0, ref targetHuman1) / 2 + this.rangeR);
+            this.radius += (R - this.radius) * Time.deltaTime;
+            //回転中心
+            Vector3 centerPos = Vector3.zero;// (this.list_pos[this.targetHuman0] + this.list_pos[this.targetHuman1]) / 2;
+
+            ////回転角度
+            ////角速度は人の重心（回転中心からの相対）
+            //Vector3 humansPos = this.CP.CenterPosition(this.list_pos);
+            //////回転方向はロボットとの外積で決定
+            //this.robotPos = this.robot.transform.position;
+            //this.robotPos.y = 0.0f;
+            //float dir = 1;
+
+            //switch (this.dirctionR)
+            //{
+            //    case _dirctionR.Cross:
+            //        Vector3 cross;
+            //        if (this.robotPos != Vector3.zero)
+            //        {
+            //            cross = Vector3.Cross(humansPos, this.robotPos);
+            //            cross /= cross.magnitude;
+            //        }
+            //        else { cross = this.preCross; }
+            //        this.preCross = cross;
+            //        dir = cross.y;
+            //        break;
+            //    case _dirctionR.diff:
+            //        if (humansPos.magnitude - this.preHumanCenter.magnitude > 0)
+            //        {
+            //            dir = 1;
+            //        }
+            //        else { dir = -1; }
+            //        break;
+            //    case _dirctionR.None:
+            //        break;
+            //}
+
+            this.radian =  Random.Range(0,1000) + this.rangeθ;
+
+            this.target = centerPos + (Quaternion.AngleAxis(this.radian * Time.deltaTime, Vector3.up) * ((this.target - this.preCenter) / (this.target - this.preCenter).magnitude * this.radius));
+            this.robot.transform.position = this.target + new Vector3(0, this.robotPos.y, 0);
+                      
+
+            this.preCenter = centerPos;
+           // this.preHumanCenter = humansPos;
+        }
+
+    }
     void MoveCircleByVel()
     {
 
@@ -219,11 +276,11 @@ public class CircleLine : MonoBehaviour
                 case _dirctionR.None:
                     break;
             }
-            this.radian = this.rangeθ *  dir * centerVel.magnitude * Time.deltaTime  +  this.rangeθ1;
+            this.radian = this.rangeθ *  dir * centerVel.magnitude  +  this.rangeθ1;
 
 
             //円中心からの方向ベクトル
-            this.target = centerPos + (Quaternion.AngleAxis(this.radian, Vector3.up) * ((this.target - this.preCenter) / (this.target - this.preCenter).magnitude * this.radius));
+            this.target = centerPos + (Quaternion.AngleAxis(this.radian * Time.deltaTime, Vector3.up) * ((this.target - this.preCenter) / (this.target - this.preCenter).magnitude * this.radius));
             this.target.y = this.robotPos.y;
             //移動
             this.robot.transform.position = this.target;
@@ -274,7 +331,6 @@ public class CircleLine : MonoBehaviour
             this.target = centerPos + (Quaternion.AngleAxis(this.radian, Vector3.up) * ((this.target - this.preCenter) / (this.target - this.preCenter).magnitude * this.radius));
             this.target.y = this.robotPos.y;
             //移動
-
             this.robot.transform.position = this.target;
             //値の更新
             this.preCenter = centerPos;
@@ -282,6 +338,8 @@ public class CircleLine : MonoBehaviour
         }
 
     }
+    
+
 
     //標準偏差で中心方向にぶれる
     void NoiseSD()
@@ -421,3 +479,4 @@ public class CircleLine : MonoBehaviour
     //}
     #endregion
 }
+

@@ -42,7 +42,7 @@ public class Spiral : MonoBehaviour {
             }
             else
             {
-                this.radius += (this.Rvel * Time.deltaTime);//
+                this.radius += (this.Rvel * Time.deltaTime);
 
                 if (this.radius > this.MaxRadius || this.radius < 0)
                 {

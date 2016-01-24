@@ -36,8 +36,7 @@ public class SendImage : MonoBehaviour {
     private Texture2D sendtexture;
     private List<Texture2D> List_SendTexture;
     private byte[] data;
-    Thread thread;
-    FPSAdjuster.FPSAdjuster fpsAdjuster;
+
 
     // Use this for initialization
     void Start ()
@@ -55,7 +54,7 @@ public class SendImage : MonoBehaviour {
 
             if (this.destinations[i].Port == 0)
             {
-                this.destinations[i].Port = 15000 + i;
+                this.destinations[i].Port = 15000;
             }
 
             if (this.destinations[i].IPadress == "")
@@ -72,11 +71,6 @@ public class SendImage : MonoBehaviour {
             this.List_PixelColors.Add(new Color[Rtexture.width * Rtexture.height]);
         }
         
-        this.thread = new Thread(new ThreadStart(this.SendJPG));
-        this.thread.Start(); 
-        this.fpsAdjuster = new FPSAdjuster.FPSAdjuster();
-        this.fpsAdjuster.Fps = 30;
-        this.fpsAdjuster.Start();
     }
 	
 	// Update is called once per frame
@@ -88,19 +82,28 @@ public class SendImage : MonoBehaviour {
             return;
         }
 
+        //int size = this.List_RenderTexture.Count;
+
         for (int i = 0; i < this.List_RenderTexture.Count; i++)
         {
             RenderTexture.active = this.List_RenderTexture[i];
             this.List_SendTexture[i].ReadPixels(new Rect(0, 0, this.List_RenderTexture[i].width, this.List_RenderTexture[i].height), 0, 0);
-            this.List_PixelColors[i] = this.List_SendTexture[i].GetPixels();
+            
+           
         }
 
         this.sendtexture = this.List_SendTexture[0];
 
-        if (this.IsdifColor || IsInvert || IsChangeColor || this.List_RenderTexture.Count >1 )
+        //加工処理
+        #region
+        if (this.IsdifColor || IsInvert || IsChangeColor || this.List_RenderTexture.Count > 1 )
         {
+            for (int i = 0; i < this.List_RenderTexture.Count; i++)
+            {
+                this.List_PixelColors[i] = this.List_SendTexture[i].GetPixels();
+            }
 
-            //Debug.Log("OK");
+
             Color[] colors = this.sendtexture.GetPixels();
 
             for (int i = 0; i < colors.Length; i++)
@@ -163,46 +166,20 @@ public class SendImage : MonoBehaviour {
             }
             this.sendtexture.SetPixels(colors);
            
-
         }
-
+        #endregion
 
         this.sendtexture.Apply();
         this.data = this.sendtexture.EncodeToJPG();
 
-    }
-
-    void SendJPG()
-    {
-        while (true)
+        for (int i = 0; i < this.list_client.Count; i++)
         {
-
-            this.fpsAdjuster.Adjust();
-
-
-            try
-            {
-                //Debug.Log("send");
-                for (int i = 0; i < this.list_client.Count; i++)
-                {
-                    this.list_client[i].Send(this.data, this.data.Length, this.destinations[i].IPadress, this.destinations[i].Port);
-                }
-            }
-            catch { }
+            this.list_client[i].Send(this.data, this.data.Length, this.destinations[i].IPadress, this.destinations[i].Port);
         }
-        
 
     }
 
-    void OnDestroy()
-    {
-        if(this.thread != null)
-        {
-            this.thread.Abort();
-
-        }
-    }
-
+   
 
 }
 

@@ -20,11 +20,14 @@ public class PointCloud : MonoBehaviour
     public _Mode mode;
     public bool IsContour;
 
+    Vector3 hidePositon;
+
     //パラメータ
     public int maxCubeNum = 5000;
     public Vector2 rangex;
     public Vector2 rangez;
     public float roophight;
+    [Range(1,1000)]
     public int range;
     public bool IsReset = false;
 
@@ -74,7 +77,8 @@ public class PointCloud : MonoBehaviour
             this.sensor.Open();
 
         }
-        this.centerPos = new Vector3();        
+        this.centerPos = new Vector3();
+        this.hidePositon = new Vector3(0, -100, 0);      
     }
 
     void depthreader_FrameArrived(object sender, Windows.Kinect.DepthFrameArrivedEventArgs e)
@@ -103,9 +107,8 @@ public class PointCloud : MonoBehaviour
             this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveCIPCData.readArchiveData, this.cameraSpacePoints);
 
         }
-
+        
         int cubeCount = 0;
-
         //this.centerPos = Vector3.zero;
         switch (this.mode)
         {
@@ -119,15 +122,19 @@ public class PointCloud : MonoBehaviour
         ////重心位置算出
         //this.centerPos /= cubeCount;
         //this.centerPos += this.kinect.transform.position;
-        this.CenterPos();
+        //this.CenterPos();
 
-        //消す処理
+        //隠す処理
         if (this.ListCube.Count > (cubeCount + 100) )
         {
             for (int i = cubeCount; i < this.ListCube.Count; i++)
             {
-                Destroy(this.ListCube[cubeCount]);
-                this.ListCube.RemoveAt(cubeCount);
+                //消す   重い>(´；ω；｀)
+                //Destroy(this.ListCube[cubeCount]);
+                //this.ListCube.RemoveAt(cubeCount);
+
+                //フィールド外に隠す（軽いけど場所によっては影がでるかも？）
+                this.ListCube[i].transform.position = this.hidePositon;   
             }
 
         }
@@ -158,15 +165,14 @@ public class PointCloud : MonoBehaviour
         for (int i = this.imageWidth; i < cameraSpacePoints.Length - this.imageWidth; i++)
         {
             //奥の壁排除
-            if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && this.ListCube.Count < this.maxCubeNum)
-            {
-                //三次元位置に変更
-                Vector3 point = new Vector3(-this.cameraSpacePoints[i].X, this.cameraSpacePoints[i].Y, this.cameraSpacePoints[i].Z);
-                
-
+            if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && cubeCount < this.maxCubeNum)
+            {               
                 //床排除と左右の壁排除                       
-                if (point.y < this.roophight && point.y > -this.kinect.transform.position.y && point.x > this.rangex.x && point.x < this.rangex.y)
+                if (this.cameraSpacePoints[i].Y < this.roophight && this.cameraSpacePoints[i].Y > -this.kinect.transform.position.y && this.cameraSpacePoints[i].X > this.rangex.x && this.cameraSpacePoints[i].X < this.rangex.y)
                 {
+                    //三次元位置に変更
+                    Vector3 point = new Vector3(-this.cameraSpacePoints[i].X, this.cameraSpacePoints[i].Y, this.cameraSpacePoints[i].Z);
+
                     //条件クリアした粒子
                     //輪郭
                     if (this.IsContour &&
@@ -196,7 +202,7 @@ public class PointCloud : MonoBehaviour
         for (int i = this.imageWidth; i < cameraSpacePoints.Length - this.imageWidth; i++)
         {
             //奥の壁排除
-            if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && this.ListCube.Count < this.maxCubeNum)
+            if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && cubeCount < this.maxCubeNum)
             {
                 //三次元位置に変更
                 Vector3 point = new Vector3(-this.cameraSpacePoints[i].X, this.cameraSpacePoints[i].Y, this.cameraSpacePoints[i].Z);
@@ -232,7 +238,7 @@ public class PointCloud : MonoBehaviour
         for (int i = this.imageWidth; i < cameraSpacePoints.Length - this.imageWidth; i++)
         {
             //奥の壁排除
-            if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && this.ListCube.Count < this.maxCubeNum)
+            if (this.cameraSpacePoints[i].Z > this.rangez.x && this.cameraSpacePoints[i].Z < this.rangez.y && cubeCount < this.maxCubeNum)
             {
                 //三次元位置に変更
                 Vector3 point = new Vector3(-this.cameraSpacePoints[i].X, this.cameraSpacePoints[i].Y, this.cameraSpacePoints[i].Z);
@@ -291,7 +297,7 @@ public class PointCloud : MonoBehaviour
                 {
 
                     //奥の壁排除
-                    if (this.cameraSpacePoints[j].Z > this.rangez.x && this.cameraSpacePoints[j].Z < i && this.ListCube.Count < this.maxCubeNum)
+                    if (this.cameraSpacePoints[j].Z > this.rangez.x && this.cameraSpacePoints[j].Z < i && cubeCount < this.maxCubeNum)
                     {
                         //三次元位置に変更
                         Vector3 point = new Vector3(-this.cameraSpacePoints[j].X, this.cameraSpacePoints[j].Y, this.cameraSpacePoints[j].Z);

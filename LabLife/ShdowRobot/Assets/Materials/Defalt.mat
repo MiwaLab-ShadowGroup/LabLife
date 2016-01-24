@@ -171,16 +171,12 @@ Material:
         second: .0199999996
       data:
         first:
-          name: _Glossiness
-        second: .233999997
-      data:
-        first:
-          name: _Metallic
-        second: 0
-      data:
-        first:
           name: _ZWrite
         second: 1
+      data:
+        first:
+          name: _Glossiness
+        second: .233999997
       data:
         first:
           name: _BumpScale
@@ -200,6 +196,10 @@ Material:
       data:
         first:
           name: _Mode
+        second: 0
+      data:
+        first:
+          name: _Metallic
         second: 0
       data:
         first:

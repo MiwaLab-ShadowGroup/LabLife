@@ -95,6 +95,7 @@
     <Compile Include="Assets\PointClouds\ShapeLookAt.cs" />
     <Compile Include="Assets\PointClouds\TetrahedronScript.cs" />
     <Compile Include="Assets\Script\AddTextrure.cs" />
+    <Compile Include="Assets\Script\BynaryReader.cs" />
     <Compile Include="Assets\Script\CIPCReceiver.cs" />
     <Compile Include="Assets\Script\CIPCReceiverLaserScaner.cs" />
     <Compile Include="Assets\Script\CIPCReceiverforRead.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Assets\Script\ReadDepth.cs" />
     <Compile Include="Assets\Script\SaveDepth.cs" />
     <Compile Include="Assets\Script\SendImage.cs" />
+    <Compile Include="Assets\Script\SimpleSender.cs" />
     <Compile Include="Assets\Script\UIScript.cs" />
     <Compile Include="Assets\ShadowRobot\IRobotAction.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\CalculatePosition.cs" />
@@ -118,8 +120,10 @@
     <Compile Include="Assets\ShadowRobot\RobotAction\RobotSync.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\Spiral.cs" />
     <Compile Include="Assets\ShadowRobot\RobotActionControll.cs" />
+    <Compile Include="Assets\ShadowRobot\SaveRobotMT.cs" />
     <Compile Include="Assets\ShadowRobot\SaveRobotMove.cs" />
     <Compile Include="Assets\ShadowRobot\ShadowRobotStage.cs" />
+    <Compile Include="Assets\TimeDelaytest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\MyEffect\InvertEffect.shader" />

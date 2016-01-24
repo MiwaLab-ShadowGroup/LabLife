@@ -12,17 +12,29 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
     public string clinteName;
     public int fps;
     public bool IsSC = false;
+    public MonoBehaviour saverobot;
+
+    struct _set
+    {
+        public int id;
+        public Vector3 pos;
+    }
+
+    public GameObject cube;
+    GameObject[] cubes;
+    public GameObject text;
+    GameObject[] texts;
+    SaveRobotMT srMT;
 
     CIPC_CS_Unity.CLIENT.CLIENT client;
     byte[] data;
 
     [HideInInspector]
     public List<Vector3> list_humanpos;
+    List<_set> list_data;
 
     Thread thread;
     FPSAdjuster.FPSAdjuster FpsAd;
-
-
 
 
     bool IsCIPC;
@@ -37,11 +49,23 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
     {
         this.IsCIPC = false;
         this.list_humanpos = new List<Vector3>();
+        this.list_data = new List<_set>();
 
+        this.srMT = this.saverobot.GetComponent<SaveRobotMT>(); 
 
         this.FpsAd = new FPSAdjuster.FPSAdjuster();
         this.FpsAd.Fps = 30;
         this.FpsAd.Start();
+
+        this.cubes = new GameObject[3];
+        this.texts = new GameObject[3];
+        for (int i = 0; i < 3; i++)
+        {
+            this.cubes[i] = Instantiate(this.cube);
+            this.texts[i] = Instantiate(this.text);
+        }
+        
+
     }
 
     // Update is called once per frame
@@ -53,6 +77,32 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
         //        this.list_humanpos = this.GetData();
         //    //Debug.Log("CIPC");       
         //}
+        if (!this.srMT.IsStart)
+        {
+           // this.list_humanpos = new List<Vector3>();
+        }
+
+        if(this.list_data.Count > 0)
+        {
+            for (int i =0; i< this.list_data.Count; i++)
+            {
+                if (i < this.cubes.Length)
+                {
+                    this.cubes[i].transform.position = this.list_data[i].pos;
+                    this.texts[i].transform.position = this.list_data[i].pos + new Vector3(0,0.5f,0);
+                    this.texts[i].GetComponent<TextMesh>().text = this.list_data[i].id.ToString();
+                }
+                
+            }
+            if(this.list_data.Count < this.cubes.Length)
+            {
+                for (int i = this.list_data.Count; i < this.cubes.Length; i++)
+                {
+                    this.cubes[i].transform.position = new Vector3(0, -100, 0);
+                    this.texts[i].transform.position = new Vector3(0, -100, 0);
+                }
+            }
+        }
 
     }
 
@@ -65,7 +115,8 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
             {
                 this.FpsAd.Adjust();
                 List<Vector3> list_position = new List<Vector3>();
-
+                List<int> local_list_id = new List<int>();
+                int id = -1;
                 try
                 {
 
@@ -79,29 +130,113 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
                     {
                         float x = (float)dec.get_double();
                         float z = (float)dec.get_double();
+                        int myID = dec.get_int();
                         
                         if (this.IsSC)
                         {
-                            int id = dec.get_int();
-                            list_position.Add(new Vector3(x / 1000, 0, z / 1000));
+                            x /= 1000;
+                            z /= 1000;                           
                         }
-                        else { list_position.Add(new Vector3(x, 0, z)); }
+
+                        Vector3 vec = new Vector3(x, 0, z);
+
+                        if (id == myID)
+                        {
+                            vec = ( vec +  list_humanpos[list_humanpos.Count - 1] ) / 2;
+                            list_humanpos[list_humanpos.Count - 1] = vec;
+                            
+                        }
+                        else
+                        {
+                            list_position.Add(vec);
+                            local_list_id.Add(myID);
+                        }
 
 
+                        id = myID;
                     }
-                    //if (list_position.Count > 0) Debug.Log(list_position[0]); 
+                    
+                    this.srMT.save();
                 }
                 catch
                 {
 
                 }
+                
+
                 this.list_humanpos = list_position;
+                
             }
         }
         
 
     }
+    void GetData2()
+    {
+        while (true)
+        {
+            if (this.client.IsAvailable > 3)
+            {
+                this.FpsAd.Adjust();
+                List<_set> list_position = new List<_set>();
+                int id = -1;
+                try
+                {
 
+                    this.client.Update(ref this.data);
+                    UDP_PACKETS_CODER.UDP_PACKETS_DECODER dec = new UDP_PACKETS_CODER.UDP_PACKETS_DECODER();
+                    dec.Source = this.data;
+
+                    //データ格納
+                    int humanNum = dec.get_int();
+                    for (int i = 0; i < humanNum; i++)
+                    {
+                        float x = (float)dec.get_double();
+                        float z = (float)dec.get_double();
+                        int myID = dec.get_int();
+
+                        if (this.IsSC)
+                        {
+                            x /= 1000;
+                            z /= 1000;
+                        }
+
+                        Vector3 vec = new Vector3(x, 0, z);
+
+                        if (id == myID)
+                        {
+                            vec = (vec + list_position[list_position.Count - 1].pos) / 2;
+                            _set set = new _set();
+                            set.id = myID;
+                            set.pos = vec;
+                            list_position[list_position.Count - 1] = set;
+                        }
+                        else
+                        {
+                            _set set = new _set();
+                            set.id = myID;
+                            set.pos = vec;
+                            list_position.Add(set);
+                            
+                        }
+
+
+                        id = myID;
+                    }
+                    this.list_data = list_position;
+                    this.srMT.save();
+                }
+                catch
+                {
+
+                }
+
+
+            }
+        }
+
+
+    }
     void OnDestroy()
     {
         if (this.client != null)
@@ -126,7 +261,13 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
             this.IsCIPC = true;
             Debug.Log("CIPCforLaserScaner");
 
-            this.thread = new Thread(new ThreadStart(this.GetData));
+            //Save 
+            if(this.saverobot != null)
+            {
+                //this.srMT.IsStart = true;
+            }
+
+            this.thread = new Thread(new ThreadStart(this.GetData2));
             this.thread.Start();
         }
         catch
