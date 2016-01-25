@@ -20,6 +20,7 @@ public class CircleLine : MonoBehaviour
     //パラメータ
     public float rangeR;
     public float rangeθ;
+    public float rangeθ1;
     //public float rangeVel;
     //
     CalculatePosition CP;
@@ -69,7 +70,7 @@ public class CircleLine : MonoBehaviour
 
         this.robot.transform.position = new Vector3(0.0f, this.robot.transform.position.y, 0.0f);
 
-        this.Test();
+        //this.Test();
 	}
 	
 	// Update is called once per frame
@@ -77,11 +78,11 @@ public class CircleLine : MonoBehaviour
     {
         //データ取得
         #region
-        //switch (this.dataMode)
-        //{
-        //    case _datamode.kinect: this.Kinect(); break;
-        //    case _datamode.LRF: this.LRF(); break;
-        //}
+        switch (this.dataMode)
+        {
+            case _datamode.kinect: this.Kinect(); break;
+            case _datamode.LRF: this.LRF(); break;
+        }
 
         #endregion
         //動き
@@ -163,7 +164,7 @@ public class CircleLine : MonoBehaviour
                     break;
             }
 
-            this.radian = dir * humansPos.magnitude * Time.deltaTime * this.rangeθ;
+            this.radian = this.rangeθ1 + dir * humansPos.magnitude * Time.deltaTime * this.rangeθ;
 
             //円中心からの方向ベクトル
             this.target = centerPos + (Quaternion.AngleAxis(this.radian, Vector3.up) * ((this.target - this.preCenter) / (this.target - this.preCenter).magnitude * this.radius));

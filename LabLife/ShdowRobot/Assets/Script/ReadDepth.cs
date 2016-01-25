@@ -6,8 +6,13 @@ using UnityEditor;
 
 public class ReadDepth : MonoBehaviour {
 
+
+    //public enum _Mode { MakeArchive, ReadArchive, }
+    //public _Mode mode;
     BinaryReader reader;
+    [HideInInspector]
     public ushort[] readData;
+
     int datalength;
     //public string ReadFileName;
     
@@ -25,6 +30,8 @@ public class ReadDepth : MonoBehaviour {
     public bool ReadStop = false;
 
     bool IsStart = false;
+
+    public bool PausePlay = false;
 
     // Use this for initialization
     void Start () {
@@ -66,48 +73,51 @@ public class ReadDepth : MonoBehaviour {
         //Debug.Log("ok");
         while (true)
         {
-            FpsAd.Adjust();
-            if (ReadStart)
+            if (!PausePlay)
             {
-                if (Isreader)
+                FpsAd.Adjust();
+                if (ReadStart)
                 {
-                    //Debug.Log("ok2");
-                    this.datalength = this.reader.ReadInt32();
-                    
-                    for (int i = 0; i < datalength; i++)
+                    if (Isreader)
                     {
-                        this.readData[i] = this.reader.ReadUInt16();
-                        
-                    }
+                        //Debug.Log("ok2");
+                        this.datalength = this.reader.ReadInt32();
 
-                    if (reader.PeekChar() == -1)
-                    {
-                        //Debug.Log("ok3");
-                        reader.Close();
-                        Isreader = false;
-                    }
 
-                    if (ReadStop)
-                    {
-                        Isreader = false;
-                        ReadStop = false;
+                        for (int i = 0; i < datalength; i++)
+                        {
+                            this.readData[i] = this.reader.ReadUInt16();
+
+                        }
+
+                        if (reader.PeekChar() == -1)
+                        {
+                            Debug.Log("end");
+                            reader.Close();
+                            Isreader = false;
+                        }
+
+                        if (ReadStop)
+                        {
+                            Isreader = false;
+                            ReadStop = false;
+                        }
+                        //Debug.Log("OK");
+
                     }
-                    //Debug.Log("OK");
+                    else
+                    {
+                        if (reader != null)
+                        {
+                            reader.Close();
+
+                        }
+
+                        break;
+                    }
 
                 }
-                else
-                {
-                    if(reader != null)
-                    {
-                        reader.Close();
-
-                    }
-
-                    break;
-                }
-
             }
-
         }
         //Debug.Log("thread");
 

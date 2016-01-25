@@ -6,6 +6,7 @@ public class PointCloud : MonoBehaviour
 {
     #region
     public GameObject cube;
+
     private List<GameObject> ListCube = new List<GameObject>();
     public Windows.Kinect.KinectSensor sensor;
     private ushort[] RawData;
@@ -14,6 +15,7 @@ public class PointCloud : MonoBehaviour
     private int imageWidth;
     private int imageHeight;
 
+    List<Windows.Kinect.CameraSpacePoint[]> list_camera;
     public GameObject kinect;
 
     public enum _Mode {Random, Boder, Check, Constant,}
@@ -39,8 +41,10 @@ public class PointCloud : MonoBehaviour
     public bool IsArchive;
     public bool IsCIPCArchive;
     public GameObject ReadDepth;
+    //public GameObject ReadDepthmulti;
     public GameObject CIPCReceiverforRead;
     ReadDepth saveData;
+    //ReadDepthmulti saveDatamulti;
     CIPCReceiverforRead saveCIPCData;
     #endregion
     // Use this for initialization
@@ -87,21 +91,21 @@ public class PointCloud : MonoBehaviour
             
         }
     }
-    
 
     // Update is called once per frame
     void Update()
     {
         if (this.IsArchive)
         {
-            
-            this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveData.readData, this.cameraSpacePoints);
+            //for(int i = 0; i < this.saveDatamulti.numberofdata.Length; i++)
+            //{
+                this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveData.readData, this.cameraSpacePoints);
+            //}
             //Debug.Log(saveData.readData.Length);
         }
         if (this.IsCIPCArchive)
         {
             this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.saveCIPCData.readArchiveData, this.cameraSpacePoints);
-
         }
 
         int cubeCount = 0;
@@ -129,7 +133,6 @@ public class PointCloud : MonoBehaviour
                 Destroy(this.ListCube[cubeCount]);
                 this.ListCube.RemoveAt(cubeCount);
             }
-
         }
 
         this.particulsnum = this.ListCube.Count;
@@ -162,7 +165,6 @@ public class PointCloud : MonoBehaviour
             {
                 //三次元位置に変更
                 Vector3 point = new Vector3(-this.cameraSpacePoints[i].X, this.cameraSpacePoints[i].Y, this.cameraSpacePoints[i].Z);
-                
 
                 //床排除と左右の壁排除                       
                 if (point.y < this.roophight && point.y > -this.kinect.transform.position.y && point.x > this.rangex.x && point.x < this.rangex.y)
@@ -272,7 +274,6 @@ public class PointCloud : MonoBehaviour
                 }
             }
 
-
         }
     }
     void Constant(ref int cubeCount)
@@ -324,13 +325,9 @@ public class PointCloud : MonoBehaviour
                     }
 
                 }
-
             }
-
         }
         catch { }
-        
-
     }
 
     void CenterPos()

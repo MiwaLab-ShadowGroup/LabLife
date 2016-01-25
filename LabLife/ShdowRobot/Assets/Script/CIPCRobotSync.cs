@@ -89,6 +89,10 @@ public class CIPCRobotSync : MonoBehaviour {
                 this.robotLightPos.x = dec.get_float();
                 this.robotLightPos.y = dec.get_float();
                 this.robotLightPos.z = dec.get_float();
+
+                Debug.Log(this.robotLightPos.x);
+                Debug.Log(this.robotLightPos.y);
+                Debug.Log(this.robotLightPos.z);
             }
         }
         catch

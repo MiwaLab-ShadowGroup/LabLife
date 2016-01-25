@@ -9,7 +9,7 @@ public class ShadowRobotStage : MonoBehaviour {
 
     //コピー
     GameObject localRobot;
-    GameObject localFixedLight;
+    //GameObject localFixedLight;
 
 	// Use this for initialization
 	void Start ()
@@ -18,15 +18,18 @@ public class ShadowRobotStage : MonoBehaviour {
         this.transform.position += new Vector3(50, 0, 0);
 
         this.localRobot = Instantiate(this.robot);
-        this.localFixedLight = Instantiate(this.FixedLight);
+        //this.localFixedLight = Instantiate(this.FixedLight);
         //オリジナルを見えなくする
         this.robot.GetComponent<MeshRenderer>().enabled = false;
-        this.robot.GetComponentInChildren<MeshRenderer>().enabled = false;
+        GameObject head = this.robot.transform.FindChild("RobotHead").gameObject;
+        head.GetComponent<MeshRenderer>().enabled = false;
+
+        //this.robot.GetComponentInChildren<MeshRenderer>().enabled = false;
         //クローンを可視化
         this.localRobot.GetComponent<MeshRenderer>().enabled = true;
         this.localRobot.GetComponentInChildren<MeshRenderer>().enabled = true;
         this.localRobot.transform.parent = this.transform;
-        this.localFixedLight.transform.parent = this.transform;
+        //this.localFixedLight.transform.parent = this.transform;
 	
 	}
 	
@@ -35,7 +38,7 @@ public class ShadowRobotStage : MonoBehaviour {
     {
         //同期する
         this.localRobot.transform.localPosition = this.robot.transform.position;
-        this.localFixedLight.transform.localPosition = this.FixedLight.transform.position;
+        //this.localFixedLight.transform.localPosition = this.FixedLight.transform.position;
 	
 	}
 }
