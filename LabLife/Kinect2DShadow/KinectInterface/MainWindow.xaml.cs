@@ -19,6 +19,7 @@ using System.Net.Sockets;
 using System.Windows.Threading;
 using System.IO;
 using OpenCvSharp;
+using OpenCvSharp.Blob;
 
 //using System.Windows.Forms;
 
@@ -50,6 +51,7 @@ namespace Kinect2DShadow
         int bodyIndexHeight;
         Mat bodyIndexMat;
 
+        Object SyncObject = new Object();
 
         //深度情報
         DepthFrameReader depthFrameReader;
@@ -153,6 +155,16 @@ namespace Kinect2DShadow
         int outblue;
         int outgreen;
 
+
+        Mat sendmat;
+        //ラベリング
+        bool bool_label = false;
+        //Mat graylabel;
+
+        CvBlobs blobs;
+        IplImage labelimage;
+        IplImage labelgrayimage;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -189,7 +201,7 @@ namespace Kinect2DShadow
 
             #endregion
 
-            //震度情報
+            //深度情報
             #region
             this.depthFrameReader = this.kinect.DepthFrameSource.OpenReader();
             this.depthFrameReader.FrameArrived += DepthFrame_Arrived;
@@ -261,6 +273,14 @@ namespace Kinect2DShadow
             this.bufimage = new Mat(new OpenCvSharp.CPlusPlus.Size(_w, _h), MatType.CV_8UC1, new Scalar(0));
             this.bufimage2 = new Mat(new OpenCvSharp.CPlusPlus.Size(_w, _h), MatType.CV_8UC1, new Scalar(0));
 
+            this.sendmat = new Mat(212, 256, MatType.CV_8UC3);
+
+            this.blobs = new CvBlobs();
+            this.labelgrayimage = new IplImage(512, 424, BitDepth.U8, 1);
+            Cv.NamedWindow("label", WindowMode.AutoSize);
+
+
+
             for (int i = 0; i < h; i++)
             {
                 List<bool> vTmp = new List<bool>();
@@ -280,6 +300,8 @@ namespace Kinect2DShadow
                 }
                 this.m_Field2.Add(vTmp);
             }
+
+
 
         }
 
@@ -491,12 +513,15 @@ namespace Kinect2DShadow
 
                 List<OpenCvSharp.CPlusPlus.Point> CvPoints = new List<OpenCvSharp.CPlusPlus.Point>();
 
+                //Console.WriteLine(contour.Length);
 
                 for (int i = 0; i < contour.Length; i++)
                 {
+
+                    CvPoints.Clear();
+
                     if (Cv2.ContourArea(contour[i]) > 1000)
                     {
-                        CvPoints.Clear();
 
                         for (int j = 0; j < contour[i].Length; j += this.sharpness)
                         {
@@ -505,13 +530,15 @@ namespace Kinect2DShadow
                         }
 
                         this.List_Contours.Add(CvPoints);
-                        //Cv2.FillConvexPoly(dst, CvPoints, Scalar.Yellow,  OpenCvSharp.LineType.Link4, 0);
+                        //Cv2.FillConvexPoly(Polygon, CvPoints, Scalar.Yellow,  OpenCvSharp.LineType.Link4, 0);
+                        Cv2.DrawContours(Polygon, this.List_Contours, 0, Scalar.FromRgb((int)RedSlider.Value, (int)GreenSlider.Value, (int)BlueSlider.Value), -1, OpenCvSharp.LineType.Link8);
+
                     }
 
                 }
-
-                Cv2.DrawContours(Polygon, this.List_Contours, 0, Scalar.FromRgb((int)RedSlider.Value,(int)GreenSlider.Value,(int)BlueSlider.Value), -1, OpenCvSharp.LineType.Link8);
+                   
                 
+
             }
 
             if ((bool)checkBox_Zanzou.IsChecked)
@@ -675,7 +702,8 @@ namespace Kinect2DShadow
 
                                     if (!IsArchive)
                                     {
-                                        data = this.depthMat.ToBytes(".jpg");
+                                        Cv2.Resize(depthMat, sendmat, new OpenCvSharp.CPlusPlus.Size(sendmat.Width,sendmat.Height));
+                                        data = this.sendmat.ToBytes(".jpg");
                                         this.List_UDP[i].Send(data, data.Length, List_IP[i], List_Port[i]);
 
                                     }
@@ -691,8 +719,9 @@ namespace Kinect2DShadow
                                             Compositionmat = depthMat + Archivemat;
 
                                         }
+                                        Cv2.Resize(Compositionmat, sendmat, new OpenCvSharp.CPlusPlus.Size(sendmat.Width, sendmat.Height));
 
-                                        data = this.Compositionmat.ToBytes(".jpg");
+                                        data = this.sendmat.ToBytes(".jpg");
                                         this.List_UDP[i].Send(data, data.Length, List_IP[i], List_Port[i]);
 
                                     }
@@ -701,27 +730,32 @@ namespace Kinect2DShadow
                                 {
                                     if (!IsArchive)
                                     {
-                                        data = this.Polygon.ToBytes(".jpg");
+                                        Cv2.Resize(Polygon, sendmat, new OpenCvSharp.CPlusPlus.Size(sendmat.Width, sendmat.Height));
+
+                                        data = this.sendmat.ToBytes(".jpg");
                                         this.List_UDP[i].Send(data, data.Length, List_IP[i], List_Port[i]);
 
                                     }
                                     if (IsArchive)
                                     {
 
-
-                                        if ((bool)this.checkBox_Archive.IsChecked)
+                                        lock (SyncObject)
                                         {
+                                            if ((bool)this.checkBox_Archive.IsChecked)
+                                            {
 
-                                            Compositionmat = ArchivePolygon;
+                                                Compositionmat = ArchivePolygon;
 
+                                            }
+                                            else
+                                            {
+                                                Compositionmat = Polygon + ArchivePolygon;
+
+                                            }
                                         }
-                                        else
-                                        {
-                                            Compositionmat = Polygon + ArchivePolygon;
+                                        Cv2.Resize(Compositionmat, sendmat, new OpenCvSharp.CPlusPlus.Size(sendmat.Width, sendmat.Height));
 
-                                        }
-
-                                        data = this.Compositionmat.ToBytes(".jpg");
+                                        data = this.sendmat.ToBytes(".jpg");
                                         this.List_UDP[i].Send(data, data.Length, List_IP[i], List_Port[i]);
 
                                     }
@@ -731,7 +765,9 @@ namespace Kinect2DShadow
                                 {
                                     if (!IsArchive)
                                     {
-                                        data = this.Zanzou.ToBytes(".jpg");
+                                        Cv2.Resize(Zanzou, sendmat, new OpenCvSharp.CPlusPlus.Size(sendmat.Width, sendmat.Height));
+
+                                        data = this.sendmat.ToBytes(".jpg");
                                         this.List_UDP[i].Send(data, data.Length, List_IP[i], List_Port[i]);
 
                                     }
@@ -749,8 +785,9 @@ namespace Kinect2DShadow
                                             Compositionmat = Zanzou + ArchiveZanzou;
 
                                         }
+                                        Cv2.Resize(Compositionmat, sendmat, new OpenCvSharp.CPlusPlus.Size(sendmat.Width, sendmat.Height));
 
-                                        data = this.Compositionmat.ToBytes(".jpg");
+                                        data = this.sendmat.ToBytes(".jpg");
                                         this.List_UDP[i].Send(data, data.Length, List_IP[i], List_Port[i]);
 
                                     }
@@ -840,6 +877,14 @@ namespace Kinect2DShadow
             
             if(FilePath != null)
             {
+                if(ReadThread != null)
+                {
+                    ReadThread.Abort();
+                }
+                if(DepthThread != null)
+                {
+                    DepthThread.Abort();
+                }
                 this.kinect.Open();
                 this.FpsAd = new FPSAdjuster.FPSAdjuster();
                 this.FpsAd.Fps = 30;
@@ -879,46 +924,48 @@ namespace Kinect2DShadow
             while (true)
             {
                 FpsAd.Adjust();
-                
-                    if (Isreader)
+
+                if (Isreader)
+                {
+                    //Debug.Log("ok2");
+                    this.datalength = this.reader.ReadInt32();
+
+                    for (int i = 0; i < datalength; i++)
                     {
-                        //Debug.Log("ok2");
-                        this.datalength = this.reader.ReadInt32();
-
-                        for (int i = 0; i < datalength; i++)
-                        {
-                            this.readData[i] = this.reader.ReadUInt16();
-
-                        }
-
-                        if (reader.PeekChar() == -1)
-                        {
-                            //Debug.Log("ok3");
-                            reader.Close();
-                            Isreader = false;
-                        }
-
-                        if (ReadStop)
-                        {
-                            Isreader = false;
-                            ReadStop = false;
-                        }
-                        //Console.WriteLine("OK");
+                        this.readData[i] = this.reader.ReadUInt16();
 
                     }
-                    else
+
+                    if (reader.PeekChar() == -1)
                     {
-                        if (reader != null)
-                        {
-                            reader.Close();
-
-                        }
-
-                        break;
+                        //Debug.Log("ok3");
+                        reader.Close();
+                        Isreader = false;
+                        //endthread = true;
                     }
+
+                    if (ReadStop)
+                    {
+                        Isreader = false;
+                        ReadStop = false;
+                        //endthread = true;
+                    }
+                    //Console.WriteLine("OK");
 
                 }
+                else
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
 
+                    }
+
+                    break;
+                }
+
+            }
+            //Console.WriteLine("in");
             
             if (reader != null)
             {
@@ -933,6 +980,17 @@ namespace Kinect2DShadow
             {
                 DepthThread.Abort();
             }
+            //if(ReadThread != null)
+            //{
+            //    ReadThread.Abort();
+            //}
+
+            //if (this.readData.Length != 0)
+            //{
+                
+            //    this.readData = new ushort[512 * 424];
+
+            //}
 
         }
 
@@ -949,6 +1007,7 @@ namespace Kinect2DShadow
                 this.kinect.CoordinateMapper.MapDepthFrameToCameraSpace(this.readData, this.cameraSpacePointsArchive);
 
                 this.ArchiveDepthToMat();
+                Console.WriteLine("a");
 
                 if (endthread)
                 {
@@ -991,6 +1050,14 @@ namespace Kinect2DShadow
                     }
                 }
             }
+
+            Cv2.ImShow("label", Archivemat);
+            if (bool_label)
+            {
+                Labeling();
+            }
+
+            #region
             checkBox_Polygon.Dispatcher.BeginInvoke(new Action(() =>
             {
 
@@ -1024,55 +1091,59 @@ namespace Kinect2DShadow
                 {
                     this.List_ArchiveContours.Clear();
                     Cv2.CvtColor(Archivemat, Archivegrayimage, OpenCvSharp.ColorConversion.BgrToGray);
-                    ArchivePolygon = new Mat(424, 512, MatType.CV_8UC3);
-                    OpenCvSharp.CPlusPlus.Point[][] contour;//= grayimage.FindContoursAsArray(OpenCvSharp.ContourRetrieval.External, OpenCvSharp.ContourChain.ApproxSimple);
-                    OpenCvSharp.CPlusPlus.HiearchyIndex[] hierarchy;
-
-                    Cv2.FindContours(Archivegrayimage, out contour, out hierarchy, OpenCvSharp.ContourRetrieval.External, OpenCvSharp.ContourChain.ApproxNone);
-
-                    List<OpenCvSharp.CPlusPlus.Point> CvPoints = new List<OpenCvSharp.CPlusPlus.Point>();
-
-
-                    for (int i = 0; i < contour.Length; i++)
+                    lock (SyncObject)
                     {
-                        if (Cv2.ContourArea(contour[i]) > 1000)
+                        ArchivePolygon = new Mat(424, 512, MatType.CV_8UC3);
+                        OpenCvSharp.CPlusPlus.Point[][] contour;//= grayimage.FindContoursAsArray(OpenCvSharp.ContourRetrieval.External, OpenCvSharp.ContourChain.ApproxSimple);
+                        OpenCvSharp.CPlusPlus.HiearchyIndex[] hierarchy;
+
+                        Cv2.FindContours(Archivegrayimage, out contour, out hierarchy, OpenCvSharp.ContourRetrieval.External, OpenCvSharp.ContourChain.ApproxNone);
+
+                        List<OpenCvSharp.CPlusPlus.Point> CvPoints = new List<OpenCvSharp.CPlusPlus.Point>();
+
+                        RedSlider.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+
+                            red = (int)RedSlider.Value;
+
+                        }));
+
+                        GreenSlider.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+
+                            green = (int)GreenSlider.Value;
+
+                        }));
+
+                        BlueSlider.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+
+                            blue = (int)BlueSlider.Value;
+
+                        }));
+
+                        for (int i = 0; i < contour.Length; i++)
                         {
                             CvPoints.Clear();
 
-                            for (int j = 0; j < contour[i].Length; j += this.sharpness)
+                            if (Cv2.ContourArea(contour[i]) > 1000)
                             {
 
-                                CvPoints.Add(contour[i][j]);
+                                for (int j = 0; j < contour[i].Length; j += this.sharpness)
+                                {
+
+                                    CvPoints.Add(contour[i][j]);
+                                }
+
+                                this.List_ArchiveContours.Add(CvPoints);
+                                //Cv2.FillConvexPoly(dst, CvPoints, Scalar.Yellow,  OpenCvSharp.LineType.Link4, 0);
+                                Cv2.DrawContours(ArchivePolygon, this.List_ArchiveContours, 0, Scalar.FromRgb(red, green, blue), -1, OpenCvSharp.LineType.Link8);
+
                             }
 
-                            this.List_ArchiveContours.Add(CvPoints);
-                            //Cv2.FillConvexPoly(dst, CvPoints, Scalar.Yellow,  OpenCvSharp.LineType.Link4, 0);
                         }
-
                     }
-                    RedSlider.Dispatcher.BeginInvoke(new Action(() =>
-                    {
-
-                        red = (int)RedSlider.Value;
-
-                    }));
-
-                    GreenSlider.Dispatcher.BeginInvoke(new Action(() =>
-                    {
-
-                        green = (int)GreenSlider.Value;
-
-                    }));
-
-                    BlueSlider.Dispatcher.BeginInvoke(new Action(() =>
-                    {
-
-                        blue = (int)BlueSlider.Value;
-
-                    }));
-
-                    Cv2.DrawContours(ArchivePolygon, this.List_ArchiveContours, 0, Scalar.FromRgb(red,green,blue), -1, OpenCvSharp.LineType.Link8);
-                    GC.Collect();
+                    //GC.Collect();
                 }
                 catch(Exception ex)
                 {
@@ -1224,14 +1295,40 @@ namespace Kinect2DShadow
 
                     GC.Collect();
                 }
+
+                
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message + ex.TargetSite);
                 }
-
+               
             }
-
+            #endregion
         }
+
+        private void labeling_Click(object sender, RoutedEventArgs e)
+        {
+            bool_label = true;
+        }
+
+        void Labeling()
+        {
+
+            labelimage = (IplImage)Archivemat;
+            //CvWindow.ShowImages(labelimage);
+
+
+            Cv.CvtColor(labelimage, labelgrayimage, ColorConversion.BgrToGray);
+            CvBlobs blobs = new CvBlobs();
+            blobs.Label(labelgrayimage);
+            blobs.FilterByArea(100, int.MaxValue);
+            IplImage imgrender = new IplImage(labelimage.Size, BitDepth.U8, 3);
+            blobs.RenderBlobs(labelgrayimage, imgrender);
+            //CvWindow.ShowImages(imgrender);
+            Cv.ShowImage("label", imgrender);
+        }
+
+
 
     }
 }
