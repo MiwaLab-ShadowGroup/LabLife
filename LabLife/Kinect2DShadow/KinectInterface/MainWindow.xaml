@@ -45,12 +45,12 @@
             <Label Content="Roof" Canvas.Left="130" Canvas.Top="40" />
             <Label Content="Left" Canvas.Left="10" Canvas.Top="70" Width="38"/>
             <Label Content="Right" Canvas.Left="130" Canvas.Top="70"/>
-            <TextBox x:Name="Back" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="60" Canvas.Left="53" Canvas.Top="12" TextChanged="TextChanged" />
+            <TextBox x:Name="Back" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="5.5" VerticalAlignment="Top" Width="60" Canvas.Left="53" Canvas.Top="12" TextChanged="TextChanged" />
             <TextBox x:Name="Front" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60" Canvas.Left="176" Canvas.Top="12" TextChanged="TextChanged"/>
-            <TextBox x:Name="Floor" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="-0.7" VerticalAlignment="Top" Width="60" Canvas.Left="53" Canvas.Top="42" TextChanged="TextChanged"/>
-            <TextBox x:Name="Roof" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="60" Canvas.Left="176" Canvas.Top="42" TextChanged="TextChanged"/>
-            <TextBox x:Name="Left" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="-1" VerticalAlignment="Top" Width="60" Canvas.Left="53" Canvas.Top="72" TextChanged="TextChanged"/>
-            <TextBox x:Name="Right" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="60" Canvas.Left="176" Canvas.Top="72" TextChanged="TextChanged"/>
+            <TextBox x:Name="Floor" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="-0.9" VerticalAlignment="Top" Width="60" Canvas.Left="53" Canvas.Top="42" TextChanged="TextChanged"/>
+            <TextBox x:Name="Roof" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1.3" VerticalAlignment="Top" Width="60" Canvas.Left="176" Canvas.Top="42" TextChanged="TextChanged"/>
+            <TextBox x:Name="Left" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="-3" VerticalAlignment="Top" Width="60" Canvas.Left="53" Canvas.Top="72" TextChanged="TextChanged"/>
+            <TextBox x:Name="Right" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="60" Canvas.Left="176" Canvas.Top="72" TextChanged="TextChanged"/>
 
         </Canvas>
         <RadioButton x:Name="radioButton_BI" Content="BodyIndex" HorizontalAlignment="Left" Margin="58,231,0,0" VerticalAlignment="Top" Height="14" Width="81" />
@@ -60,26 +60,27 @@
         <Button x:Name="ReadDepth" Content="ReadStart" HorizontalAlignment="Left" Margin="23,338,0,0" VerticalAlignment="Top" Width="75" Click="ReadDepth_Click"/>
         <Button x:Name="ChooseFile" Content="ファイル選択" HorizontalAlignment="Left" Margin="23,303,0,0" VerticalAlignment="Top" Width="75" Click="ChooseFile_Click"/>
         <Button x:Name="ReadStopButton" Content="ReadStop" HorizontalAlignment="Left" Margin="116,338,0,0" VerticalAlignment="Top" Width="75" Click="ReadStopButton_Click"/>
-        <CheckBox x:Name="checkBox_Archive" Content="ArchiveOnly" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,374,0,0"/>
-        <CheckBox x:Name="checkBox_Polygon" Content="Polygon" HorizontalAlignment="Left" Margin="129,374,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="checkBox_Zanzou" Content="Zanzou" HorizontalAlignment="Left" Margin="129,394,0,0" VerticalAlignment="Top"/>
-        <Slider x:Name="RedSlider" HorizontalAlignment="Left" Margin="60,440,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="80" Value="255"/>
-        <TextBlock x:Name="redpala" HorizontalAlignment="Left" Margin="165,440,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=RedSlider}" VerticalAlignment="Top"/>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="20,440,0,0" TextWrapping="Wrap" Text="Red" VerticalAlignment="Top"/>
-        <Slider x:Name="GreenSlider" HorizontalAlignment="Left" Margin="60,470,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="80" Value="255"/>
-        <TextBlock x:Name="greenpala" HorizontalAlignment="Left" Margin="165,470,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=GreenSlider}" VerticalAlignment="Top"/>
-        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="20,470,0,0" TextWrapping="Wrap" Text="Green" VerticalAlignment="Top"/>
-        <Slider x:Name="BlueSlider" HorizontalAlignment="Left" Margin="60,500,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="80" Value="255"/>
-        <TextBlock x:Name="bluepala" HorizontalAlignment="Left" Margin="165,500,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=BlueSlider}" VerticalAlignment="Top"/>
-        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="20,500,0,0" TextWrapping="Wrap" Text="Blue" VerticalAlignment="Top"/>
-        <Slider x:Name="RedSlider_Copy" HorizontalAlignment="Left" Margin="225,440,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="80" Value="255"/>
-        <TextBlock x:Name="redpala2" HorizontalAlignment="Left" Margin="320,440,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=RedSlider_Copy}" VerticalAlignment="Top"/>
-        <Slider x:Name="GreenSlider_Copy" HorizontalAlignment="Left" Margin="225,470,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="80" Value="255"/>
-        <TextBlock x:Name="greenpala2" HorizontalAlignment="Left" Margin="320,470,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=GreenSlider_Copy}" VerticalAlignment="Top"/>
-        <Slider x:Name="BlueSlider_Copy" HorizontalAlignment="Left" Margin="225,500,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="80" Value="255"/>
-        <TextBlock x:Name="bluepala2" HorizontalAlignment="Left" Margin="320,500,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=BlueSlider_Copy}" VerticalAlignment="Top"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="225,420,0,0" TextWrapping="Wrap" Text="残像　outer" VerticalAlignment="Top"/>
-        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="23,420,0,0" TextWrapping="Wrap" Text="色調整" VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkBox_Archive" Content="ArchiveOnly" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,493,0,0" Height="15"/>
+        <CheckBox x:Name="checkBox_Polygon" Content="Polygon" HorizontalAlignment="Left" Margin="129,493,0,0" VerticalAlignment="Top" Height="15"/>
+        <CheckBox x:Name="checkBox_Zanzou" Content="Zanzou" HorizontalAlignment="Left" Margin="129,513,0,0" VerticalAlignment="Top" Height="16"/>
+        <Slider x:Name="RedSlider" HorizontalAlignment="Left" Margin="282,439,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="81" Value="255" Height="18"/>
+        <TextBlock x:Name="redpala" HorizontalAlignment="Left" Margin="388,439,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=RedSlider}" VerticalAlignment="Top" Height="15" Width="23"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="242,439,0,0" TextWrapping="Wrap" Text="Red" VerticalAlignment="Top" Height="15" Width="35"/>
+        <Slider x:Name="GreenSlider" HorizontalAlignment="Left" Margin="282,468,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="81" Value="255" Height="18"/>
+        <TextBlock x:Name="greenpala" HorizontalAlignment="Left" Margin="388,468,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=GreenSlider}" VerticalAlignment="Top" Height="15" Width="23"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="242,468,0,0" TextWrapping="Wrap" Text="Green" VerticalAlignment="Top" Height="15" Width="35"/>
+        <Slider x:Name="BlueSlider" HorizontalAlignment="Left" Margin="282,498,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="81" Value="255" Height="17"/>
+        <TextBlock x:Name="bluepala" HorizontalAlignment="Left" Margin="388,498,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=BlueSlider}" VerticalAlignment="Top" Height="14" Width="23"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="242,498,0,0" TextWrapping="Wrap" Text="Blue" VerticalAlignment="Top" Height="14" Width="26"/>
+        <Slider x:Name="RedSlider_Copy" HorizontalAlignment="Left" Margin="440,439,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="87" Value="255" Height="18"/>
+        <TextBlock x:Name="redpala2" HorizontalAlignment="Left" Margin="543,439,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=RedSlider_Copy}" VerticalAlignment="Top" Height="15" Width="23"/>
+        <Slider x:Name="GreenSlider_Copy" HorizontalAlignment="Left" Margin="440,468,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="87" Value="255" Height="18"/>
+        <TextBlock x:Name="greenpala2" HorizontalAlignment="Left" Margin="543,468,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=GreenSlider_Copy}" VerticalAlignment="Top" Height="15" Width="23"/>
+        <Slider x:Name="BlueSlider_Copy" HorizontalAlignment="Left" Margin="440,498,0,0" VerticalAlignment="Top" Minimum="0" Maximum="255" Width="87" Value="255" Height="17"/>
+        <TextBlock x:Name="bluepala2" HorizontalAlignment="Left" Margin="543,498,0,0" TextWrapping="Wrap" Text="{Binding Value, ElementName=BlueSlider_Copy}" VerticalAlignment="Top" Height="14" Width="23"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="440,420,0,0" TextWrapping="Wrap" Text="残像　outer" VerticalAlignment="Top" Height="15" Width="69"/>
+        <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="245,420,0,0" TextWrapping="Wrap" Text="色調整" VerticalAlignment="Top" Height="15" Width="37"/>
+        <Button x:Name="labeling" Content="ラベリング" HorizontalAlignment="Left" Margin="23,424,0,0" VerticalAlignment="Top" Width="75" Click="labeling_Click"/>
 
     </Grid>
 </Window>
