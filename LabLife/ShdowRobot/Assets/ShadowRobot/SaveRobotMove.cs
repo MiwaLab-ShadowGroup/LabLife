@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System;
 
 public class SaveRobotMove : MonoBehaviour, ISave
-    {
+{
 
     public enum _Mode { Binary, CSV, BinaryCSV, }
     public _Mode mode;

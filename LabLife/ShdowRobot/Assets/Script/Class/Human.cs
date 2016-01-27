@@ -17,3 +17,10 @@ public class Human
 
     
 }
+
+public class LRFdataSet
+{
+    public int id;
+    public Vector3 pos;
+}
+

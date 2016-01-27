@@ -22,12 +22,14 @@ public class MoveByCenterPos : MonoBehaviour
     public GameObject CIPCforLaserScaner;
     public GameObject CIPCforKinect;
     public GameObject depth;
+    public GameObject ReadLRF;
     //Local
     CIPCReceiver cipcKinect;
     CIPCReceiverLaserScaner cipcLS;
     PointCloud pointCloud;
+    BynaryReader LFRreader;
     //モード
-    public enum _DataMode { KinectStation, LaserScaner, Depth, DepthLRF};
+    public enum _DataMode { KinectStation, LaserScaner, Depth, DepthLRF, recdata};
     public _DataMode DataMode;
     public enum _Mode { field, hight, randomhight, sinhight,}
     public _Mode Mode;
@@ -55,6 +57,7 @@ public class MoveByCenterPos : MonoBehaviour
             this.cipcKinect = this.CIPCforKinect.GetComponent<CIPCReceiver>();
             this.cipcLS = this.CIPCforLaserScaner.GetComponent<CIPCReceiverLaserScaner>();
             this.pointCloud = this.depth.GetComponent<PointCloud>();
+            this.LFRreader = this.ReadLRF.GetComponent<BynaryReader>();
         }
         catch { }
         
@@ -81,6 +84,7 @@ public class MoveByCenterPos : MonoBehaviour
             case _DataMode.LaserScaner: this.LaserRangeFinder(); break;
             case _DataMode.DepthLRF: this.DepthLRF(); break;
             case _DataMode.Depth: this.Depth(); break;
+            case _DataMode.recdata: this.RecLaserRangeFinder(); break;
         }
 
         if(this.centerPos != Vector3.zero)
@@ -112,6 +116,11 @@ public class MoveByCenterPos : MonoBehaviour
     void LaserRangeFinder()
     {
         this.centerPos = this.cp.CenterPosition(this.cipcLS.list_humanpos);
+        //this.centerPos.x *= -1;
+    }
+    void RecLaserRangeFinder()
+    {
+        this.centerPos = this.cp.CenterPosition(this.LFRreader.list_humanpos);
         //this.centerPos.x *= -1;
     }
     void DepthLRF()

@@ -13,7 +13,7 @@ public class CIPCReceiverforSave : MonoBehaviour {
     public string clientName;
     public int fps;
 
-    ISave[] List_Sctipt;
+    public ISave[] List_Sctipt;
 
     CIPC_CS_Unity.CLIENT.CLIENT client;
     bool IsCIPC = false;
@@ -32,7 +32,7 @@ public class CIPCReceiverforSave : MonoBehaviour {
     BinaryWriter writer;
     string FolderPath;
 
-    public bool OpenFileChoose = false;
+    public bool OpenFolderChoose = false;
 
     bool SaveStop;
     public string filename;
@@ -88,11 +88,11 @@ public class CIPCReceiverforSave : MonoBehaviour {
 
         }
 
-        if (OpenFileChoose)
+        if (OpenFolderChoose)
         {
             FolderPath = EditorUtility.SaveFolderPanel("フォルダ選択", " ", " ");
 
-            OpenFileChoose = false;
+            OpenFolderChoose = false;
 
         }
         CIPCSave();
@@ -229,7 +229,7 @@ public class CIPCReceiverforSave : MonoBehaviour {
         {
             this.List_Sctipt[i] = components[i] as ISave;
         }
-        
+        Debug.Log(this.List_Sctipt.Length);
         
     }
     void Set_StartSave(bool isStart)

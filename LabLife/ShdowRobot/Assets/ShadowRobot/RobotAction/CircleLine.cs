@@ -6,7 +6,7 @@ public class CircleLine : MonoBehaviour
 {
     //モード
     public float Rd;
-    public enum _datamode { kinect, LRF, }
+    public enum _datamode { kinect, LRF, recLRF}
     public _datamode dataMode;
     public enum _actionmode { CenterPos, VelOfCenterPos, Hokan, Random,noiseSD,}
     public _actionmode actionMode;
@@ -16,8 +16,10 @@ public class CircleLine : MonoBehaviour
     public GameObject robot;
     public GameObject CIPCforKinect;
     public GameObject CIPCforLS;
+    public GameObject LRFReader;
     CIPCReceiverLaserScaner cipcForLS;
     CIPCReceiver cipcForKinect;
+    BynaryReader recLRFreader;
     //パラメータ
     public float rangeR;
     public float rangeθ;
@@ -54,6 +56,7 @@ public class CircleLine : MonoBehaviour
 
         this.cipcForKinect = this.CIPCforKinect.GetComponent<CIPCReceiver>();
         this.cipcForLS = this.CIPCforLS.GetComponent<CIPCReceiverLaserScaner>();
+        this.recLRFreader = this.LRFReader.GetComponent<BynaryReader>();
 
         this.list_pos = new List<Vector3>();
 
@@ -71,7 +74,6 @@ public class CircleLine : MonoBehaviour
 
         this.robot.transform.position = new Vector3(0.0f, this.robot.transform.position.y, 0.0f);
 
-
 	}
 	
 	// Update is called once per frame
@@ -83,6 +85,7 @@ public class CircleLine : MonoBehaviour
         {
             case _datamode.kinect: this.Kinect(); break;
             case _datamode.LRF: this.LRF(); break;
+            case _datamode.recLRF: this.recLRF(); break;
         }
 
         #endregion
@@ -112,7 +115,10 @@ public class CircleLine : MonoBehaviour
     {
         this.list_pos = this.cipcForLS.list_humanpos;
     }
-
+    void recLRF()
+    {
+        this.list_pos = this.recLRFreader.list_humanpos;
+    }
     void Test()
     {
         this.list_pos.Add(new Vector3(0, 0, 0));

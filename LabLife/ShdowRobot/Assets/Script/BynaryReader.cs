@@ -29,6 +29,8 @@ public class BynaryReader : MonoBehaviour {
     public bool ReStart;
     List<_set> list_data;
 
+    public List<Vector3> list_humanpos;
+
     BinaryReader reader;
     public int size;
     // Use this for initialization
@@ -37,9 +39,9 @@ public class BynaryReader : MonoBehaviour {
 
         this.list_data = new List<_set>();
 
-        //this.srMT = this.saverobot.GetComponent<SaveRobotMT>();
+        this.srMT = this.saverobot.GetComponent<SaveRobotMT>();
 
-
+        this.list_humanpos = new List<Vector3>();
         this.cubes = new GameObject[this.size];
         this.texts = new GameObject[this.size];
         for (int i = 0; i < this.size; i++)
@@ -106,6 +108,7 @@ public class BynaryReader : MonoBehaviour {
         try
         {
             List<_set> list_position = new List<_set>();
+            List<Vector3> locallist = new List<Vector3>();
             int id = -1;
             this.reader.ReadUInt32();
             this.reader.ReadInt64();
@@ -123,7 +126,7 @@ public class BynaryReader : MonoBehaviour {
 
 
                 Vector3 vec = new Vector3(x, 0, z);
-
+                locallist.Add(vec);
                 if (id == myID)
                 {
                     vec = (vec + list_position[list_position.Count - 1].pos) / 2;
@@ -145,6 +148,8 @@ public class BynaryReader : MonoBehaviour {
                 id = myID;
             }
             this.list_data = list_position;
+            this.list_humanpos = locallist;
+            this.srMT.save();
         }
         catch
         {
