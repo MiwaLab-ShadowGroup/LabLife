@@ -282,11 +282,12 @@ public class CircleLine : MonoBehaviour
                 case _dirctionR.None:
                     break;
             }
-            this.radian = this.rangeθ *  dir * centerVel.magnitude  +  this.rangeθ1;
-
+            this.radian =(this.rangeθ *  dir * centerVel.magnitude  +  this.rangeθ1) * Time.deltaTime;
+            //Debug.Log(this.radian);
+            //Debug.Log(this.target - this.preCenter);
 
             //円中心からの方向ベクトル
-            this.target = centerPos + (Quaternion.AngleAxis(this.radian * Time.deltaTime, Vector3.up) * ((this.target - this.preCenter) / (this.target - this.preCenter).magnitude * this.radius));
+            this.target = centerPos + (Quaternion.AngleAxis(this.radian, Vector3.up) * ((this.target - this.preCenter) / (this.target - this.preCenter).magnitude * this.radius));
             this.target.y = this.robotPos.y;
             //移動
             this.robot.transform.position = this.target;

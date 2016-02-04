@@ -41,10 +41,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CIPC_CS">
-      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\CIPC_CS.dll</HintPath>
+      <HintPath>..\..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\CIPC_CS.dll</HintPath>
     </Reference>
     <Reference Include="FPSAdjuster">
-      <HintPath>bin\Release\FPSAdjuster.dll</HintPath>
+      <HintPath>..\..\..\CIPCSystem\CentralInterProcessComunicationServer\ArduinoCommunication\bin\Debug\FPSAdjuster.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Kinect.2.0.1410.19000\lib\net45\Microsoft.Kinect.dll</HintPath>
@@ -86,17 +86,19 @@
     </Reference>
     <Reference Include="System.Xml.Serialization" />
     <Reference Include="TerminalConnectionSettings">
-      <HintPath>bin\Release\TerminalConnectionSettings.dll</HintPath>
+      <HintPath>..\..\..\CIPCSystem\CentralInterProcessComunicationServer\TerminalConnectionSettings\bin\Debug\TerminalConnectionSettings.dll</HintPath>
     </Reference>
     <Reference Include="UDP_PACKETS_CLIANT">
-      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\UDP_PACKETS_CLIANT.dll</HintPath>
+      <HintPath>..\..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\UDP_PACKETS_CLIANT.dll</HintPath>
     </Reference>
     <Reference Include="UDP_PACKETS_CODER">
-      <HintPath>..\..\CIPCSystem\CIPCClient\CIPC_CS\CIPC_CS\bin\Debug\UDP_PACKETS_CODER.dll</HintPath>
+      <HintPath>..\..\..\CIPCSystem\CentralInterProcessComunicationServer\ArduinoCommunication\bin\Debug\UDP_PACKETS_CODER.dll</HintPath>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -134,6 +136,8 @@
     <Compile Include="LabLife.cs" />
     <Compile Include="Processer\ImageProcesser\AImageProcesser.cs" />
     <Compile Include="Processer\ImageProcesser\CellAutomaton.cs" />
+    <Compile Include="Processer\ImageProcesser\ColorChanger.cs" />
+    <Compile Include="Processer\ImageProcesser\paramater.cs" />
     <Compile Include="Processer\ImageProcesser\polygon.cs" />
     <Compile Include="Processer\ImageProcesser\Reverse.cs" />
     <Compile Include="Processer\ImageProcesser\Zanzou.cs" />

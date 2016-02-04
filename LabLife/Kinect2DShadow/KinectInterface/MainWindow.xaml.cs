@@ -927,30 +927,67 @@ namespace Kinect2DShadow
 
                 if (Isreader)
                 {
-                    //Debug.Log("ok2");
-                    this.datalength = this.reader.ReadInt32();
+                    ////Debug.Log("ok2");
+                    //this.datalength = this.reader.ReadInt32();
 
-                    for (int i = 0; i < datalength; i++)
+                    //for (int i = 0; i < datalength; i++)
+                    //{
+                    //    this.readData[i] = this.reader.ReadUInt16();
+
+                    //}
+
+                    //if (reader.PeekChar() == -1)
+                    //{
+                    //    //Debug.Log("ok3");
+                    //    reader.Close();
+                    //    Isreader = false;
+                    //    //endthread = true;
+                    //}
+
+                    //if (ReadStop)
+                    //{
+                    //    Isreader = false;
+                    //    ReadStop = false;
+                    //    //endthread = true;
+                    //}
+                    ////Console.WriteLine("OK");
+
+                    this.reader.ReadInt32();
+                    this.reader.ReadInt32();
+                    int mode = this.reader.ReadInt32();
+                    //if(mode % 10 == 1)
+                    //{
+                    //robot
+                    this.reader.ReadSingle();
+                    this.reader.ReadSingle();
+                    this.reader.ReadSingle();
+                    this.reader.ReadSingle();
+                    this.reader.ReadSingle();
+                    this.reader.ReadSingle();
+
+                    //}
+                    //if (mode % 10 == 1)
+                    //{
+                    //Shadow
+                    for (int i = 0; i < 512 * 424; i++)
                     {
                         this.readData[i] = this.reader.ReadUInt16();
 
                     }
-
-                    if (reader.PeekChar() == -1)
+                    //}
+                    //if (mode / 100 == 1)
+                    //{
+                    //LRF
+                    int human = this.reader.ReadInt32();
+                    for (int i = 0; i < human; i++)
                     {
-                        //Debug.Log("ok3");
-                        reader.Close();
-                        Isreader = false;
-                        //endthread = true;
+                        this.reader.ReadInt32();
+                        this.reader.ReadSingle();
+                        this.reader.ReadSingle();
+                        this.reader.ReadSingle();
                     }
 
-                    if (ReadStop)
-                    {
-                        Isreader = false;
-                        ReadStop = false;
-                        //endthread = true;
-                    }
-                    //Console.WriteLine("OK");
+                    //}
 
                 }
                 else

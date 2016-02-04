@@ -132,6 +132,7 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
 
                     //データ格納
                     int humanNum = dec.get_int();
+                    //Debug.Log(humanNum);
                     for (int i = 0; i < humanNum; i++)
                     {
                         float x = (float)dec.get_double();
@@ -164,6 +165,7 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
                         id = myID;
                     }
                     this.list_data = locallist_data;
+                    this.list_humanpos = locallist_position;
                     
                 }
                 catch
@@ -201,7 +203,7 @@ public class CIPCReceiverLaserScaner : MonoBehaviour
             Debug.Log("CIPCforLaserScaner");
 
 
-            this.thread = new Thread(new ThreadStart(this.GetData));
+            this.thread = new Thread(new ThreadStart(this.GetDataSet));
             this.thread.Start();
         }
         catch

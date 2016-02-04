@@ -27,6 +27,7 @@ public class SavaData : MonoBehaviour, ISave {
     public bool FileChoose;
     public string path;
     public bool IsStart;
+    public bool Pause;
 
     PointCloud pointCloud;
     CIPCReceiverLaserScaner cipcForLRF;
@@ -47,6 +48,8 @@ public class SavaData : MonoBehaviour, ISave {
     int frameByn;
     int frameCSV;
     int savemodeflag = 0;
+    [Range(5, 100)]
+    public int fps;
 
     // Use this for initialization
     void Start ()
@@ -59,8 +62,7 @@ public class SavaData : MonoBehaviour, ISave {
         this.FpsAd = new FPSAdjuster.FPSAdjuster();
         this.FpsAd.Fps = 30;
         this.FpsAd.Start();
-        this.frameByn = 0;
-        this.frameCSV = 0;
+        
     }
     void SetUpWriter()
     {
@@ -78,8 +80,9 @@ public class SavaData : MonoBehaviour, ISave {
         {
             this.IsRobot = true;
         }
+        this.frameByn = 0;
+        this.frameCSV = 0;
 
-        
     }
     void StartSave()
     {
@@ -99,11 +102,16 @@ public class SavaData : MonoBehaviour, ISave {
     {
         this.readData = new ushort[512 * 424];
     }
-    void StartRead() { }
+    void StartRead()
+    {
+        this.bReader = new BinaryReader(File.OpenRead(this.path));
+        
+    }
 
     // Update is called once per frame
     void Update ()
     {
+        this.FpsAd.Fps = this.fps;
         if(this.mode == _Mode.Writer)
         {
             this.robotPos = this.Robot.transform.position;
@@ -230,53 +238,66 @@ public class SavaData : MonoBehaviour, ISave {
         try
         {
             this.StartRead();
+            Vector3 vec = new Vector3();
+
             while (true)
             {
-                
-                this.bReader.ReadInt32();
-                this.bReader.ReadInt32();
-                int mode = this.bReader.ReadInt32();
-                if(mode % 10 == 1)
+                try
                 {
-                    //robot
-                    this.robotPos.x = this.bReader.ReadInt32();
-                    this.robotPos.y = this.bReader.ReadInt32();
-                    this.robotPos.z = this.bReader.ReadInt32();
-                    this.robotLightPos.x = this.bReader.ReadInt32();
-                    this.robotLightPos.y = this.bReader.ReadInt32();
-                    this.robotLightPos.z = this.bReader.ReadInt32();
-
-                }
-                if (mode % 10 == 1)
-                {
-                    //Shadow
-                    for (int i = 0; i < 512 * 424; i++)
+                    if (!this.Pause)
                     {
-                        this.readData[i] = this.bReader.ReadUInt16();
+                       // this.FpsAd.Adjust();
+                        this.bReader.ReadInt32();
+                        this.bReader.ReadInt32();
+                        int mode = this.bReader.ReadInt32();
+                        //if(mode % 10 == 1)
+                        //{
+                        //robot
+                        this.robotPos.x = this.bReader.ReadSingle();
+                        this.robotPos.y = this.bReader.ReadSingle();
+                        this.robotPos.z = this.bReader.ReadSingle();
+                        this.robotLightPos.x = this.bReader.ReadSingle();
+                        this.robotLightPos.y = this.bReader.ReadSingle();
+                        this.robotLightPos.z = this.bReader.ReadSingle();
+
+                        //}
+                        //if (mode % 10 == 1)
+                        //{
+                        //Shadow
+                        for (int i = 0; i < this.readData.Length; i++)
+                        {
+                            this.readData[i] = this.bReader.ReadUInt16();
+
+                        }
+                        //}
+                        //if (mode / 100 == 1)
+                        //{
+                        //LRF
+                        List<LRFdataSet> lsit = new List<LRFdataSet>();
+                        int human = this.bReader.ReadInt32();
+                        for (int i = 0; i < human; i++)
+                        {
+                            LRFdataSet set = new LRFdataSet();
+                            set.id = this.bReader.ReadInt32();
+                            vec.x = this.bReader.ReadSingle();
+                            vec.y = this.bReader.ReadSingle();
+                            vec.z = this.bReader.ReadSingle();
+                            set.pos = vec;
+                            lsit.Add(set);
+                        }
+
+                        this.list_Data = lsit;
+                        //}
+                        if (!this.IsStart) { break; }
 
                     }
+                    
                 }
-                if (mode / 100 == 1)
+                catch
                 {
-                    //LRF
-                    List<LRFdataSet> lsit = new List<LRFdataSet>();
-                    for(int i = 0; i < this.bReader.ReadInt32(); i++)
-                    {
-                        LRFdataSet set = new LRFdataSet();
-                        set.id = this.bReader.ReadInt32();
-                        set.pos = new Vector3(this.bReader.ReadSingle(), this.bReader.ReadSingle(), this.bReader.ReadSingle());
-                        lsit.Add(set);
-                    }                
-                   
-                    this.list_Data = lsit;
-                }
-
-              
-                if (!this.IsStart)
-                {
-                    this.StopRead();
                     break;
                 }
+               
             }
         }
         catch { }
@@ -295,7 +316,6 @@ public class SavaData : MonoBehaviour, ISave {
 
     void OnDestroy()
     {
-
         if(this.thread != null)
         {
             this.thread.Abort();

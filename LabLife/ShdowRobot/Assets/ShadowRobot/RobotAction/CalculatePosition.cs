@@ -132,20 +132,25 @@ public class CalculatePosition
         {
             humannum0 = 0;
             humannum1 = 0;
-        }       
-        for(int i= 0; i< list.Count; i++)
+            return 0;
+        }
+        else
         {
-            for(int j = 0; j < list.Count; j++)
+            for (int i = 0; i < list.Count; i++)
             {
-                if ((list[j] - list[i]).magnitude > length)
+                for (int j = 0; j < list.Count; j++)
                 {
-                    length = (list[j] - list[i]).magnitude;
-                    humannum0 = i;
-                    humannum1 = j;
+                    if ((list[j] - list[i]).magnitude > length)
+                    {
+                        length = (list[j] - list[i]).magnitude;
+                        humannum0 = i;
+                        humannum1 = j;
+                    }
                 }
             }
-        }
-        return length;
+            return length;
+        }      
+        
     }
     public float MinLength(List<Vector3> list, ref int humannum0, ref int humannum1)
     {
