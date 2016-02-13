@@ -121,6 +121,7 @@
     <Compile Include="Processer\ImageProcesser\AImageProcesser.cs" />
     <Compile Include="Processer\ImageProcesser\CellAutomaton.cs" />
     <Compile Include="Processer\ImageProcesser\Reverse.cs" />
+    <Compile Include="Processer\NeuralProcesser\Internal\Energy.cs" />
     <Compile Include="Processer\NeuralProcesser\Internal\ExcitationIntensity.cs" />
     <Compile Include="Processer\NeuralProcesser\Internal\Extensions.cs" />
     <Compile Include="Processer\NeuralProcesser\Internal\Interface\IBasicNeuron.cs" />

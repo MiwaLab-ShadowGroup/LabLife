@@ -17,5 +17,7 @@ namespace LabLife.Processer.NeuralProcesser.Internal.Interface
         /// <param name="value">減衰係数</param>
         /// <returns></returns>
         INeurotransmitter TransfarAttenuation(TransferCoefficient value);
+        List<double> getParams();
+        int getParamsNum();
     }
 }

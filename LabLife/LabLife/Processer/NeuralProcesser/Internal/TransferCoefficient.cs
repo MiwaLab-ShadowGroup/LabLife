@@ -34,6 +34,11 @@ namespace LabLife.Processer.NeuralProcesser.Internal
             return this.m_value >= 0 && this.m_value <= 1;
         }
 
+        /// <summary>
+        /// 伝達
+        /// </summary>
+        /// <param name="neurotransmitter"></param>
+        /// <returns></returns>
         public Interface.INeurotransmitter Cofficient(Interface.INeurotransmitter neurotransmitter)
         {
             return neurotransmitter.TransfarAttenuation(this);

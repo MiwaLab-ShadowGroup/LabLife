@@ -23,6 +23,18 @@ namespace LabLife.Processer.NeuralProcesser.Internal
             this.m_value = value;
         }
 
+        public List<double> getParams()
+        {
+            List<double> value = new List<double>();
+            value.Add(this.m_value);
+            return value;
+        }
+
+        public int getParamsNum()
+        {
+            return 1;
+        }
+
         /// <summary>
         /// 減衰したものを返す
         /// </summary>

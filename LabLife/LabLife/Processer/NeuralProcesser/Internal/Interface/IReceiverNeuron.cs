@@ -8,6 +8,7 @@ namespace LabLife.Processer.NeuralProcesser.Internal.Interface
 {
     public interface IReceiverNeuron : INeuron
     {
+        void ConnectFrom(ISenderNeuron senderNeuron);
         void Receive(INeurotransmitter neurotransmitter);
     }
 }
