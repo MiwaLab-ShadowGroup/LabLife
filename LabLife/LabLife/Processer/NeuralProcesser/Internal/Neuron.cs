@@ -79,6 +79,7 @@ namespace LabLife.Processer.NeuralProcesser.Internal
                     this.m_EI.add(q);
                 }
             }
+            this.m_ReceivedTransmittersList.Clear();
 
             //励起状態の判定
             if (this.m_EI.State == ExcitationState.High)
@@ -134,6 +135,11 @@ namespace LabLife.Processer.NeuralProcesser.Internal
         public void AddEnergy(double value)
         {
             this.m_Energy.Add(value);
+        }
+
+        public NeuronMode GetMode()
+        {
+            return NeuronMode.Normal;
         }
     }
 }

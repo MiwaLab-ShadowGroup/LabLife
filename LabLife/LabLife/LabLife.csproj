@@ -131,6 +131,7 @@
     <Compile Include="Processer\NeuralProcesser\Internal\Interface\ISenderNeuron.cs" />
     <Compile Include="Processer\NeuralProcesser\Internal\Neuron.cs" />
     <Compile Include="Processer\NeuralProcesser\Internal\Neurotransmitter.cs" />
+    <Compile Include="Processer\NeuralProcesser\Internal\SensorNeuron.cs" />
     <Compile Include="Processer\NeuralProcesser\Internal\TransferCoefficient.cs" />
     <Compile Include="Processer\NeuralProcesser\NeuralNetwork.cs" />
     <Compile Include="Processer\Recoder.cs" />

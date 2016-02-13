@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace LabLife.Processer.NeuralProcesser.Internal.Interface
 {
-    public enum ConnectMode
+    public enum NeuronMode
     {
         Input,
-        Output
+        Output,
+        Normal
     }
     public enum ExcitationState
     {
@@ -26,5 +27,6 @@ namespace LabLife.Processer.NeuralProcesser.Internal.Interface
         void AddEnergy(double value);
         void Update();
         void Die();
+        NeuronMode GetMode();
     }
 }
