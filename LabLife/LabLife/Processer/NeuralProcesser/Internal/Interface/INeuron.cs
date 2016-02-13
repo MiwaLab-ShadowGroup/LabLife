@@ -23,7 +23,7 @@ namespace LabLife.Processer.NeuralProcesser.Internal.Interface
     /// </summary>
     public interface INeuron : IBasicNeuron
     {
-        void ConnectTo(INeuron target, ConnectMode mode);
+        void ConnectTo(IReceiverNeuron target);
         void Update();
         void Die();
     }

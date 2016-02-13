@@ -9,7 +9,7 @@ namespace LabLife.Processer.NeuralProcesser.Internal
 {
     public class Neuron : Interface.IReceiverNeuron, Interface.ISenderNeuron
     {
-        public List<KeyValuePair<Neuron, TransferCoefficient>> Children;
+        public List<KeyValuePair<IReceiverNeuron, TransferCoefficient>> m_Children;
 
         /// <summary>
         /// 
@@ -23,7 +23,7 @@ namespace LabLife.Processer.NeuralProcesser.Internal
 
         public void Initialize()
         {
-            this.Children = new List<KeyValuePair<Neuron, TransferCoefficient>>();
+            this.m_Children = new List<KeyValuePair<IReceiverNeuron, TransferCoefficient>>();
             this.m_EI = new ExcitationIntensity();
         }
 
@@ -34,15 +34,16 @@ namespace LabLife.Processer.NeuralProcesser.Internal
         /// <param name="neurotransmitter"></param>
         public void Receive(INeurotransmitter neurotransmitter)
         {
-            foreach (var p in this.Children)
+            foreach (var p in this.m_Children)
             {
                 this.Send(p.Key, neurotransmitter.TransfarAttenuation(p.Value));
             }
         }
 
-        public void ConnectTo(INeuron target, ConnectMode mode)
+        public void ConnectTo(IReceiverNeuron target)
         {
-            throw new NotImplementedException();
+            TransferCoefficient TC = new TransferCoefficient();
+            this.m_Children.Add(new KeyValuePair<IReceiverNeuron, TransferCoefficient>(target, TC));
         }
 
         public void Update()
@@ -65,6 +66,6 @@ namespace LabLife.Processer.NeuralProcesser.Internal
         {
             receiverNeuron.Receive(neurotransmitter);
         }
-        
+
     }
 }
