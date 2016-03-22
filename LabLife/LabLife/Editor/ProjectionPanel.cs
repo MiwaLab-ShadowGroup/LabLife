@@ -133,6 +133,7 @@ namespace LabLife.Editor
             this.m_ImageProcesserList.Add(new Processer.ImageProcesser.CellAutomaton());
             this.m_ImageProcesserList.Add(new Processer.ImageProcesser.polygon());
             this.m_ImageProcesserList.Add(new Processer.ImageProcesser.Zanzou());
+            this.m_ImageProcesserList.Add(new Processer.ImageProcesser.Timedelay());
             this.updateLists();
         }
 

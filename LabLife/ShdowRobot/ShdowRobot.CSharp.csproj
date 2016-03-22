@@ -97,6 +97,7 @@
     <Compile Include="Assets\MyEffect\ImageEffect.cs" />
     <Compile Include="Assets\MyEffect\Invert.cs" />
     <Compile Include="Assets\PointClouds\PointCloud.cs" />
+    <Compile Include="Assets\PointClouds\PointCloud2.cs" />
     <Compile Include="Assets\PointClouds\Shape.cs" />
     <Compile Include="Assets\PointClouds\ShapeLookAt.cs" />
     <Compile Include="Assets\PointClouds\TetrahedronScript.cs" />
@@ -118,6 +119,8 @@
     <Compile Include="Assets\Script\SaveDepth.cs" />
     <Compile Include="Assets\Script\SendImage.cs" />
     <Compile Include="Assets\Script\UIScript.cs" />
+    <Compile Include="Assets\Script\centerpos.cs" />
+    <Compile Include="Assets\Script\centerposcylinder.cs" />
     <Compile Include="Assets\Script\dividehuman.cs" />
     <Compile Include="Assets\ShadowRobot\IRobotAction.cs" />
     <Compile Include="Assets\ShadowRobot\RobotAction\CalculatePosition.cs" />

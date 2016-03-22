@@ -361,7 +361,7 @@ namespace LabLife.Editor
 
                 if (depthMat != null && bodyindexMat != null && colorimageMat != null)
                 {
-
+                    bodyindexMat = bodyindexMat.CvtColor(OpenCvSharp.ColorConversion.BgraToBgr);
                     OnImageFrameArrived(new ImageFrameArrivedEventArgs(new Mat[] { bodyindexMat, depthMat, colorimageMat}));
                     
                 }

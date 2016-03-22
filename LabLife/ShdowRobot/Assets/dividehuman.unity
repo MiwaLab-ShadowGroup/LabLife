@@ -228,10 +228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 505d20d2ae3955e4da06cf4e4d28679c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robot: {fileID: 0}
-  velparameter: 0
-  Field: {x: 0, y: 0}
-  localO: {x: 0, y: 0}
+  robot: {fileID: 1720696256}
+  velparameter: 50
+  Field: {x: 3.5999999, y: 3}
+  localO: {x: 1.79999995, y: 1.20000005}
   IsHeigh: 0
   IsLight: 0
 --- !u!114 &25280761
@@ -1412,7 +1412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &493547225
 Transform:
   m_ObjectHideFlags: 0
@@ -2149,7 +2149,7 @@ MonoBehaviour:
   List_RenderTexture:
   - {fileID: 8400000, guid: 6b8a0458b39479547baa009f673ac1e2, type: 2}
   destinations:
-  - IPadress: 192.168.11.4
+  - IPadress: 127.0.0.1
     Port: 15000
   IsChangeColor: 0
   List_Colors: []
@@ -3250,14 +3250,14 @@ MonoBehaviour:
   maxCubeNum: 20000
   rangex: {x: -1.5, y: 1.70000005}
   rangez: {x: 1, y: 4}
-  roophight: 1.39999998
-  range: 10
+  roophight: 1.29999995
+  range: 3
   IsReset: 0
   particulsnum: 0
   centerPos: {x: 0, y: 0, z: 0}
   SaveRawData: 
-  IsArchive: 0
-  IsCIPCArchive: 1
+  IsArchive: 1
+  IsCIPCArchive: 0
   ReadDepth: {fileID: 21058028}
   CIPCReceiverforRead: {fileID: 1028956280}
 --- !u!1 &1137285048
@@ -3475,7 +3475,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1250662611
 Transform:
   m_ObjectHideFlags: 0
@@ -3733,7 +3733,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1419482177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.0599999987, y: .75, z: -2}
+  m_LocalPosition: {x: .400000006, y: 1, z: -2.79999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1111110751}
@@ -3933,7 +3933,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 197692, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2341330, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_UseLightProbes
@@ -3950,6 +3950,10 @@ Prefab:
     - target: {fileID: 197692, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
       propertyPath: m_TagString
       value: RobotLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 145504, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c0bc5425c1f3da498ae224d3f3725a6, type: 2}
@@ -4206,7 +4210,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1623532492
 Transform:
   m_ObjectHideFlags: 0
@@ -4384,7 +4388,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1749838740}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: -2.5}
+  m_LocalPosition: {x: 0, y: 1.60000002, z: -2.79999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4723,11 +4727,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2444b9b9cd7ee4d4eb5591d6777f16b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverPort: 0
-  remoteIP: 
-  myPort: 0
-  clientName: 
-  fps: 0
+  serverPort: 12000
+  remoteIP: 127.0.0.1
+  myPort: 56001
+  clientName: CIPC_Save
+  fps: 30
   pointCloudShadow: {fileID: 493547224}
   CIPCSetup: 0
   OpenFileChoose: 0
@@ -5085,7 +5089,7 @@ MonoBehaviour:
   List_RenderTexture:
   - {fileID: 8400000, guid: bbc64e64ba54b434090182a5738ae2d3, type: 2}
   destinations:
-  - IPadress: 127.0.0.1
+  - IPadress: 192.168.11.22
     Port: 15000
   IsChangeColor: 0
   List_Colors: []

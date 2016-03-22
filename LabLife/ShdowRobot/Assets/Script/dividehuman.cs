@@ -75,6 +75,7 @@ public class dividehuman : MonoBehaviour {
     double distance;
 
 
+
     // Use this for initialization
     void Start() {
 
