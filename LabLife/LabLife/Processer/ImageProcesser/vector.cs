@@ -58,11 +58,12 @@ namespace LabLife.Processer.ImageProcesser
                 }
 
             }
-            Console.WriteLine(CvPoints.Count);
-            Cv.Line(vectoripl, CvPoints[0], CvPoints[1], new CvScalar(255, 255, 0), 2);
+            //Console.WriteLine(CvPoints.Count);
+            //Cv.Line(vectoripl, CvPoints[0], CvPoints[1], new CvScalar(255, 255, 0), 2);
             
             for (int k = 0; k < CvPoints.Count; k+=2)
             {
+
                 Cv.Line(vectoripl, CvPoints[k], CvPoints[k + 1], color, 2);
 
             }
