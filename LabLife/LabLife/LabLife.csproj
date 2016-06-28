@@ -26,7 +26,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>1</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -137,6 +137,7 @@
     <Compile Include="Processer\ImageProcesser\particle.cs" />
     <Compile Include="Processer\ImageProcesser\polygon.cs" />
     <Compile Include="Processer\ImageProcesser\Reverse.cs" />
+    <Compile Include="Processer\ImageProcesser\skeleton.cs" />
     <Compile Include="Processer\ImageProcesser\Timedelay.cs" />
     <Compile Include="Processer\ImageProcesser\vector.cs" />
     <Compile Include="Processer\ImageProcesser\Zanzou.cs" />

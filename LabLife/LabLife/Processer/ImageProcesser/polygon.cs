@@ -35,10 +35,10 @@ namespace LabLife.Processer.ImageProcesser
             Cv2.FindContours(grayimage, out contour, out hierarchy, OpenCvSharp.ContourRetrieval.External, OpenCvSharp.ContourChain.ApproxNone);
             
             List<OpenCvSharp.CPlusPlus.Point> CvPoints = new List<Point>();
-            
+
             for (int i = 0; i < contour.Length; i++)
             {
-                if(Cv2.ContourArea(contour[i]) > 1000)
+                if (Cv2.ContourArea(contour[i]) > 1000)
                 {
                     CvPoints.Clear();
 
@@ -51,9 +51,9 @@ namespace LabLife.Processer.ImageProcesser
                     this.List_Contours.Add(CvPoints);
                     //Cv2.FillConvexPoly(dst, CvPoints, Scalar.Yellow,  OpenCvSharp.LineType.Link4, 0);
                 }
-                
+                Cv2.DrawContours(dst, this.List_Contours, 0, Scalar.Aqua, -1, OpenCvSharp.LineType.Link8);
+
             }
-            Cv2.DrawContours(dst, this.List_Contours, 0, Scalar.Aqua, -1, OpenCvSharp.LineType.Link8);
         }
 
         public override string ToString()

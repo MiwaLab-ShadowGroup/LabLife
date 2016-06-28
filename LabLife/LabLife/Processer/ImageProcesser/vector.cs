@@ -13,6 +13,22 @@ namespace LabLife.Processer.ImageProcesser
     public class vector : AImageProcesser
     {
 
+        CvGraph grapth;
+        CvSize size;
+        //int interval;
+        Mat thin;
+        Mat raster_r;
+
+        /// <summary>
+        /// toUI
+        /// </summary>
+        int interval = 15;
+        int length = 7;
+        int radius = 1;
+        Scalar color = new Scalar(255, 255, 0);
+        Scalar colorBack;
+
+        int count = 0;
 
         public override void ImageProcess(ref Mat src, ref Mat dst)
         {
@@ -21,55 +37,65 @@ namespace LabLife.Processer.ImageProcesser
 
         }
 
-        private Mat grayimage = new Mat();
+        Mat grayimage = new Mat();
 
 
         private void Update(ref Mat src, ref Mat dst)
         {
+            Mat dstMat = new Mat(src.Height, src.Width, MatType.CV_8UC3,new Scalar(0,0,0));
+
+
+
+            int imgW = src.Width;
+            int imgH = src.Height;
+
 
             Cv2.CvtColor(src, grayimage, OpenCvSharp.ColorConversion.BgrToGray);
-            IplImage vectoripl = new IplImage(dst.Width, dst.Height, BitDepth.U8, 3);
-            dst = new Mat(dst.Height, dst.Width, MatType.CV_8UC3);
 
-            OpenCvSharp.CPlusPlus.Point[][] contour;//= grayimage.FindContoursAsArray(OpenCvSharp.ContourRetrieval.External, OpenCvSharp.ContourChain.ApproxSimple);
+
+            OpenCvSharp.CPlusPlus.Point[][] contour;
             HierarchyIndex[] hierarchy;
-            CvScalar color = new CvScalar(255, 0, 0);
+           
 
             Cv2.FindContours(grayimage, out contour, out hierarchy, OpenCvSharp.ContourRetrieval.External, OpenCvSharp.ContourChain.ApproxNone);
 
-            List<OpenCvSharp.CPlusPlus.Point> CvPoints = new List<OpenCvSharp.CPlusPlus.Point>();
-
-            //Console.Write(contour.Length);
-
+            Random rand = new Random();
+            double x = 0;
+            double y = 0;
+            double dir;
+            int size = 0;
+            OpenCvSharp.CPlusPlus.Point center;
             for (int i = 0; i < contour.Length; i++)
             {
-                //Console.Write(contour[i].Length);
-
                 if (Cv2.ContourArea(contour[i]) > 100)
                 {
-                    CvPoints.Clear();
-
-                    for (int j = 0; j < contour[i].Length; j += 30)
+                    for (int j = 0; j < contour[i].Length - this.interval; j = j + this.interval)
                     {
+                        OpenCvSharp.CPlusPlus.Point vec = contour[i][j + this.interval] - contour[i][j];
+                        size = (int)Math.Sqrt(vec.X * vec.X + vec.Y * vec.Y);
+                        dir = (int)(Math.Atan2(vec.Y, vec.X) * 180);
+                        //dir = rand.Next(dir - this.rangeRad, dir + this.rangeRad);
+                        x = Math.Cos(dir);
+                        y = Math.Sin(dir);
 
-                        CvPoints.Add(contour[i][j]);
+
+                        for (int k = 0; k < this.length; k++)
+                        {
+                            center = contour[i][j] + new OpenCvSharp.CPlusPlus.Point(x * k, y * k);
+                            dstMat.Circle(center, 1, this.color, this.radius, LineType.Link8, 0);
+                        }
+                        for (int k = 0; k < this.length; k++)
+                        {
+                            center = contour[i][j] + new OpenCvSharp.CPlusPlus.Point(-x * k, -y * k);
+                            dstMat.Circle(center, 1, this.color, this.radius, LineType.Link8, 0);
+                        }
+
                     }
-
                 }
-
             }
-            //Console.WriteLine(CvPoints.Count);
-            //Cv.Line(vectoripl, CvPoints[0], CvPoints[1], new CvScalar(255, 255, 0), 2);
-            
-            for (int k = 0; k < CvPoints.Count; k+=2)
-            {
+           
+            dst = dstMat;
 
-                Cv.Line(vectoripl, CvPoints[k], CvPoints[k + 1], color, 2);
-
-            }
-
-            Mat dst1 = new Mat(vectoripl);
-            dst = dst1;
         }
 
 

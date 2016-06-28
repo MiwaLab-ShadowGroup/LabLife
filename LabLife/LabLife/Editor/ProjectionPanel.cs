@@ -135,6 +135,7 @@ namespace LabLife.Editor
             this.m_ImageProcesserList.Add(new Processer.ImageProcesser.Zanzou());
             this.m_ImageProcesserList.Add(new Processer.ImageProcesser.Timedelay());
             this.m_ImageProcesserList.Add(new Processer.ImageProcesser.vector());
+            this.m_ImageProcesserList.Add(new Processer.ImageProcesser.skeleton());
             this.updateLists();
         }
 
