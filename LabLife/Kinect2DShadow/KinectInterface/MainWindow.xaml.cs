@@ -157,6 +157,7 @@ namespace Kinect2DShadow
 
 
         Mat sendmat;
+        Mat playmat;
         //ラベリング
         bool bool_label = false;
         //Mat graylabel;
@@ -164,6 +165,9 @@ namespace Kinect2DShadow
         CvBlobs blobs;
         IplImage labelimage;
         IplImage labelgrayimage;
+
+        string time;
+        byte[] ReadDepthData;
 
         public MainWindow()
         {
@@ -231,6 +235,7 @@ namespace Kinect2DShadow
             this.timer.Start();
 
             this.readData = new ushort[512 * 424];
+            this.ReadDepthData = new byte[512 * 424];
             this.cameraSpacePointsArchive = new CameraSpacePoint[this.depthFrameReader.DepthFrameSource.FrameDescription.LengthInPixels];
             this.Archivemat = new Mat(this.depthImageHeight, this.depthImageWidth, MatType.CV_8UC3);
             this.Compositionmat = Archivemat.Clone();
@@ -279,6 +284,7 @@ namespace Kinect2DShadow
             this.labelgrayimage = new IplImage(512, 424, BitDepth.U8, 1);
             Cv.NamedWindow("label", WindowMode.AutoSize);
 
+            playmat = new Mat(new OpenCvSharp.CPlusPlus.Size(512, 424), MatType.CV_16U);
 
 
             for (int i = 0; i < h; i++)
@@ -920,53 +926,76 @@ namespace Kinect2DShadow
         }
         void ReadData()
         {
-            //Console.WriteLine("ok");
-            while (true)
+            unsafe
             {
-                FpsAd.Adjust();
 
-                if (Isreader)
+                //Console.WriteLine("ok");
+                while (true)
                 {
-                    //Debug.Log("ok2");
-                    this.datalength = this.reader.ReadInt32();
+                    FpsAd.Adjust();
 
-                    for (int i = 0; i < datalength; i++)
+                    if (Isreader)
                     {
-                        this.readData[i] = this.reader.ReadUInt16();
+                        //Debug.Log("ok2");
+                        this.time = reader.ReadString();
+                        this.datalength = this.reader.ReadInt32();
+
+                        for (int i = 0; i < datalength; i++)
+                        {
+                            this.readData[i] = this.reader.ReadUInt16();
+
+                        }
+
+                        if (reader.PeekChar() == -1)
+                        {
+                            //Debug.Log("ok3");
+                            reader.Close();
+                            Isreader = false;
+                            //endthread = true;
+                        }
+
+                        //ushort* ptr = (ushort*)playmat.Data;
+
+                        //this.time = reader.ReadString();
+                        //this.datalength = this.reader.ReadInt32();
+
+                        //for (int i = 0; i < datalength; ++i)
+                        //{
+                        //    this.ReadDepthData[i] = this.reader.ReadByte();
+
+                        //}
+
+                        //for (int i = 0; i < datalength; ++i)
+                        //{
+                        //    ptr[i] = ReadDepthData[i];
+
+                        //}
+
+                        //Cv2.ImShow("test", playmat);
+
+                        if (ReadStop)
+                        {
+                            Isreader = false;
+                            ReadStop = false;
+                            //endthread = true;
+                        }
+                        //Console.WriteLine("OK");
 
                     }
-
-                    if (reader.PeekChar() == -1)
+                    else
                     {
-                        //Debug.Log("ok3");
-                        reader.Close();
-                        Isreader = false;
-                        //endthread = true;
-                    }
+                        if (reader != null)
+                        {
+                            reader.Close();
 
-                    if (ReadStop)
-                    {
-                        Isreader = false;
-                        ReadStop = false;
-                        //endthread = true;
+                        }
+
+                        break;
                     }
-                    //Console.WriteLine("OK");
 
                 }
-                else
-                {
-                    if (reader != null)
-                    {
-                        reader.Close();
-
-                    }
-
-                    break;
-                }
-
+                //Console.WriteLine("in");
             }
-            //Console.WriteLine("in");
-            
             if (reader != null)
             {
                 reader.Close();

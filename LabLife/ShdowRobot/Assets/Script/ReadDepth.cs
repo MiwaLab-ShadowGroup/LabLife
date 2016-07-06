@@ -32,6 +32,7 @@ public class ReadDepth : MonoBehaviour {
     bool IsStart = false;
 
     public bool PausePlay = false;
+    string time;
 
     // Use this for initialization
     void Start () {
@@ -81,7 +82,10 @@ public class ReadDepth : MonoBehaviour {
                     if (Isreader)
                     {
                         //Debug.Log("ok2");
+                        this.time = reader.ReadString();
+
                         this.datalength = this.reader.ReadInt32();
+                        Debug.Log(time);
 
 
                         for (int i = 0; i < datalength; i++)

@@ -74,7 +74,9 @@ public class dividehuman : MonoBehaviour {
     public GameObject cylinder;
     double distance;
 
-
+    string time;
+    string time2;
+    string timer = "timer";
 
     // Use this for initialization
     void Start() {
@@ -133,11 +135,11 @@ public class dividehuman : MonoBehaviour {
             this.reader = new BinaryReader(File.OpenRead(FilePath));
             IsStart = false;
         }
-        if (IsSave)
-        {
-            this.writer = new BinaryWriter(File.OpenWrite(FolderPath + @"\" + SaveFilename));
-            this.IsSave = false;
-        }
+        //if (IsSave)
+        //{
+        //    this.writer = new BinaryWriter(File.OpenWrite(FolderPath + @"\" + SaveFilename));
+        //    this.IsSave = false;
+        //}
 
         if (ReadStart)
         {
@@ -197,9 +199,10 @@ public class dividehuman : MonoBehaviour {
     {
         if (ReadStart)
         {
+            this.time = this.reader.ReadString();
             this.datalength = this.reader.ReadInt32();
 
-            for (int i = 0; i < datalength; i++)
+            for (int i = 0; i < 512*424; i++)
             {
                 this.readData[i] = this.reader.ReadUInt16();
             }
@@ -233,6 +236,7 @@ public class dividehuman : MonoBehaviour {
         if (Is10frameread)
         {
             //Debug.Log("ok2");
+            this.time2 = this.reader10frame.ReadString();
             this.datalength10frame = this.reader10frame.ReadInt32();
 
             for (int i = 0; i < datalength10frame; i++)
@@ -383,8 +387,8 @@ public class dividehuman : MonoBehaviour {
             //    }
             //}
             #endregion
-
-            writer.Write(ArchiveData.Length);
+            writer.Write(time2);
+            writer.Write(read10frameData.Length);
 
             for (int i = 0; i < cameraSpacePoints10frame.Length; i++)
             {

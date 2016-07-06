@@ -3,7 +3,7 @@ using System.Collections;
 using System.IO;
 using System.Threading;
 using UnityEditor;
-
+using System;
 
 public class SaveDepth : MonoBehaviour {
 
@@ -26,6 +26,8 @@ public class SaveDepth : MonoBehaviour {
     public bool IsSaveStop = false;
 
     public string filename;
+    DateTime datetime;
+    TimeSpan timestump;
 
     // Use this for initialization
     void Start () {
@@ -85,6 +87,11 @@ public class SaveDepth : MonoBehaviour {
             while (true)
             {
                 this.FpsAd.Adjust();
+
+                datetime = DateTime.Now;
+                timestump = datetime.TimeOfDay;
+                
+                writer.Write(timestump.ToString());
                 //Debug.Log(framecount);
                 writer.Write(pointcloud.SaveRawData.Length);
 
