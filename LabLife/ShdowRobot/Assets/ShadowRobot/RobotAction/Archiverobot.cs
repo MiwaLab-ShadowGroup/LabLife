@@ -1,21 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.IO;
 using System.Threading;
+using System.IO;
 using UnityEditor;
 
-public class ReadDepth : MonoBehaviour {
-
-
-    //public enum _Mode { MakeArchive, ReadArchive, }
-    //public _Mode mode;
+public class Archiverobot : MonoBehaviour
+{
+    public GameObject robot;
     BinaryReader reader;
     [HideInInspector]
-    public ushort[] readData;
 
-    int datalength;
-    //public string ReadFileName;
-    
     bool Isreader = true;
     Thread thread;
 
@@ -32,22 +26,27 @@ public class ReadDepth : MonoBehaviour {
     bool IsStart = false;
 
     public bool PausePlay = false;
-    string time;
+
+    public Vector3 robotpos = Vector3.zero;
+    int frame;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
-        readData = new ushort[512 * 424];
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (OpenFileChoose)
         {
             FilePath = EditorUtility.OpenFilePanel("ファイル選択", "　", "　");
 
-            if(FilePath != null)
+            if (FilePath != null)
             {
                 IsStart = true;
                 OpenFileChoose = false;
@@ -57,7 +56,7 @@ public class ReadDepth : MonoBehaviour {
         if (IsStart)
         {
             this.FpsAd = new FPSAdjuster.FPSAdjuster();
-            this.FpsAd.Fps = 30;
+            this.FpsAd.Fps = 23;
             this.FpsAd.Start();
 
             this.reader = new BinaryReader(File.OpenRead(FilePath));
@@ -65,8 +64,11 @@ public class ReadDepth : MonoBehaviour {
             this.thread.Start();
             IsStart = false;
             Isreader = true;
-            //Debug.Log("isstart");
         }
+        
+        this.robot.transform.position = this.robotpos;
+        
+
     }
 
     void ReadData()
@@ -74,56 +76,45 @@ public class ReadDepth : MonoBehaviour {
         //Debug.Log("ok");
         while (true)
         {
-            if (!PausePlay)
+            FpsAd.Adjust();
+            if (ReadStart)
             {
-                FpsAd.Adjust();
-                if (ReadStart)
+                if (Isreader)
                 {
-                    if (Isreader)
+                    frame = this.reader.ReadInt32();
+                    robotpos.x = this.reader.ReadSingle();
+                    robotpos.z = this.reader.ReadSingle();
+                    robotpos.y = this.reader.ReadSingle();
+
+                    robotpos.y = 0;
+
+                    if (reader.PeekChar() == -1)
                     {
-                        //Debug.Log("ok2");
-                        this.time = reader.ReadString();
-
-                        this.datalength = this.reader.ReadInt32();
-                        //Debug.Log(time);
-
-
-                        for (int i = 0; i < datalength; i++)
-                        {
-                            this.readData[i] = this.reader.ReadUInt16();
-
-                        }
-
-                        if (reader.PeekChar() == -1)
-                        {
-                            Debug.Log("end");
-                            reader.Close();
-                            Isreader = false;
-                        }
-
-                        if (ReadStop)
-                        {
-                            Isreader = false;
-                            ReadStop = false;
-                        }
-                        //Debug.Log("OK");
-
+                        Debug.Log("end");
+                        reader.Close();
+                        Isreader = false;
                     }
-                    else
+
+                    if (ReadStop)
                     {
-                        if (reader != null)
-                        {
-                            reader.Close();
-
-                        }
-
-                        break;
+                        Isreader = false;
+                        ReadStop = false;
                     }
 
                 }
+                else
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+
+                    }
+
+                    break;
+                }
+
             }
         }
-        //Debug.Log("thread");
 
         if (reader != null)
         {
@@ -134,7 +125,6 @@ public class ReadDepth : MonoBehaviour {
             FilePath = null;
         }
 
-        //readData = new ushort[512 * 424];
 
         ReadStart = false;
         if (thread != null)
@@ -161,3 +151,5 @@ public class ReadDepth : MonoBehaviour {
         }
     }
 }
+    
+    

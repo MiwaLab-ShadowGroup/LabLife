@@ -10,15 +10,12 @@ public class centerpos : MonoBehaviour
 {
 
     BinaryReader reader;
-    BinaryReader reader10frame;
     [HideInInspector]
     public ushort[] readData;
-    [HideInInspector]
-    public ushort[] read10frameData;
+    
     ushort[] ArchiveData;
 
     int datalength;
-    int datalength10frame;
     public bool OpenFileChoose = false;
 
     public bool SaveFileChoose = false;
@@ -74,12 +71,16 @@ public class centerpos : MonoBehaviour
     //public GameObject cylinder;
     double distance;
 
-    
+
+
     public Vector3 centerPos;
 
     StreamWriter streamwriter;
 
+    public bool Iscsv;
+
     int framenum = 0;
+    string time;
     // Use this for initialization
     void Start()
     {
@@ -95,13 +96,13 @@ public class centerpos : MonoBehaviour
         this.depthreader = this.sensor.DepthFrameSource.OpenReader();
 
         this.cameraSpacePoints = new Windows.Kinect.CameraSpacePoint[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
-        //this.cameraSpacePoints10frame = new Windows.Kinect.CameraSpacePoint[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
         this.sensor.Open();
 
         depthcamerapoint = new depthinfo();
         this.depthcamerapoint.DivideCameraSpacePoint = new Windows.Kinect.CameraSpacePoint[this.depthreader.DepthFrameSource.FrameDescription.LengthInPixels];
 
         this.hidePositon = new Vector3(0, -100, 0);
+
     }
 
     // Update is called once per frame
@@ -109,8 +110,6 @@ public class centerpos : MonoBehaviour
     {
 
         if (NoUpdate) return;
-
-        int cubeCount = 0;
 
         if (OpenFileChoose)
         {
@@ -142,8 +141,18 @@ public class centerpos : MonoBehaviour
         }
         if (IsSave)
         {
-            this.streamwriter = new StreamWriter(File.OpenWrite(this.FolderPath + @"\" +  this.SaveFilename + ".csv"));
-            this.IsSave = false;
+            if (Iscsv)
+            {
+                this.streamwriter = new StreamWriter(File.OpenWrite(this.FolderPath + @"\" + this.SaveFilename + ".csv"));
+                this.IsSave = false;
+
+            }
+            else
+            {
+                this.writer = new BinaryWriter(File.OpenWrite(this.FolderPath + @"\" + this.SaveFilename ));
+                this.IsSave = false;
+            }
+            
         }
 
         if (ReadStart)
@@ -151,6 +160,7 @@ public class centerpos : MonoBehaviour
             ReadData();
             
         }
+        int cubeCount = 0;
 
 
         if (readData != null)
@@ -158,6 +168,8 @@ public class centerpos : MonoBehaviour
             this.sensor.CoordinateMapper.MapDepthFrameToCameraSpace(this.readData, this.cameraSpacePoints);
         }
 
+
+        ExpressHuman(ref cubeCount);
 
         //隠す処理
         if (this.ListCube.Count > cubeCount)
@@ -170,28 +182,47 @@ public class centerpos : MonoBehaviour
 
         this.particulsnum = this.ListCube.Count;
 
-        ExpressHuman(ref cubeCount);
-
         //CenterPos();
         CenterPos();
-        
+
         if (ReadStart)
         {
             framenum++;
-            if (streamwriter != null)
+            if (Iscsv)
             {
-                streamwriter.Write(framenum);
-                streamwriter.Write(",");
-                streamwriter.Write(centerPos.x);
-                streamwriter.Write(",");
-                streamwriter.Write(centerPos.z);
-                streamwriter.Write(",");
-                streamwriter.Write(centerPos.y);
-                streamwriter.Write("\n");
+                if (streamwriter != null)
+                {
+                    streamwriter.Write(framenum);
+                    streamwriter.Write(",");
+                    streamwriter.Write(centerPos.x);
+                    streamwriter.Write(",");
+                    streamwriter.Write(centerPos.z);
+                    streamwriter.Write(",");
+                    streamwriter.Write(centerPos.y);
+                    streamwriter.Write("\n");
+                }
+                else
+                {
+                    Debug.Log("null");
+                }
             }
             else
             {
-                Debug.Log("null");
+                if (writer != null)
+                {
+                    writer.Write(framenum);
+
+                    writer.Write(centerPos.x);
+
+                    writer.Write(centerPos.z);
+
+                    writer.Write(centerPos.y);
+                }
+                else
+                {
+                    Debug.Log("null");
+                }
+                
             }
         }
 
@@ -201,6 +232,7 @@ public class centerpos : MonoBehaviour
     {
         if (ReadStart)
         {
+            this.time = reader.ReadString();
             this.datalength = this.reader.ReadInt32();
 
             for (int i = 0; i < datalength; i++)
@@ -210,12 +242,16 @@ public class centerpos : MonoBehaviour
 
             if (reader.PeekChar() == -1)
             {
-                //Debug.Log("end");
+                Debug.Log("end");
                 reader.Close();
                 ReadStart = false;
                 if(streamwriter != null)
                 {
                     streamwriter.Close();
+                }
+                if(writer != null)
+                {
+                    writer.Close();
                 }
             }
 
@@ -228,8 +264,11 @@ public class centerpos : MonoBehaviour
                 {
                     streamwriter.Close();
                 }
+                if (writer != null)
+                {
+                    writer.Close();
+                }
             }
-            //Debug.Log("OK");
         }
         else
         {
@@ -242,39 +281,7 @@ public class centerpos : MonoBehaviour
 
     }
 
-    void Read10frameData()
-    {
-        if (Is10frameread)
-        {
-            //Debug.Log("ok2");
-            this.datalength10frame = this.reader10frame.ReadInt32();
-
-            for (int i = 0; i < datalength10frame; i++)
-            {
-                this.read10frameData[i] = this.reader10frame.ReadUInt16();
-            }
-
-            if (reader10frame.PeekChar() == -1)
-            {
-                reader10frame.Close();
-                Is10frameread = false;
-            }
-
-            if (ReadStop)
-            {
-                ReadStop = false;
-                Is10frameread = false;
-            }
-        }
-        else
-        {
-            if (reader10frame != null)
-            {
-                reader10frame.Close();
-            }
-        }
-    }
-
+    
     void OnDestroy()
     {
         if (FilePath != null)
@@ -285,10 +292,7 @@ public class centerpos : MonoBehaviour
         {
             reader.Close();
         }
-        if (reader10frame != null)
-        {
-            reader10frame.Close();
-        }
+        
         if (writer != null)
         {
             writer.Close();
@@ -317,19 +321,7 @@ public class centerpos : MonoBehaviour
         }
     }
 
-    //void CubeControll2(int cubeCount, Vector3 point)
-    //{
-    //    if (cubeCount < this.ListCube.Count)
-    //    {
-    //        this.ListCube[cubeCount].transform.localPosition = point;
-    //    }
-    //    else
-    //    {
-    //        this.ListCube.Add(Instantiate(this.cube2));
-    //        this.ListCube[this.ListCube.Count - 1].transform.parent = this.kinect.transform;
-    //        this.ListCube[this.ListCube.Count - 1].transform.localPosition = point;
-    //    }
-    //}
+   
 
     //void RangeChoose()
     //{
@@ -442,12 +434,12 @@ public class centerpos : MonoBehaviour
                         this.CubeControll(cubeCount, point);
                         cubeCount++;
 
-
                     }
                     
                 }
             }
         }
+        //Debug.Log(cubeCount);
     }
 
     //void ExpressHuman2(ref int cubeCount)
@@ -475,16 +467,31 @@ public class centerpos : MonoBehaviour
 
     void CenterPos()
     {
-        this.centerPos = Vector3.zero;
-        for (int i = 0; i < this.ListCube.Count; i++)
-        {
-            if(this.ListCube[i].transform.position.y > 0)
-            {
-                this.centerPos += this.ListCube[i].transform.position;
+        //Debug.Log();
 
+        if (ListCube != null)
+        {
+            this.centerPos = Vector3.zero;
+            Vector3 vec;
+
+            int counter = 0;
+            for (int i = 0; i < this.ListCube.Count; i++)
+            {
+                vec = this.ListCube[i].transform.position;
+                //Debug.Log(vec.x);
+                if (vec.y > 0)
+                {
+                    this.centerPos.x = this.centerPos.x+vec.x;
+                    this.centerPos.y = this.centerPos.y+vec.y;
+                    this.centerPos.z = this.centerPos.z+vec.z;
+                    ++counter;
+                }
             }
+            this.centerPos.x = this.centerPos.x/counter;
+            this.centerPos.y = this.centerPos.y/counter;
+            this.centerPos.z = this.centerPos.z/counter;
         }
-        this.centerPos /= this.ListCube.Count;
+        
     }
 
 }
